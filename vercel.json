@@ -1,9 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "./build.sh",
+  "buildCommand": "npm run vercel-build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "frameworkVersion": "14.2.24",
   "outputDirectory": ".next"
 }
