@@ -1,5 +1,13 @@
 import type { Config } from "tailwindcss";
 
+// Try to load the typography plugin, but don't fail if it's not available
+let typographyPlugin = null;
+try {
+  typographyPlugin = require('@tailwindcss/typography');
+} catch (e) {
+  console.warn('Typography plugin not available, continuing without it');
+}
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -34,7 +42,7 @@ const config: Config = {
           '100%': { opacity: '1' },
         },
       },
-      typography: {
+      typography: typographyPlugin ? {
         DEFAULT: {
           css: {
             color: 'var(--foreground)',
@@ -61,12 +69,10 @@ const config: Config = {
             },
           },
         },
-      },
+      } : {},
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: typographyPlugin ? [typographyPlugin] : [],
 };
 
 export default config;
