@@ -134,17 +134,8 @@ export async function POST(request: NextRequest) {
     textPrompt += `Calculated Sunrise Time: ${sunriseTime}\n`;
     textPrompt += `Calculated Sunset Time: ${sunsetTime}\n`;
     
-    if (birthData.method === 'manual' && birthData.physicalAppearance) {
-      textPrompt += `\nPhysical Appearance:\n`;
-      textPrompt += `- Body Type: ${birthData.physicalAppearance.bodyType || 'Not specified'}\n`;
-      textPrompt += `- Face Shape: ${birthData.physicalAppearance.faceShape || 'Not specified'}\n`;
-      textPrompt += `- Forehead: ${birthData.physicalAppearance.forehead || 'Not specified'}\n`;
-      textPrompt += `- Eye Features: ${birthData.physicalAppearance.eyeFeatures || 'Not specified'}\n`;
-      textPrompt += `- Body Structure: ${birthData.physicalAppearance.bodyStructure || 'Not specified'}\n`;
-      
-      if (birthData.physicalAppearance.additionalFeatures) {
-        textPrompt += `- Additional Features: ${birthData.physicalAppearance.additionalFeatures}\n`;
-      }
+    if (birthData.method === 'manual' && birthData.physicalDescription) {
+      textPrompt += `\nPhysical Description:\n${birthData.physicalDescription}\n`;
       
       // Add text prompt to messages
       messages.push({

@@ -13,14 +13,7 @@ export interface BirthFormData {
   location?: string;
   date?: string;
   timeOfDay?: 'morning' | 'afternoon' | 'evening' | 'night';
-  physicalAppearance?: {
-    bodyType?: string;
-    faceShape?: string;
-    forehead?: string;
-    eyeFeatures?: string;
-    bodyStructure?: string;
-    additionalFeatures?: string;
-  };
+  physicalDescription?: string;
   photo?: File | null;
 }
 
@@ -30,14 +23,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
     location: '',
     date: '',
     timeOfDay: 'morning',
-    physicalAppearance: {
-      bodyType: '',
-      faceShape: '',
-      forehead: '',
-      eyeFeatures: '',
-      bodyStructure: '',
-      additionalFeatures: ''
-    },
+    physicalDescription: '',
     photo: null,
   });
 
@@ -47,22 +33,10 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormData((prev) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof BirthFormData] as object,
-          [child]: value
-        }
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleMethodChange = (method: 'manual' | 'upload') => {
@@ -100,11 +74,8 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
       }
     } else if (currentStep === 2) {
       if (formData.method === 'manual') {
-        if (!formData.physicalAppearance?.bodyType) {
-          newErrors['physicalAppearance.bodyType'] = 'Body type is required';
-        }
-        if (!formData.physicalAppearance?.faceShape) {
-          newErrors['physicalAppearance.faceShape'] = 'Face shape is required';
+        if (!formData.physicalDescription || formData.physicalDescription.trim().length < 10) {
+          newErrors.physicalDescription = 'Please provide a detailed physical description (at least 10 characters)';
         }
       } else if (formData.method === 'upload') {
         if (!formData.photo) {
@@ -242,124 +213,27 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
 
         {step === 2 && (
           <div className={`space-y-6 ${getAnimationClass()}`}>
-            <h2 className="text-2xl font-bold text-center mb-6">Physical Appearance</h2>
+            <h2 className="text-2xl font-bold text-center mb-6">Physical Description</h2>
             
             {formData.method === 'manual' ? (
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="physicalAppearance.bodyType" className="block text-sm font-medium mb-1">
-                    Body Type <span className="text-red-400">*</span>
+                  <label htmlFor="physicalDescription" className="block text-sm font-medium mb-1">
+                    Describe Your Physical Appearance <span className="text-red-400">*</span>
                   </label>
-                  <select
-                    id="physicalAppearance.bodyType"
-                    name="physicalAppearance.bodyType"
-                    value={formData.physicalAppearance?.bodyType}
+                  <textarea
+                    id="physicalDescription"
+                    name="physicalDescription"
+                    value={formData.physicalDescription}
                     onChange={handleInputChange}
-                    className={`w-full p-2 bg-primary rounded border ${errors['physicalAppearance.bodyType'] ? 'border-red-500 focus:ring-red-500' : 'border-gray-700 focus:ring-accent'} focus:border-transparent`}
-                  >
-                    <option value="">Select body type</option>
-                    <option value="slim">Slim/Thin/Lean</option>
-                    <option value="athletic">Athletic/Muscular</option>
-                    <option value="medium">Medium/Average build</option>
-                    <option value="heavySet">Heavy-set/Large</option>
-                    <option value="shortStocky">Short & Stocky</option>
-                    <option value="tallSlender">Tall & Slender</option>
-                    <option value="wellProportioned">Well-proportioned/Balanced</option>
-                  </select>
-                  {errors['physicalAppearance.bodyType'] && <p className="text-red-400 text-xs mt-1">{errors['physicalAppearance.bodyType']}</p>}
-                </div>
-                
-                <div>
-                  <label htmlFor="physicalAppearance.faceShape" className="block text-sm font-medium mb-1">
-                    Face Shape <span className="text-red-400">*</span>
-                  </label>
-                  <select
-                    id="physicalAppearance.faceShape"
-                    name="physicalAppearance.faceShape"
-                    value={formData.physicalAppearance?.faceShape}
-                    onChange={handleInputChange}
-                    className={`w-full p-2 bg-primary rounded border ${errors['physicalAppearance.faceShape'] ? 'border-red-500 focus:ring-red-500' : 'border-gray-700 focus:ring-accent'} focus:border-transparent`}
-                  >
-                    <option value="">Select face shape</option>
-                    <option value="oval">Oval/Elongated</option>
-                    <option value="round">Round/Full</option>
-                    <option value="square">Square/Angular</option>
-                    <option value="triangular">Triangular/Heart-shaped</option>
-                    <option value="rectangular">Rectangular/Oblong</option>
-                    <option value="diamond">Diamond/Sharp features</option>
-                    <option value="prominent">Prominent features</option>
-                    <option value="delicate">Delicate/Fine features</option>
-                  </select>
-                  {errors['physicalAppearance.faceShape'] && <p className="text-red-400 text-xs mt-1">{errors['physicalAppearance.faceShape']}</p>}
-                </div>
-                
-                <div>
-                  <label htmlFor="physicalAppearance.forehead" className="block text-sm font-medium mb-1">
-                    Forehead
-                  </label>
-                  <select
-                    id="physicalAppearance.forehead"
-                    name="physicalAppearance.forehead"
-                    value={formData.physicalAppearance?.forehead}
-                    onChange={handleInputChange}
-                    className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  >
-                    <option value="">Select forehead type</option>
-                    <option value="broad">Broad/Wide</option>
-                    <option value="narrow">Narrow</option>
-                    <option value="high">High/Tall</option>
-                    <option value="low">Low</option>
-                    <option value="prominent">Prominent</option>
-                    <option value="rounded">Rounded</option>
-                    <option value="sloped">Sloped/Receding</option>
-                    <option value="lined">Lined/Wrinkled</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="physicalAppearance.eyeFeatures" className="block text-sm font-medium mb-1">
-                    Eye Features
-                  </label>
-                  <select
-                    id="physicalAppearance.eyeFeatures"
-                    name="physicalAppearance.eyeFeatures"
-                    value={formData.physicalAppearance?.eyeFeatures}
-                    onChange={handleInputChange}
-                    className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  >
-                    <option value="">Select eye features</option>
-                    <option value="large">Large/Prominent</option>
-                    <option value="small">Small/Narrow</option>
-                    <option value="almond">Almond-shaped</option>
-                    <option value="round">Round</option>
-                    <option value="deepSet">Deep-set</option>
-                    <option value="bright">Bright/Shining</option>
-                    <option value="intense">Intense/Penetrating</option>
-                    <option value="gentle">Gentle/Soft</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="physicalAppearance.bodyStructure" className="block text-sm font-medium mb-1">
-                    Body Structure
-                  </label>
-                  <select
-                    id="physicalAppearance.bodyStructure"
-                    name="physicalAppearance.bodyStructure"
-                    value={formData.physicalAppearance?.bodyStructure}
-                    onChange={handleInputChange}
-                    className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  >
-                    <option value="">Select body structure</option>
-                    <option value="fineBones">Fine/Delicate bones</option>
-                    <option value="largeBones">Large/Prominent bones</option>
-                    <option value="symmetrical">Symmetrical/Balanced</option>
-                    <option value="asymmetrical">Asymmetrical features</option>
-                    <option value="broadShoulders">Broad shoulders</option>
-                    <option value="narrowShoulders">Narrow shoulders</option>
-                    <option value="longLimbs">Long limbs</option>
-                    <option value="shortLimbs">Short limbs</option>
-                  </select>
+                    rows={8}
+                    className={`w-full p-2 bg-primary rounded border ${errors.physicalDescription ? 'border-red-500 focus:ring-red-500' : 'border-gray-700 focus:ring-accent'} focus:border-transparent`}
+                    placeholder="Describe your physical traits in detail (body type, face shape, forehead, eyes, height, distinctive features, etc.)"
+                  />
+                  {errors.physicalDescription && <p className="text-red-400 text-xs mt-1">{errors.physicalDescription}</p>}
+                  <p className="text-xs text-gray-400 mt-2">
+                    Include details about your body type, face shape, forehead, eyes, height, and any distinctive features. The more details you provide, the more accurate your birth time prediction will be.
+                  </p>
                 </div>
               </div>
             ) : (
@@ -412,51 +286,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
           </div>
         )}
 
-        {step === 3 && formData.method === 'manual' && (
-          <div className={`space-y-6 ${getAnimationClass()}`}>
-            <h2 className="text-2xl font-bold text-center mb-6">Additional Features</h2>
-            
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="physicalAppearance.additionalFeatures" className="block text-sm font-medium mb-1">
-                  Additional Features
-                </label>
-                <textarea
-                  id="physicalAppearance.additionalFeatures"
-                  name="physicalAppearance.additionalFeatures"
-                  value={formData.physicalAppearance?.additionalFeatures}
-                  onChange={handleInputChange}
-                  rows={5}
-                  className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  placeholder="Any distinctive features (e.g., birthmarks, dimples, etc.)"
-                />
-              </div>
-            </div>
-            
-            <div className="flex space-x-4">
-              <button
-                type="button"
-                onClick={goToPreviousStep}
-                className="flex-1 py-3 bg-primary hover:bg-opacity-90 rounded-lg transition-transform hover:translate-y-[-2px]"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                onClick={goToNextStep}
-                className="flex-1 py-3 bg-gray-600 hover:bg-opacity-90 rounded-lg transition-transform hover:translate-y-[-2px]"
-              >
-                Next
-              </button>
-            </div>
-
-            <p className="text-xs text-gray-400 text-center mt-4">
-              Your physical traits are linked to your ascendant in Vedic astrology, helping us determine your exact birth time.
-            </p>
-          </div>
-        )}
-
-        {((step === 3 && formData.method === 'upload') || (step === 4 && formData.method === 'manual')) && (
+        {step === 3 && (
           <div className={`space-y-6 ${getAnimationClass()}`}>
             <h2 className="text-2xl font-bold text-center mb-6">Confirm Your Details</h2>
             
@@ -468,14 +298,8 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
               
               {formData.method === 'manual' ? (
                 <div className="mt-2">
-                  <p className="text-gray-400 font-medium">Physical Appearance:</p>
-                  <ul className="list-disc list-inside pl-2 text-sm">
-                    <li>Body Type: {formData.physicalAppearance?.bodyType}</li>
-                    <li>Face Shape: {formData.physicalAppearance?.faceShape}</li>
-                    <li>Forehead: {formData.physicalAppearance?.forehead}</li>
-                    <li>Eye Features: {formData.physicalAppearance?.eyeFeatures}</li>
-                    <li>Body Structure: {formData.physicalAppearance?.bodyStructure}</li>
-                  </ul>
+                  <p className="text-gray-400 font-medium">Physical Description:</p>
+                  <p className="text-sm mt-1">{formData.physicalDescription}</p>
                 </div>
               ) : (
                 <p className="mt-2">
