@@ -224,7 +224,9 @@ export async function POST(request: NextRequest) {
       role: "user",
       content: `Based on the information provided, determine the most likely birth time for this person in simple terms that someone without astrological knowledge can understand.
 
-Use sunrise (${sunriseTime}) only as a general reference point to establish a window of time, not as the main calculation method.
+IMPORTANT: Do NOT use sunrise (${sunriseTime}) in your calculations of ascendants or birth time. The sunrise time is provided only as general background information about when the sun was rising on that day, but should NOT influence your prediction methodology or calculations in any way.
+
+Base your prediction SOLELY on the physical traits described and their correlation with astrological indicators. The physical traits are the primary and most important factor in determining the birth time.
 
 Keep your response to approximately 100 words total, and format it EXACTLY according to this template:
 
@@ -236,7 +238,7 @@ Best Time: [best time]
 Alternate Option 1: [alternate time 1]
 Alternate Option 2: [alternate time 2]
 
-These times are our best estimates based on analyzing your physical features and astrological indicators. The Best Time has the strongest correlation with your unique characteristics.
+These times are our best estimates based on analyzing your physical features. The Best Time has the strongest correlation with your unique characteristics.
 
 IMPORTANT: Keep your response simple, brief (about 100 words total), and focused ONLY on the birth time prediction. DO NOT include technical astrological terms or concepts that would confuse someone without astrological knowledge. Follow the template format EXACTLY as shown above.`
     });
