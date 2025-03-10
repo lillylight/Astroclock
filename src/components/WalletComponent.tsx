@@ -26,6 +26,14 @@ export function WalletComponent() {
     setMounted(true);
   }, []);
   
+  // Set flag to reset state on wallet connection
+  useEffect(() => {
+    if (!isConnected && mounted) {
+      // Set flag to reset on connect
+      localStorage.setItem('resetOnConnect', 'true');
+    }
+  }, [isConnected, mounted]);
+  
   const handleCopyAddress = () => {
     if (address) {
       navigator.clipboard.writeText(address);

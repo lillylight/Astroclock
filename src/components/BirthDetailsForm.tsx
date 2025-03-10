@@ -16,10 +16,9 @@ export interface BirthFormData {
   physicalAppearance?: {
     bodyType?: string;
     faceShape?: string;
-    eyeColor?: string;
-    hairType?: string;
-    skinTone?: string;
-    height?: string;
+    complexion?: string;
+    eyeFeatures?: string;
+    bodyStructure?: string;
     additionalFeatures?: string;
   };
   photo?: File | null;
@@ -34,10 +33,9 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
     physicalAppearance: {
       bodyType: '',
       faceShape: '',
-      eyeColor: '',
-      hairType: '',
-      skinTone: '',
-      height: '',
+      complexion: '',
+      eyeFeatures: '',
+      bodyStructure: '',
       additionalFeatures: ''
     },
     photo: null,
@@ -260,12 +258,13 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     className={`w-full p-2 bg-primary rounded border ${errors['physicalAppearance.bodyType'] ? 'border-red-500 focus:ring-red-500' : 'border-gray-700 focus:ring-accent'} focus:border-transparent`}
                   >
                     <option value="">Select body type</option>
-                    <option value="slim">Slim/Thin</option>
-                    <option value="athletic">Athletic/Well-proportioned</option>
+                    <option value="slim">Slim/Thin/Lean</option>
+                    <option value="athletic">Athletic/Muscular</option>
                     <option value="medium">Medium/Average build</option>
-                    <option value="strong">Strong/Sturdy</option>
-                    <option value="rounded">Rounded/Soft</option>
                     <option value="heavySet">Heavy-set/Large</option>
+                    <option value="shortStocky">Short & Stocky</option>
+                    <option value="tallSlender">Tall & Slender</option>
+                    <option value="wellProportioned">Well-proportioned/Balanced</option>
                   </select>
                   {errors['physicalAppearance.bodyType'] && <p className="text-red-400 text-xs mt-1">{errors['physicalAppearance.bodyType']}</p>}
                 </div>
@@ -288,102 +287,78 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     <option value="triangular">Triangular/Heart-shaped</option>
                     <option value="rectangular">Rectangular/Oblong</option>
                     <option value="diamond">Diamond/Sharp features</option>
+                    <option value="prominent">Prominent features</option>
+                    <option value="delicate">Delicate/Fine features</option>
                   </select>
                   {errors['physicalAppearance.faceShape'] && <p className="text-red-400 text-xs mt-1">{errors['physicalAppearance.faceShape']}</p>}
                 </div>
                 
                 <div>
-                  <label htmlFor="physicalAppearance.eyeColor" className="block text-sm font-medium mb-1">
-                    Eye Color & Shape
+                  <label htmlFor="physicalAppearance.complexion" className="block text-sm font-medium mb-1">
+                    Complexion
                   </label>
                   <select
-                    id="physicalAppearance.eyeColor"
-                    name="physicalAppearance.eyeColor"
-                    value={formData.physicalAppearance?.eyeColor}
+                    id="physicalAppearance.complexion"
+                    name="physicalAppearance.complexion"
+                    value={formData.physicalAppearance?.complexion}
                     onChange={handleInputChange}
                     className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
                   >
-                    <option value="">Select eye characteristics</option>
-                    <option value="darkBrown">Dark brown/intense</option>
-                    <option value="lightBrown">Light brown/warm</option>
-                    <option value="hazel">Hazel/changeable</option>
-                    <option value="green">Green/bright</option>
-                    <option value="blue">Blue/clear</option>
-                    <option value="gray">Gray/penetrating</option>
+                    <option value="">Select complexion</option>
+                    <option value="fair">Fair/Pale</option>
+                    <option value="medium">Medium/Wheat</option>
+                    <option value="olive">Olive/Tan</option>
+                    <option value="brown">Brown/Dark</option>
+                    <option value="ruddy">Ruddy/Reddish</option>
+                    <option value="glowing">Glowing/Radiant</option>
+                    <option value="yellowish">Yellowish tint</option>
+                    <option value="uneven">Uneven/Mixed</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label htmlFor="physicalAppearance.eyeFeatures" className="block text-sm font-medium mb-1">
+                    Eye Features
+                  </label>
+                  <select
+                    id="physicalAppearance.eyeFeatures"
+                    name="physicalAppearance.eyeFeatures"
+                    value={formData.physicalAppearance?.eyeFeatures}
+                    onChange={handleInputChange}
+                    className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
+                  >
+                    <option value="">Select eye features</option>
+                    <option value="large">Large/Prominent</option>
+                    <option value="small">Small/Narrow</option>
                     <option value="almond">Almond-shaped</option>
-                    <option value="round">Round/large</option>
-                    <option value="deepSet">Deep-set/intense</option>
+                    <option value="round">Round</option>
+                    <option value="deepSet">Deep-set</option>
+                    <option value="bright">Bright/Shining</option>
+                    <option value="intense">Intense/Penetrating</option>
+                    <option value="gentle">Gentle/Soft</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label htmlFor="physicalAppearance.hairType" className="block text-sm font-medium mb-1">
-                    Hair Type & Quality
+                  <label htmlFor="physicalAppearance.bodyStructure" className="block text-sm font-medium mb-1">
+                    Body Structure
                   </label>
                   <select
-                    id="physicalAppearance.hairType"
-                    name="physicalAppearance.hairType"
-                    value={formData.physicalAppearance?.hairType}
+                    id="physicalAppearance.bodyStructure"
+                    name="physicalAppearance.bodyStructure"
+                    value={formData.physicalAppearance?.bodyStructure}
                     onChange={handleInputChange}
                     className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
                   >
-                    <option value="">Select hair characteristics</option>
-                    <option value="straight">Straight/fine</option>
-                    <option value="wavy">Wavy/medium</option>
-                    <option value="curly">Curly/thick</option>
-                    <option value="coarse">Coarse/strong</option>
-                    <option value="thin">Thin/delicate</option>
-                    <option value="thick">Thick/abundant</option>
-                    <option value="early">Early thinning/receding</option>
-                    <option value="late">Retains thickness with age</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="physicalAppearance.skinTone" className="block text-sm font-medium mb-1">
-                    Skin Tone & Quality
-                  </label>
-                  <select
-                    id="physicalAppearance.skinTone"
-                    name="physicalAppearance.skinTone"
-                    value={formData.physicalAppearance?.skinTone}
-                    onChange={handleInputChange}
-                    className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  >
-                    <option value="">Select skin characteristics</option>
-                    <option value="veryFair">Very fair/pale</option>
-                    <option value="fair">Fair/pinkish</option>
-                    <option value="medium">Medium/golden</option>
-                    <option value="olive">Olive/warm</option>
-                    <option value="brown">Brown/rich</option>
-                    <option value="darkBrown">Dark brown/deep</option>
-                    <option value="sensitive">Sensitive/thin</option>
-                    <option value="oily">Oily/prone to acne</option>
-                    <option value="dry">Dry/rough</option>
-                    <option value="balanced">Balanced/clear</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="physicalAppearance.height" className="block text-sm font-medium mb-1">
-                    Height & Bone Structure
-                  </label>
-                  <select
-                    id="physicalAppearance.height"
-                    name="physicalAppearance.height"
-                    value={formData.physicalAppearance?.height}
-                    onChange={handleInputChange}
-                    className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  >
-                    <option value="">Select height & bone structure</option>
-                    <option value="tallSlender">Tall & slender</option>
-                    <option value="tallMuscular">Tall & muscular</option>
-                    <option value="mediumWellProportioned">Medium & well-proportioned</option>
-                    <option value="mediumStocky">Medium & stocky</option>
-                    <option value="shortCompact">Short & compact</option>
-                    <option value="shortDelicate">Short & delicate</option>
-                    <option value="largeBones">Large/prominent bones</option>
-                    <option value="fineBones">Fine/delicate bones</option>
+                    <option value="">Select body structure</option>
+                    <option value="fineBones">Fine/Delicate bones</option>
+                    <option value="largeBones">Large/Prominent bones</option>
+                    <option value="symmetrical">Symmetrical/Balanced</option>
+                    <option value="asymmetrical">Asymmetrical features</option>
+                    <option value="broadShoulders">Broad shoulders</option>
+                    <option value="narrowShoulders">Narrow shoulders</option>
+                    <option value="longLimbs">Long limbs</option>
+                    <option value="shortLimbs">Short limbs</option>
                   </select>
                 </div>
               </div>
@@ -497,10 +472,9 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   <ul className="list-disc list-inside pl-2 text-sm">
                     <li>Body Type: {formData.physicalAppearance?.bodyType}</li>
                     <li>Face Shape: {formData.physicalAppearance?.faceShape}</li>
-                    <li>Eye Color: {formData.physicalAppearance?.eyeColor}</li>
-                    <li>Hair Type: {formData.physicalAppearance?.hairType}</li>
-                    <li>Skin Tone: {formData.physicalAppearance?.skinTone}</li>
-                    <li>Height: {formData.physicalAppearance?.height}</li>
+                    <li>Complexion: {formData.physicalAppearance?.complexion}</li>
+                    <li>Eye Features: {formData.physicalAppearance?.eyeFeatures}</li>
+                    <li>Body Structure: {formData.physicalAppearance?.bodyStructure}</li>
                   </ul>
                 </div>
               ) : (

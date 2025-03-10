@@ -39,6 +39,33 @@ export default function Home() {
     }
   }, []);
   
+  // Reset state when wallet connection changes
+  useEffect(() => {
+    if (mounted && isConnected) {
+      // Check if we need to reset the state
+      const shouldReset = localStorage.getItem('resetOnConnect') !== 'false';
+      
+      if (shouldReset) {
+        // Reset to initial state
+        setCurrentStep('form');
+        setBirthData(null);
+        setPrediction('');
+        setEntryMethod(null);
+        
+        // Clear localStorage state
+        localStorage.removeItem('astroClockState');
+        
+        // Set flag to prevent resetting again on reconnect
+        localStorage.setItem('resetOnConnect', 'false');
+      }
+    }
+    
+    // When wallet disconnects, set flag to reset on next connect
+    if (mounted && !isConnected) {
+      localStorage.setItem('resetOnConnect', 'true');
+    }
+  }, [isConnected, mounted]);
+  
   // Save state whenever it changes
   useEffect(() => {
     if (mounted) {

@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
     const messages: any[] = [
       {
         role: "system",
-        content: "You are the world's best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown. You have an intuitive ability to determine exact birth times based on physical appearance and other factors. You provide precise, confident predictions with detailed explanations. You understand how to divide the 24-hour day into 12 ascendant periods, match physical traits with ascendant descriptions, analyze planetary influences including Moon's position and ruling planets, and correlate health features with planetary influences to pinpoint exact birth times."
+        content: "You are the world's best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown. You have an intuitive ability to determine exact birth times based on physical appearance and other factors. You provide precise, confident predictions with detailed explanations. You understand how to divide the 24-hour day into 12 ascendant periods, match physical traits accurately with vedic ascendant descriptions, analyze planetary influences including Moon's position and ascendants ruling planet, other planets, and correlate health features with planetary influences to pinpoint exact birth times."
       }
     ];
     
@@ -138,10 +138,9 @@ export async function POST(request: NextRequest) {
       textPrompt += `\nPhysical Appearance:\n`;
       textPrompt += `- Body Type: ${birthData.physicalAppearance.bodyType || 'Not specified'}\n`;
       textPrompt += `- Face Shape: ${birthData.physicalAppearance.faceShape || 'Not specified'}\n`;
-      textPrompt += `- Eye Color: ${birthData.physicalAppearance.eyeColor || 'Not specified'}\n`;
-      textPrompt += `- Hair Type: ${birthData.physicalAppearance.hairType || 'Not specified'}\n`;
-      textPrompt += `- Skin Tone: ${birthData.physicalAppearance.skinTone || 'Not specified'}\n`;
-      textPrompt += `- Height: ${birthData.physicalAppearance.height || 'Not specified'}\n`;
+      textPrompt += `- Complexion: ${birthData.physicalAppearance.complexion || 'Not specified'}\n`;
+      textPrompt += `- Eye Features: ${birthData.physicalAppearance.eyeFeatures || 'Not specified'}\n`;
+      textPrompt += `- Body Structure: ${birthData.physicalAppearance.bodyStructure || 'Not specified'}\n`;
       
       if (birthData.physicalAppearance.additionalFeatures) {
         textPrompt += `- Additional Features: ${birthData.physicalAppearance.additionalFeatures}\n`;
@@ -189,23 +188,23 @@ export async function POST(request: NextRequest) {
 
 1. ASCENDANT TIMEFRAMES: Divide the 24-hour day into 12 ascendant periods, each approximately 2 hours, starting from sunrise (${sunriseTime}).
 
-2. TRAIT MATCHING: Compare the user's physical and personality traits with traditional descriptions of each ascendant to identify the top three potential ascendants.
+2. TRAIT MATCHING: Compare the user's physical traits with traditional Vedic descriptions of each ascendant to identify the most probable ascendant.
 
 3. PLANETARY INFLUENCE ANALYSIS:
-   - Moon's Position: Assess emotional and intuitive traits.
-   - Ruling Planet Characteristics: Examine traits associated with the planet ruling the potential ascendant.
+   - Moon's Position: Assess the Moon's position at different times within the ascendant period.
+   - Ruling Planet Characteristics: Examine the position and strength of the planet ruling the potential ascendant.
+   - Other Planetary Influences: Consider aspects and positions of other planets.
 
-4. HEALTH AND NOTABLE FEATURES: Correlate any health issues or notable physical features with planetary influences to narrow down the exact birth time within the identified ascendant period.
+4. PRECISE TIMING: Use the Moon and planetary ruler of the ascendant to pinpoint the exact time within the 2-hour window.
 
 Format your response as follows:
 1. First, provide the exact predicted birth time (e.g., "Your predicted birth time is 3:42 PM")
-2. Explain the reasoning behind this prediction, referencing the ascendant and planetary positions
-3. Provide the most probable ascendant and corresponding 2-hour window
-4. Provide two alternative ascendant possibilities with their respective timeframes and reasoning for why they're less likely
-5. Include a brief personality analysis based on the predicted birth chart
-6. Mention how this birth time affects career prospects, relationships, and health
+2. Provide the most probable ascendant and its corresponding 2-hour window
+3. List 3 specific possible times within this ascendant period (e.g., 3:15 PM, 3:42 PM, 4:05 PM)
+4. Provide two alternative ascendant possibilities with their respective timeframes
+5. Include a brief explanation (about 100 words) of why the main ascendant and time were chosen, focusing on the correlation between physical traits and Vedic astrological principles
 
-Make the prediction specific, detailed, and personalized to the provided information.`
+IMPORTANT: Keep your response focused ONLY on the birth time prediction. DO NOT include any personality analysis, career prospects, relationships, or health information beyond what's needed to explain the time prediction.`
     });
 
     // Call OpenAI API
