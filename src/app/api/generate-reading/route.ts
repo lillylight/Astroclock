@@ -46,6 +46,43 @@ async function getCoordinatesFromLocation(location: string) {
   }
 }
 
+// Helper function to get estimated sunrise/sunset times using GPT-4.5
+async function getEstimatedSunriseSunsetWithGPT(latitude: number, longitude: number, date: string) {
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4.5-preview",
+      messages: [
+        {
+          role: "system",
+          content: "You are a helpful assistant that provides accurate sunrise and sunset times based on scientific calculations."
+        },
+        {
+          role: "user",
+          content: `Based on scientific calculations, what would be the approximate sunrise and sunset times for a location at latitude ${latitude}, longitude ${longitude} on date ${date}? Respond with only a JSON object in the format: {"sunrise": "HH:MM AM/PM", "sunset": "HH:MM AM/PM"}`
+        }
+      ],
+      temperature: 0,
+      max_tokens: 100,
+    });
+
+    const content = response.choices[0]?.message?.content || '';
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    
+    if (jsonMatch) {
+      const times = JSON.parse(jsonMatch[0]);
+      return {
+        sunrise: times.sunrise,
+        sunset: times.sunset
+      };
+    }
+    
+    throw new Error('Failed to parse times from GPT response');
+  } catch (error) {
+    console.error('Error getting estimated times from GPT:', error);
+    throw error; // Propagate the error to be handled by the caller
+  }
+}
+
 // Helper function to get sunrise/sunset times using Sunrise-Sunset.org API
 async function getSunriseSunsetTimes(latitude: number, longitude: number, date: string) {
   try {
@@ -78,9 +115,19 @@ async function getSunriseSunsetTimes(latitude: number, longitude: number, date: 
     
     throw new Error('Failed to get sunrise/sunset data');
   } catch (error) {
-    console.error('Error getting sunrise/sunset times:', error);
-    // Fallback values if API call fails
-    return { sunrise: "6:30 AM", sunset: "7:15 PM" };
+    console.error('Error getting sunrise/sunset times from API:', error);
+    
+    // Try GPT-4.5 as a fallback
+    try {
+      console.log('Attempting to get estimated times using GPT-4.5...');
+      const estimatedTimes = await getEstimatedSunriseSunsetWithGPT(latitude, longitude, date);
+      console.log('Successfully got estimated times from GPT-4.5');
+      return estimatedTimes;
+    } catch (fallbackError) {
+      console.error('Fallback estimation also failed:', fallbackError);
+      // Ultimate fallback if even GPT fails
+      return { sunrise: "6:30 AM", sunset: "7:15 PM" };
+    }
   }
 }
 
@@ -154,7 +201,7 @@ export async function POST(request: NextRequest) {
         content: [
           {
             type: "text",
-            text: textPrompt + "\n\nPlease analyze the attached photo and determine accurate physical traits that match Vedic astrology ascendants physical traits correctly "
+            text: textPrompt + "\n\nPlease analyze the attached photo and extract all physical traits and accurately match them to ascendants vedic physical traits correctly."
           },
           {
             type: "image_url",
@@ -182,8 +229,8 @@ export async function POST(request: NextRequest) {
 2. TRAIT MATCHING: Compare the user's physical traits with traditional Vedic descriptions of each ascendant to identify the most probable ascendant.
 
 3. NAKSHATRA WEIGHTING:
-   - Emphasize the specific nakshatra that best fits the physical traits and refined features.
-   - Match the user's physical characteristics to the traditional descriptions of nakshatras.
+   - Emphasize the specific nakshatra within the ascendants time that best fits the physical traits and refined features.
+   - Match the user's chosen ascendants physical characteristics to the traditional descriptions of nakshatras.
    - Use this weighting to determine the most precise birth time within the ascendant period.
 
 4. PLANETARY INFLUENCE ANALYSIS:
@@ -191,7 +238,7 @@ export async function POST(request: NextRequest) {
    - Ruling Planet Characteristics: Examine the position and strength of the planet ruling the potential ascendant.
    - Other Planetary Influences: Consider aspects and positions of other planets.
 
-5. PRECISE TIMING: Use the Nakshatra Weighting method along with the Moon and planetary ruler of the ascendant to pinpoint the exact time within the 2-hour window.
+5. PRECISE TIMING: Use the Nakshatra Weighting method to pinpoint the exact time within the 2-hour window.
 
 Format your response EXACTLY according to this template:
 

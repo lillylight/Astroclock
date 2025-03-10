@@ -151,7 +151,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
               ) : (
                 <div 
                   ref={contentRef}
-                  className="prose prose-invert max-w-none"
+                  className="prose prose-invert max-w-none overflow-hidden break-words"
                 >
                   {prediction.split('\n\n').map((paragraph, index) => {
                     // Check if this is the "Most Accurate Birthday Time & Alternatives" section
@@ -164,7 +164,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                             {lines.slice(1).map((line, lineIndex) => {
                               if (line.startsWith('best:')) {
                                 return (
-                                  <div key={`time-${lineIndex}`} className="flex items-center mb-2">
+                                  <div key={`time-${lineIndex}`} className="flex flex-wrap items-center mb-2">
                                     <div className="w-32 font-medium text-purple-300">Best Time:</div>
                                     <div className="font-bold text-white">{line.replace('best:', '').trim()}</div>
                                   </div>
@@ -172,13 +172,13 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                               } else if (line.startsWith('Alternate Option')) {
                                 const [label, time] = line.split(':');
                                 return (
-                                  <div key={`time-${lineIndex}`} className="flex items-center mb-2">
+                                  <div key={`time-${lineIndex}`} className="flex flex-wrap items-center mb-2">
                                     <div className="w-32 font-medium text-gray-300">{label}:</div>
                                     <div>{time?.trim()}</div>
                                   </div>
                                 );
                               } else {
-                                return <p key={`time-${lineIndex}`} className="text-sm text-gray-300 mt-2">{line}</p>;
+                                return <p key={`time-${lineIndex}`} className="text-sm text-gray-300 mt-2 break-words">{line}</p>;
                               }
                             })}
                           </div>
@@ -186,7 +186,13 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                       );
                     } else {
                       // Regular paragraphs
-                      return <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: paragraph }} />;
+                      return (
+                        <p 
+                          key={index} 
+                          className="mb-4 break-words" 
+                          dangerouslySetInnerHTML={{ __html: paragraph }}
+                        />
+                      );
                     }
                   })}
                 </div>
