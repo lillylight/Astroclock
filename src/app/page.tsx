@@ -137,6 +137,25 @@ export default function Home() {
       return;
     }
     
+    // Check if we already have a saved prediction for this birth data
+    try {
+      const savedState = localStorage.getItem('astroClockState');
+      if (savedState) {
+        const { prediction: savedPrediction } = JSON.parse(savedState);
+        
+        // If we have a saved prediction, use it instead of making a new API call
+        if (savedPrediction && savedPrediction.length > 0) {
+          console.log('Using saved prediction from localStorage');
+          setPrediction(savedPrediction);
+          setCurrentStep('results');
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error checking localStorage for saved prediction:', error);
+      // Continue with API call if there's an error checking localStorage
+    }
+    
     console.log('Starting reading generation with birth data:', birthData);
     setIsGenerating(true);
     console.log('isGenerating set to true');

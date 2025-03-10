@@ -204,15 +204,15 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
               variants={itemVariants}
               className="flex flex-col space-y-4"
             >
-              <div className="flex justify-between items-center">
-                <div className="flex space-x-3">
+              <div className="flex flex-col space-y-4">
+                <div className="flex justify-center space-x-4">
                   <motion.button
                     onClick={handleDownload}
                     whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="py-2 px-4 bg-gradient-to-r from-purple-600/90 to-indigo-600/90 hover:from-purple-600 hover:to-indigo-600 rounded-full transition-all duration-300 hover:shadow-[0_0_15px_rgba(129,140,248,0.5)] flex items-center shadow-lg text-sm font-medium border border-purple-500/30"
+                    whileTap={{ scale: 0.95 }}
+                    className="py-3 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-base font-medium border border-purple-500/30 backdrop-blur-sm"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                     Download
@@ -222,10 +222,10 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                     <motion.button
                       onClick={toggleShareMenu}
                       whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="py-2 px-4 bg-gradient-to-r from-indigo-600/90 to-purple-600/90 hover:from-indigo-600 hover:to-purple-600 rounded-full transition-all duration-300 hover:shadow-[0_0_15px_rgba(129,140,248,0.5)] flex items-center shadow-lg text-sm font-medium border border-indigo-500/30"
+                      whileTap={{ scale: 0.95 }}
+                      className="py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-base font-medium border border-indigo-500/30 backdrop-blur-sm"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                       </svg>
                       Share
@@ -238,14 +238,14 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                           initial="hidden"
                           animate="visible"
                           exit="exit"
-                          className="absolute top-full mt-2 flex flex-col bg-gray-800/95 rounded-xl shadow-xl border border-gray-700/50 p-2 w-48 z-10 backdrop-blur-sm"
+                          className="absolute top-full mt-3 flex flex-col bg-gray-800/95 rounded-xl shadow-xl border border-gray-700/50 p-3 w-52 z-10 backdrop-blur-sm"
                         >
                           <motion.button
                             onClick={handleCopyToClipboard}
                             whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                            className="flex items-center p-2 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
+                            className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                               <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
                               <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
                             </svg>
@@ -255,9 +255,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                           <motion.button
                             onClick={handleShareToX}
                             whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                            className="flex items-center p-2 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
+                            className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                             </svg>
                             Share on X
@@ -266,9 +266,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                           <motion.button
                             onClick={handleShareToFacebook}
                             whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                            className="flex items-center p-2 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
+                            className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
                             Share on Facebook
@@ -282,13 +282,13 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                 <motion.button
                   onClick={onNewReading}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="py-2 px-4 bg-gradient-to-r from-purple-600/90 to-indigo-600/90 hover:from-purple-600 hover:to-indigo-600 rounded-full transition-all duration-300 hover:shadow-[0_0_15px_rgba(129,140,248,0.5)] flex items-center shadow-lg text-sm font-medium border border-purple-500/30"
+                  whileTap={{ scale: 0.95 }}
+                  className="py-3 px-6 bg-gradient-to-br from-pink-500 to-orange-400 hover:from-pink-400 hover:to-orange-300 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,114,182,0.6)] flex items-center justify-center shadow-lg text-base font-medium border border-pink-500/30 backdrop-blur-sm mx-auto"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
                   </svg>
-                  New Reading
+                  Get New Reading
                 </motion.button>
               </div>
             </motion.div>
