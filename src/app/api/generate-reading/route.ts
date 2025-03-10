@@ -154,7 +154,7 @@ export async function POST(request: NextRequest) {
         content: [
           {
             type: "text",
-            text: textPrompt + "\n\nPlease analyze the attached photo to determine physical traits that correlate with Vedic astrological principles for birth time determination."
+            text: textPrompt + "\n\nPlease analyze the attached photo and determine accurate physical traits that match Vedic astrology ascendants physical traits correctly "
           },
           {
             type: "image_url",
@@ -193,11 +193,20 @@ export async function POST(request: NextRequest) {
 
 5. PRECISE TIMING: Use the Nakshatra Weighting method along with the Moon and planetary ruler of the ascendant to pinpoint the exact time within the 2-hour window.
 
-Format your response as a single paragraph of approximately 150 words. Use HTML formatting with the following structure:
+Format your response EXACTLY according to this template:
 
-Our calculations show [ascendant sign] rising between approximately [time range]. Within [ascendant sign]'s zodiac span, three nakshatras emerge: [nakshatra 1], [nakshatra 2], and [nakshatra 3]. <strong>[Best match nakshatra] (Best match)</strong> most closely aligns with your [physical traits], while [alternative nakshatra 1] and [alternative nakshatra 2] remain possible alternatives. An ascendant near [specific time] fits your [specific physical traits]. This precise Lagna placement reflects [brief explanation of why this time was chosen].
+Our calculations show [ascendant sign] rising between approximately [time range]. Within [ascendant sign]'s zodiac span, three nakshatras emerge: [nakshatra 1], [nakshatra 2], and [nakshatra 3]. Among these, [best match nakshatra] is the best match, closely aligning with your [physical traits], while [alternative nakshatra 1] and [alternative nakshatra 2] remain possible alternatives.
 
-IMPORTANT: Keep your response focused ONLY on the birth time prediction. DO NOT include any personality analysis, career prospects, relationships, or health information beyond what's needed to explain the time prediction. The response should be a single paragraph with the best match in bold.`
+An ascendant near [specific time] best fits your [specific physical traits]. This precise Lagna placement reflects [explanation]. Our method combines fixed astronomical markers (like sunrise) with physical trait analysis.
+
+Most Accurate Birthday Time & Alternatives:
+
+best: [best time]
+Alternate Option 1: [alternate time 1]
+Alternate Option 2: [alternate time 2]
+These times are derived using the same calculated time frame for [ascendant sign] rising.
+
+IMPORTANT: Keep your response focused ONLY on the birth time prediction. DO NOT include any personality analysis, career prospects, relationships, or health information beyond what's needed to explain the time prediction. Follow the template format EXACTLY as shown above.`
     });
 
     // Call OpenAI API
