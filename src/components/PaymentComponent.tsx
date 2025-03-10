@@ -215,7 +215,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
   return (
     <>
       <Header isHomePage={false} />
-      <div className="max-w-md mx-auto bg-secondary bg-opacity-90 p-8 rounded-3xl shadow-2xl border border-gray-600/30 text-center mt-8">
+      <div className="max-w-md mx-auto bg-secondary bg-opacity-90 p-6 rounded-3xl shadow-2xl border border-gray-600/30 text-center my-8 mx-4">
         <h2 className="text-2xl font-bold mb-4">Complete Your Payment</h2>
         <p className="mb-6 text-gray-300">
           To receive your personalized birth time prediction, please complete the payment of $1 USDC.
@@ -284,24 +284,24 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                   <div className="relative">
                     {/* Always render the Checkout component or the success UI */}
                     {paymentVerified ? (
-                      <div className="bg-green-900/30 p-6 rounded-xl text-green-300 flex flex-col items-center justify-center">
-                        <svg className="w-12 h-12 text-green-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <div className="bg-green-900/30 p-4 rounded-xl text-green-300 flex flex-col items-center justify-center max-h-[60vh] overflow-hidden">
+                        <svg className="w-10 h-10 text-green-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="text-xl font-bold mb-2">Payment Verified!</h3>
-                        <p className="mb-2">Your payment has been successfully processed.</p>
-                        <p className="text-sm">Preparing your personalized birth time prediction...</p>
-                        <div className="mt-4 w-full bg-gray-700/50 h-2 rounded-full overflow-hidden">
+                        <h3 className="text-lg font-bold mb-1">Payment Verified!</h3>
+                        <p className="mb-2 text-sm">Your payment has been successfully processed.</p>
+                        <p className="text-xs">Preparing your personalized birth time prediction...</p>
+                        <div className="mt-3 w-full bg-gray-700/50 h-2 rounded-full overflow-hidden">
                           <div className="bg-gradient-to-r from-green-400 to-teal-500 h-full rounded-full animate-pulse" style={{ width: '100%' }}></div>
                         </div>
                         
-                        <div className="mt-6 py-3 px-6 bg-indigo-900/50 rounded-xl text-indigo-200 animate-pulse">
-                          <p className="font-medium">Generating prediction...</p>
+                        <div className="mt-4 py-2 px-4 bg-indigo-900/50 rounded-xl text-indigo-200 animate-pulse">
+                          <p className="font-medium text-sm">Generating prediction...</p>
                           <p className="text-xs mt-1">Please wait while we prepare your results</p>
                         </div>
                         
                         {receiptUrl && (
-                          <p className="mt-4 text-xs text-green-200">
+                          <p className="mt-3 text-xs text-green-200">
                             A receipt has been opened in a new tab.
                           </p>
                         )}

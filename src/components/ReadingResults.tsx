@@ -110,8 +110,8 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
     <>
       <Header isHomePage={false} />
       
-      {/* Background glow effect */}
-      <div className="relative max-w-2xl mx-auto mt-8">
+      {/* Main content container with fixed height and proper spacing */}
+      <div className="relative max-w-2xl mx-auto my-8 px-4">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] blur-3xl opacity-50 transform scale-75"></div>
         </div>
@@ -121,7 +121,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-8 shadow-2xl overflow-hidden"
+          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-6 shadow-2xl overflow-hidden max-h-[80vh]"
         >
           {/* Subtle background patterns */}
           <div className="absolute inset-0 opacity-5">
@@ -142,7 +142,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
             
             <motion.div 
               variants={itemVariants}
-              className="bg-gray-800/70 p-8 rounded-3xl whitespace-pre-wrap shadow-inner border border-gray-700/50 backdrop-blur-sm mb-8"
+              className="bg-gray-800/70 p-6 rounded-3xl whitespace-pre-wrap shadow-inner border border-gray-700/50 backdrop-blur-sm mb-6"
             >
               {isLoading ? (
                 <div className="flex justify-center items-center h-40">
@@ -151,7 +151,8 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
               ) : (
                 <div 
                   ref={contentRef}
-                  className="prose prose-invert max-w-none overflow-hidden break-words"
+                  className="prose prose-invert max-w-none overflow-y-auto max-h-[40vh] pr-2 break-words"
+                  style={{ scrollbarWidth: 'thin', scrollbarColor: '#4f46e5 #1f2937' }}
                 >
                   {prediction.split('\n\n').map((paragraph, index) => {
                     // Check if this is the "Most Accurate Birthday Time & Alternatives" section

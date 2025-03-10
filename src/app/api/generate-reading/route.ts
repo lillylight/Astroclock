@@ -219,41 +219,26 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Add instructions for the response format with enhanced methodology
+    // Add instructions for the response format with simplified methodology
     messages.push({
       role: "user",
-      content: `Based on Vedic astrology principles, determine the most likely birth time for this person using the following methodology:
+      content: `Based on the information provided, determine the most likely birth time for this person in simple terms that someone without astrological knowledge can understand.
 
-1. ASCENDANT TIMEFRAMES: Divide the 24-hour day into 12 ascendant periods, each approximately 2 hours, starting from sunrise (${sunriseTime}).
+Use sunrise (${sunriseTime}) only as a general reference point to establish a window of time, not as the main calculation method.
 
-2. TRAIT MATCHING: Compare the user's physical traits with traditional Vedic descriptions of each ascendant to identify the most probable ascendant.
+Keep your response to approximately 100 words total, and format it EXACTLY according to this template:
 
-3. NAKSHATRA WEIGHTING:
-   - Emphasize the specific nakshatra within the ascendants time that best fits the physical traits and refined features.
-   - Match the user's chosen ascendants physical characteristics to the traditional descriptions of nakshatras.
-   - Use this weighting to determine the most precise birth time within the ascendant period.
+Based on your birth details and physical traits, we've calculated your most probable birth time.
 
-4. PLANETARY INFLUENCE ANALYSIS:
-   - Moon's Position: Assess the Moon's position at different times within the ascendant period.
-   - Ruling Planet Characteristics: Examine the position and strength of the planet ruling the potential ascendant.
-   - Other Planetary Influences: Consider aspects and positions of other planets.
+Most Accurate Birth Time & Alternatives:
 
-5. PRECISE TIMING: Use the Nakshatra Weighting method to pinpoint the exact time within the 2-hour window.
-
-Format your response EXACTLY according to this template:
-
-Our calculations show [ascendant sign] rising between approximately [time range]. Within [ascendant sign]'s zodiac span, three nakshatras emerge: [nakshatra 1], [nakshatra 2], and [nakshatra 3]. Among these, [best match nakshatra] is the best match, closely aligning with your [physical traits], while [alternative nakshatra 1] and [alternative nakshatra 2] remain possible alternatives.
-
-An ascendant near [specific time] best fits your [specific physical traits]. This precise Lagna placement reflects [explanation]. Our method combines fixed astronomical markers (like sunrise) with physical trait analysis.
-
-Most Accurate Birthday Time & Alternatives:
-
-best: [best time]
+Best Time: [best time]
 Alternate Option 1: [alternate time 1]
 Alternate Option 2: [alternate time 2]
-These times are derived using the same calculated time frame for [ascendant sign] rising.
 
-IMPORTANT: Keep your response focused ONLY on the birth time prediction. DO NOT include any personality analysis, career prospects, relationships, or health information beyond what's needed to explain the time prediction. Follow the template format EXACTLY as shown above.`
+These times are our best estimates based on analyzing your physical features and astrological indicators. The Best Time has the strongest correlation with your unique characteristics.
+
+IMPORTANT: Keep your response simple, brief (about 100 words total), and focused ONLY on the birth time prediction. DO NOT include technical astrological terms or concepts that would confuse someone without astrological knowledge. Follow the template format EXACTLY as shown above.`
     });
 
     // Call OpenAI API
