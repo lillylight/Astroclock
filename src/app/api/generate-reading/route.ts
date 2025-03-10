@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
     const messages: any[] = [
       {
         role: "system",
-        content: "You are the world's best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown. You have an intuitive ability to determine exact birth times based on physical appearance and other factors. You provide precise, confident predictions with detailed explanations. You understand how to divide the 24-hour day into 12 ascendant periods, match physical traits accurately with vedic ascendant descriptions, analyze planetary influences including Moon's position and ascendants ruling planet, other planets, and correlate health features with planetary influences to pinpoint exact birth times."
+        content: "you are the world best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown, also has intuition."
       }
     ];
     
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
       textPrompt += `\nPhysical Appearance:\n`;
       textPrompt += `- Body Type: ${birthData.physicalAppearance.bodyType || 'Not specified'}\n`;
       textPrompt += `- Face Shape: ${birthData.physicalAppearance.faceShape || 'Not specified'}\n`;
-      textPrompt += `- Complexion: ${birthData.physicalAppearance.complexion || 'Not specified'}\n`;
+      textPrompt += `- Forehead: ${birthData.physicalAppearance.forehead || 'Not specified'}\n`;
       textPrompt += `- Eye Features: ${birthData.physicalAppearance.eyeFeatures || 'Not specified'}\n`;
       textPrompt += `- Body Structure: ${birthData.physicalAppearance.bodyStructure || 'Not specified'}\n`;
       
@@ -190,21 +190,23 @@ export async function POST(request: NextRequest) {
 
 2. TRAIT MATCHING: Compare the user's physical traits with traditional Vedic descriptions of each ascendant to identify the most probable ascendant.
 
-3. PLANETARY INFLUENCE ANALYSIS:
+3. NAKSHATRA WEIGHTING:
+   - Emphasize the specific nakshatra that best fits the physical traits and refined features.
+   - Match the user's physical characteristics to the traditional descriptions of nakshatras.
+   - Use this weighting to determine the most precise birth time within the ascendant period.
+
+4. PLANETARY INFLUENCE ANALYSIS:
    - Moon's Position: Assess the Moon's position at different times within the ascendant period.
    - Ruling Planet Characteristics: Examine the position and strength of the planet ruling the potential ascendant.
    - Other Planetary Influences: Consider aspects and positions of other planets.
 
-4. PRECISE TIMING: Use the Moon and planetary ruler of the ascendant to pinpoint the exact time within the 2-hour window.
+5. PRECISE TIMING: Use the Nakshatra Weighting method along with the Moon and planetary ruler of the ascendant to pinpoint the exact time within the 2-hour window.
 
-Format your response as follows:
-1. First, provide the exact predicted birth time (e.g., "Your predicted birth time is 3:42 PM")
-2. Provide the most probable ascendant and its corresponding 2-hour window
-3. List 3 specific possible times within this ascendant period (e.g., 3:15 PM, 3:42 PM, 4:05 PM)
-4. Provide two alternative ascendant possibilities with their respective timeframes
-5. Include a brief explanation (about 100 words) of why the main ascendant and time were chosen, focusing on the correlation between physical traits and Vedic astrological principles
+Format your response as a single paragraph of approximately 150 words. Use HTML formatting with the following structure:
 
-IMPORTANT: Keep your response focused ONLY on the birth time prediction. DO NOT include any personality analysis, career prospects, relationships, or health information beyond what's needed to explain the time prediction.`
+Our calculations show [ascendant sign] rising between approximately [time range]. Within [ascendant sign]'s zodiac span, three nakshatras emerge: [nakshatra 1], [nakshatra 2], and [nakshatra 3]. <strong>[Best match nakshatra] (Best match)</strong> most closely aligns with your [physical traits], while [alternative nakshatra 1] and [alternative nakshatra 2] remain possible alternatives. An ascendant near [specific time] fits your [specific physical traits]. This precise Lagna placement reflects [brief explanation of why this time was chosen].
+
+IMPORTANT: Keep your response focused ONLY on the birth time prediction. DO NOT include any personality analysis, career prospects, relationships, or health information beyond what's needed to explain the time prediction. The response should be a single paragraph with the best match in bold.`
     });
 
     // Call OpenAI API

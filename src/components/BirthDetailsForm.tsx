@@ -16,7 +16,7 @@ export interface BirthFormData {
   physicalAppearance?: {
     bodyType?: string;
     faceShape?: string;
-    complexion?: string;
+    forehead?: string;
     eyeFeatures?: string;
     bodyStructure?: string;
     additionalFeatures?: string;
@@ -33,7 +33,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
     physicalAppearance: {
       bodyType: '',
       faceShape: '',
-      complexion: '',
+      forehead: '',
       eyeFeatures: '',
       bodyStructure: '',
       additionalFeatures: ''
@@ -294,25 +294,25 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 </div>
                 
                 <div>
-                  <label htmlFor="physicalAppearance.complexion" className="block text-sm font-medium mb-1">
-                    Complexion
+                  <label htmlFor="physicalAppearance.forehead" className="block text-sm font-medium mb-1">
+                    Forehead
                   </label>
                   <select
-                    id="physicalAppearance.complexion"
-                    name="physicalAppearance.complexion"
-                    value={formData.physicalAppearance?.complexion}
+                    id="physicalAppearance.forehead"
+                    name="physicalAppearance.forehead"
+                    value={formData.physicalAppearance?.forehead}
                     onChange={handleInputChange}
                     className="w-full p-2 bg-primary rounded border border-gray-700 focus:ring-2 focus:ring-accent focus:border-transparent"
                   >
-                    <option value="">Select complexion</option>
-                    <option value="fair">Fair/Pale</option>
-                    <option value="medium">Medium/Wheat</option>
-                    <option value="olive">Olive/Tan</option>
-                    <option value="brown">Brown/Dark</option>
-                    <option value="ruddy">Ruddy/Reddish</option>
-                    <option value="glowing">Glowing/Radiant</option>
-                    <option value="yellowish">Yellowish tint</option>
-                    <option value="uneven">Uneven/Mixed</option>
+                    <option value="">Select forehead type</option>
+                    <option value="broad">Broad/Wide</option>
+                    <option value="narrow">Narrow</option>
+                    <option value="high">High/Tall</option>
+                    <option value="low">Low</option>
+                    <option value="prominent">Prominent</option>
+                    <option value="rounded">Rounded</option>
+                    <option value="sloped">Sloped/Receding</option>
+                    <option value="lined">Lined/Wrinkled</option>
                   </select>
                 </div>
                 
@@ -472,7 +472,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   <ul className="list-disc list-inside pl-2 text-sm">
                     <li>Body Type: {formData.physicalAppearance?.bodyType}</li>
                     <li>Face Shape: {formData.physicalAppearance?.faceShape}</li>
-                    <li>Complexion: {formData.physicalAppearance?.complexion}</li>
+                    <li>Forehead: {formData.physicalAppearance?.forehead}</li>
                     <li>Eye Features: {formData.physicalAppearance?.eyeFeatures}</li>
                     <li>Body Structure: {formData.physicalAppearance?.bodyStructure}</li>
                   </ul>

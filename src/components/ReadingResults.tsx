@@ -14,41 +14,12 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
   const [copySuccess, setCopySuccess] = useState('');
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [showSlider, setShowSlider] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   
   // Handle client-side mounting to prevent hydration errors
   useEffect(() => {
     setMounted(true);
   }, []);
-  
-  // Check if content is long enough to need a slider
-  useEffect(() => {
-    if (mounted && contentRef.current) {
-      const sentences = prediction.split(/[.!?]+\s/).filter(s => s.trim().length > 0);
-      setShowSlider(sentences.length > 3);
-    }
-  }, [prediction, mounted]);
-  
-  // Handle scroll in the content container
-  const handleScroll = () => {
-    if (contentRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-      const position = scrollTop / (scrollHeight - clientHeight);
-      setScrollPosition(position || 0);
-    }
-  };
-  
-  // Handle slider change
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (contentRef.current) {
-      const { scrollHeight, clientHeight } = contentRef.current;
-      const newPosition = parseFloat(e.target.value);
-      contentRef.current.scrollTop = newPosition * (scrollHeight - clientHeight);
-      setScrollPosition(newPosition);
-    }
-  };
   
   // Log when the component is rendered
   console.log('ReadingResults component rendered with prediction:', prediction ? 'Prediction available' : 'No prediction');
@@ -169,59 +140,22 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
               </span>
             </motion.h2>
             
-            <div className="flex mb-8">
-              {showSlider && (
-                <div className="mr-4 flex flex-col justify-center">
-                  <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={scrollPosition}
-                    onChange={handleSliderChange}
-                    className="w-2 h-64 appearance-none bg-gray-700 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:cursor-pointer"
-                    style={{ 
-                      WebkitAppearance: 'slider-vertical', /* WebKit */
-                      width: '8px',
-                      height: '250px'
-                    }}
-                  />
+            <motion.div 
+              variants={itemVariants}
+              className="bg-gray-800/70 p-8 rounded-3xl whitespace-pre-wrap shadow-inner border border-gray-700/50 backdrop-blur-sm mb-8"
+            >
+              {isLoading ? (
+                <div className="flex justify-center items-center h-40">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-400"></div>
                 </div>
+              ) : (
+                <div 
+                  ref={contentRef}
+                  className="prose prose-invert max-w-none"
+                  dangerouslySetInnerHTML={{ __html: prediction }}
+                />
               )}
-              
-              <motion.div 
-                variants={itemVariants}
-                className="bg-gray-800/70 p-8 rounded-3xl whitespace-pre-wrap shadow-inner border border-gray-700/50 backdrop-blur-sm flex-1"
-              >
-                {isLoading ? (
-                  <div className="flex justify-center items-center h-40">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-400"></div>
-                  </div>
-                ) : (
-                  <div 
-                    ref={contentRef}
-                    className="prose prose-invert max-w-none max-h-[350px] overflow-y-auto pr-4 custom-scrollbar"
-                    onScroll={handleScroll}
-                    style={{
-                      scrollbarWidth: 'thin',
-                      scrollbarColor: '#4f46e5 #1f2937'
-                    }}
-                  >
-                    {prediction.split('\n').map((paragraph, index) => (
-                      <motion.p 
-                        key={index}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 * index, duration: 0.4 }}
-                        className="mb-4 last:mb-0 text-gray-100"
-                      >
-                        {paragraph}
-                      </motion.p>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            </div>
+            </motion.div>
             
             <motion.div 
               variants={itemVariants}
