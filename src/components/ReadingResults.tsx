@@ -154,7 +154,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                     scrollbarColor: '#6366f1 #374151'
                   }}
                 >
-                  <div className="text-white">
+                  <div className="text-white whitespace-pre-line">
                     {prediction}
                   </div>
                 </div>

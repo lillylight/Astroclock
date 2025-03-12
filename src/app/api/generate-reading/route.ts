@@ -247,7 +247,11 @@ NOTABLE TIME FRAMES
 Ascendant Window: {asc_window_start} – {asc_window_end}
 Alternative Birth Period: {alt_period_start} – {alt_period_end}
 
-IMPORTANT: While using technical astrological concepts in your analysis, present the final result in simple terms that someone without astrological knowledge can understand.`
+IMPORTANT: 
+- The Alternative Birth Period MUST be within the Ascendant Window timeframe, not outside of it
+- Do NOT include any explanatory text about physical traits, nakshatra characteristics, or planetary influences in your response
+- Do NOT include any sample or test text in your response
+- Return ONLY the filled template with no additional text`
     });
 
     try {
