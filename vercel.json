@@ -6,10 +6,10 @@
   "framework": "nextjs",
   "outputDirectory": ".next",
   "functions": {
-    "api/generate-reading/**": {
+    "app/api/generate-reading/**": {
       "maxDuration": 60
     },
-    "api/**": {
+    "app/api/**": {
       "maxDuration": 30
     }
   }
