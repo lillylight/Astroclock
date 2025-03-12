@@ -25,18 +25,8 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
     // Note: We're relying on GPT-4.5's knowledge to calculate sunrise/sunset times
     // based on the location and date provided
     
-    if (birthData.method === 'manual' && birthData.physicalAppearance) {
-      textPrompt += `\nPhysical Appearance:\n`;
-      textPrompt += `- Body Type: ${birthData.physicalAppearance.bodyType || 'Not specified'}\n`;
-      textPrompt += `- Face Shape: ${birthData.physicalAppearance.faceShape || 'Not specified'}\n`;
-      textPrompt += `- Eye Color: ${birthData.physicalAppearance.eyeColor || 'Not specified'}\n`;
-      textPrompt += `- Hair Type: ${birthData.physicalAppearance.hairType || 'Not specified'}\n`;
-      textPrompt += `- Skin Tone: ${birthData.physicalAppearance.skinTone || 'Not specified'}\n`;
-      textPrompt += `- Height: ${birthData.physicalAppearance.height || 'Not specified'}\n`;
-      
-      if (birthData.physicalAppearance.additionalFeatures) {
-        textPrompt += `- Additional Features: ${birthData.physicalAppearance.additionalFeatures}\n`;
-      }
+    if (birthData.method === 'manual' && birthData.physicalDescription) {
+      textPrompt += `\nPhysical Description:\n${birthData.physicalDescription}\n`;
       
       // Add text prompt to messages
       messages.push({
