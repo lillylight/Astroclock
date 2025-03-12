@@ -155,23 +155,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                   }}
                 >
                   <div className="text-white">
-                    {/* Main prediction paragraph - simplified for general audience */}
-                    <p className="mb-6 text-lg">
-                      Our calculations indicate you were likely born at 7:30 AM under the Vedic star pattern Leo, which aligns with your physical characteristics.
-                    </p>
-                    
-                    {/* No scroll indicator */}
-                    
-                    {/* Alternative ascendants section with additional timeframes */}
-                    <div id="alternative-ascendants">
-                      <h3 className="text-lg font-semibold mb-2 text-indigo-300 pl-2">NOTABLE TIME FRAMES</h3>
-                      <div className="text-gray-200 pl-2 leading-tight">
-                        <div>Ascendant Window: 7:18 AM - 8:50 AM</div>
-                        <div>Alternative Birth Period: 6:10 AM - 6:25 AM</div>
-                      </div>
-                    </div>
-                    
-                    {/* No prediction method section here */}
+                    {prediction}
                   </div>
                 </div>
               )}
