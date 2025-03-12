@@ -4,5 +4,13 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "functions": {
+    "api/generate-reading/**": {
+      "maxDuration": 60
+    },
+    "api/**": {
+      "maxDuration": 30
+    }
+  }
 }

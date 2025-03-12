@@ -249,21 +249,46 @@ Alternative ascendant possibilities and their respective timeframes:
 IMPORTANT: While using technical astrological concepts in your analysis, present the final result in simple terms that someone without astrological knowledge can understand.`
     });
 
-    // Call OpenAI API
-    const response = await openai.chat.completions.create({
-      model: "gpt-4.5-preview",
-      messages: messages,
-      temperature: 1,
-      max_tokens: 5010,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0
-    });
-
-    // Return the generated reading
-    return NextResponse.json({
-      prediction: response.choices[0]?.message?.content || "Unable to generate reading. Please try again."
-    });
+    try {
+      // Call OpenAI API with a timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 50000); // 50 second timeout
+      
+      try {
+        const response = await openai.chat.completions.create({
+          model: "gpt-4.5-preview",
+          messages: messages,
+          temperature: 1,
+          max_tokens: 1000, // Reduced from 5010 to improve response time
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0
+        }, { signal: controller.signal });
+        
+        clearTimeout(timeoutId);
+        
+        // Return the generated reading
+        return NextResponse.json({
+          prediction: response.choices[0]?.message?.content || "Unable to generate reading. Please try again."
+        });
+      } catch (abortError: any) {
+        clearTimeout(timeoutId);
+        if (abortError.name === 'AbortError') {
+          console.error('OpenAI API request timed out');
+          return NextResponse.json(
+            { error: 'The request took too long to complete. Please try again.' },
+            { status: 408 }
+          );
+        }
+        throw abortError; // Re-throw for the outer catch block to handle
+      }
+    } catch (error) {
+      console.error('Error generating astrological reading:', error);
+      return NextResponse.json(
+        { error: 'Failed to generate reading' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error('Error generating astrological reading:', error);
     return NextResponse.json(
