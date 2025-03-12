@@ -30,9 +30,22 @@ export default function Home() {
       const savedState = localStorage.getItem('astroClockState');
       if (savedState) {
         const { step, birthData: savedBirthData, prediction: savedPrediction } = JSON.parse(savedState);
-        setCurrentStep(step);
-        setBirthData(savedBirthData);
-        setPrediction(savedPrediction);
+        
+        // Check if we have a prediction already generated
+        const predictionGenerated = localStorage.getItem('predictionGenerated') === 'true';
+        
+        // If we're on the results page and have a prediction, use it
+        if (step === 'results' && savedPrediction && predictionGenerated) {
+          console.log('Using saved prediction from localStorage on page refresh');
+          setCurrentStep(step);
+          setBirthData(savedBirthData);
+          setPrediction(savedPrediction);
+        } else if (step !== 'results') {
+          // For other steps, just restore the state
+          setCurrentStep(step);
+          setBirthData(savedBirthData);
+          setPrediction(savedPrediction);
+        }
       }
     } catch (error) {
       console.error('Error loading state from localStorage:', error);
@@ -129,6 +142,7 @@ export default function Home() {
     
     // Set payment completed flag
     localStorage.setItem('paymentCompleted', 'true');
+    localStorage.setItem('predictionGenerated', 'true');
     
     if (!birthData) {
       console.error('Birth data is missing, cannot generate reading');
@@ -153,7 +167,11 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Error checking localStorage for saved prediction:', error);
-      // Continue with API call if there's an error checking localStorage
+      // Do not continue with API call if there's an error checking localStorage
+      // Instead, show an error message and set to results step
+      setPrediction('Error retrieving your saved prediction. Please try starting a new reading.');
+      setCurrentStep('results');
+      return;
     }
     
     console.log('Starting reading generation with birth data:', birthData);
@@ -210,8 +228,9 @@ export default function Home() {
     setEntryMethod(null);
     setCurrentStep('form');
     
-    // Clear the payment status in localStorage
+    // Clear the payment and prediction status in localStorage
     localStorage.removeItem('paymentCompleted');
+    localStorage.removeItem('predictionGenerated');
   };
 
   return (

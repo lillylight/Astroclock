@@ -219,28 +219,34 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Add instructions for the response format with simplified methodology
+    // Add instructions for the response format with comprehensive methodology
     messages.push({
       role: "user",
-      content: `Based on the information provided, determine the most likely birth time for this person in simple terms that someone without astrological knowledge can understand.
+      content: `Based on the information provided, determine the most likely birth time for this person using the following Vedic astrology methodology:
 
-IMPORTANT: Do NOT use sunrise (${sunriseTime}) in your calculations of ascendants or birth time. The sunrise time is provided only as general background information about when the sun was rising on that day, but should NOT influence your prediction methodology or calculations in any way.
+1. Collect Birth Data: Use the birth date, time frame (${birthData.timeOfDay}), and location (latitude ${latitude}, longitude ${longitude}).
 
-Base your prediction SOLELY on the physical traits described and their correlation with astrological indicators. The physical traits are the primary and most important factor in determining the birth time.
+2. Establish Fixed Markers: Use the local sunrise time (${sunriseTime}) as a reliable astronomical reference point for your calculations.
 
-Keep your response to approximately 100 words total, and format it EXACTLY according to this template:
+3. Ascendant Calculation: Calculate the rising sign's degree based on the sunrise data and approximate time of day.
 
-Based on your birth details and physical traits, we've calculated your most probable birth time.
+4. Physical Trait Matching: Compare the physical traits described with classical descriptions for each ascendant sign. Match body type, facial features, and other physical characteristics.
 
-Most Accurate Birth Time & Alternatives:
+5. Ruling Planet Assessment: Evaluate the strength and influence of the ascendant's ruling planet based on the birth details.
 
-Best Time: [best time]
-Alternate Option 1: [alternate time 1]
-Alternate Option 2: [alternate time 2]
+6. Nakshatra Analysis: Identify nakshatras within the ascendant and select the one that best reflects the physical traits described.
 
-These times are our best estimates based on analyzing your physical features. The Best Time has the strongest correlation with your unique characteristics.
+7. Refinement: Balance the fixed astronomical data with nakshatra details to narrow down to the perfect time.
 
-IMPORTANT: Keep your response simple, brief (about 100 words total), and focused ONLY on the birth time prediction. DO NOT include technical astrological terms or concepts that would confuse someone without astrological knowledge. Follow the template format EXACTLY as shown above.`
+Keep your response to approximately 100-150 words total, and format it EXACTLY according to this template:
+
+Your predicted birth time is [best time], according to the calculations and details entered. Below is also your Calculated Ascendant: [rising sign] ([time range]). Below are 2 more of the ones that seem probable as well, test them using a chart reading to verify.
+
+Alternative ascendant possibilities and their respective timeframes:
+   - [nakshatra 1] ([rising sign 1]): [alternate time range 1]  
+   - [nakshatra 2] ([rising sign 2]): [alternate time range 2]
+
+IMPORTANT: While using technical astrological concepts in your analysis, present the final result in simple terms that someone without astrological knowledge can understand.`
     });
 
     // Call OpenAI API

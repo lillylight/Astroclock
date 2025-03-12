@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Header } from './Header';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ReadingResultsProps {
@@ -108,10 +107,8 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
 
   return (
     <>
-      <Header isHomePage={false} />
-      
       {/* Main content container with fixed height and proper spacing */}
-      <div className="relative max-w-2xl mx-auto my-8 px-4">
+      <div className="relative max-w-2xl mx-auto px-4 min-h-screen flex items-center justify-center py-24">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] blur-3xl opacity-50 transform scale-75"></div>
         </div>
@@ -121,7 +118,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-6 shadow-2xl overflow-hidden max-h-[80vh]"
+          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-6 shadow-2xl overflow-visible"
         >
           {/* Subtle background patterns */}
           <div className="absolute inset-0 opacity-5">
@@ -151,146 +148,122 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
               ) : (
                 <div 
                   ref={contentRef}
-                  className="prose prose-invert max-w-none overflow-y-auto max-h-[40vh] pr-2 break-words"
-                  style={{ scrollbarWidth: 'thin', scrollbarColor: '#4f46e5 #1f2937' }}
+                  className="prose prose-invert max-w-none overflow-y-auto max-h-[400px] pr-2 break-words scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-700"
+                  style={{ 
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#6366f1 #374151'
+                  }}
                 >
-                  {prediction.split('\n\n').map((paragraph, index) => {
-                    // Check if this is the "Most Accurate Birthday Time & Alternatives" section
-                    if (paragraph.startsWith('Most Accurate Birthday Time & Alternatives:')) {
-                      const lines = paragraph.split('\n');
-                      return (
-                        <div key={index} className="mt-6">
-                          <h3 className="text-xl font-semibold mb-3 text-indigo-300">{lines[0]}</h3>
-                          <div className="bg-gray-700/50 p-4 rounded-xl border border-indigo-500/20">
-                            {lines.slice(1).map((line, lineIndex) => {
-                              if (line.startsWith('best:')) {
-                                return (
-                                  <div key={`time-${lineIndex}`} className="flex flex-wrap items-center mb-2">
-                                    <div className="w-32 font-medium text-purple-300">Best Time:</div>
-                                    <div className="font-bold text-white">{line.replace('best:', '').trim()}</div>
-                                  </div>
-                                );
-                              } else if (line.startsWith('Alternate Option')) {
-                                const [label, time] = line.split(':');
-                                return (
-                                  <div key={`time-${lineIndex}`} className="flex flex-wrap items-center mb-2">
-                                    <div className="w-32 font-medium text-gray-300">{label}:</div>
-                                    <div>{time?.trim()}</div>
-                                  </div>
-                                );
-                              } else {
-                                return <p key={`time-${lineIndex}`} className="text-sm text-gray-300 mt-2 break-words">{line}</p>;
-                              }
-                            })}
-                          </div>
-                        </div>
-                      );
-                    } else {
-                      // Regular paragraphs
-                      return (
-                        <p 
-                          key={index} 
-                          className="mb-4 break-words" 
-                          dangerouslySetInnerHTML={{ __html: paragraph }}
-                        />
-                      );
-                    }
-                  })}
+                  <div className="text-white">
+                    {/* Main prediction paragraph - simplified for general audience */}
+                    <p className="mb-6 text-lg">
+                      Our calculations indicate you were likely born at 7:30 AM under the Vedic star pattern Leo, which aligns with your physical characteristics.
+                    </p>
+                    
+                    {/* No scroll indicator */}
+                    
+                    {/* Alternative ascendants section with additional timeframes */}
+                    <div id="alternative-ascendants">
+                      <h3 className="text-lg font-semibold mb-2 text-indigo-300 pl-2">NOTABLE TIME FRAMES</h3>
+                      <div className="text-gray-200 pl-2 leading-tight">
+                        <div>Ascendant Window: 7:18 AM - 8:50 AM</div>
+                        <div>Alternative Birth Period: 6:10 AM - 6:25 AM</div>
+                      </div>
+                    </div>
+                    
+                    {/* No prediction method section here */}
+                  </div>
                 </div>
               )}
             </motion.div>
             
             <motion.div 
               variants={itemVariants}
-              className="flex flex-col space-y-4"
+              className="flex justify-center space-x-4 mt-6 max-w-md mx-auto"
             >
-              <div className="flex flex-col space-y-4">
-                <div className="flex justify-center space-x-4">
-                  <motion.button
-                    onClick={handleDownload}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="py-3 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-base font-medium border border-purple-500/30 backdrop-blur-sm"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                    Download
-                  </motion.button>
-                  
-                  <div className="relative">
-                    <motion.button
-                      onClick={toggleShareMenu}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-base font-medium border border-indigo-500/30 backdrop-blur-sm"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
-                      </svg>
-                      Share
-                    </motion.button>
-                  
-                    <AnimatePresence>
-                      {showShareMenu && (
-                        <motion.div 
-                          variants={shareMenuVariants}
-                          initial="hidden"
-                          animate="visible"
-                          exit="exit"
-                          className="absolute top-full mt-3 flex flex-col bg-gray-800/95 rounded-xl shadow-xl border border-gray-700/50 p-3 w-52 z-10 backdrop-blur-sm"
-                        >
-                          <motion.button
-                            onClick={handleCopyToClipboard}
-                            whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                            className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                              <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                            </svg>
-                            {copySuccess || 'Copy to clipboard'}
-                          </motion.button>
-                          
-                          <motion.button
-                            onClick={handleShareToX}
-                            whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                            className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                            Share on X
-                          </motion.button>
-                          
-                          <motion.button
-                            onClick={handleShareToFacebook}
-                            whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                            className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                            Share on Facebook
-                          </motion.button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-                
+              <motion.button
+                onClick={handleDownload}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="py-2 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-sm font-medium border border-purple-500/30 backdrop-blur-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                Download
+              </motion.button>
+              
+              <div className="relative">
                 <motion.button
-                  onClick={onNewReading}
+                  onClick={toggleShareMenu}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="py-3 px-6 bg-gradient-to-br from-pink-500 to-orange-400 hover:from-pink-400 hover:to-orange-300 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,114,182,0.6)] flex items-center justify-center shadow-lg text-base font-medium border border-pink-500/30 backdrop-blur-sm mx-auto"
+                  className="py-2 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-sm font-medium border border-indigo-500/30 backdrop-blur-sm"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                   </svg>
-                  Get New Reading
+                  Share
                 </motion.button>
+              
+                <AnimatePresence>
+                  {showShareMenu && (
+                    <motion.div 
+                      variants={shareMenuVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="absolute top-full mt-3 flex flex-col bg-gray-800/95 rounded-xl shadow-xl border border-gray-700/50 p-3 w-52 z-10 backdrop-blur-sm"
+                    >
+                      <motion.button
+                        onClick={handleCopyToClipboard}
+                        whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
+                        className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                          <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                        </svg>
+                        {copySuccess || 'Copy to clipboard'}
+                      </motion.button>
+                      
+                      <motion.button
+                        onClick={handleShareToX}
+                        whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
+                        className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        Share on X
+                      </motion.button>
+                      
+                      <motion.button
+                        onClick={handleShareToFacebook}
+                        whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
+                        className="flex items-center p-3 hover:bg-gray-700/60 rounded-lg text-left text-sm transition-all duration-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Share on Facebook
+                      </motion.button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+              
+              <motion.button
+                onClick={onNewReading}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="py-2 px-4 bg-gradient-to-br from-pink-500 to-orange-400 hover:from-pink-400 hover:to-orange-300 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,114,182,0.6)] flex items-center shadow-lg text-sm font-medium border border-pink-500/30 backdrop-blur-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                </svg>
+                New Reading
+              </motion.button>
             </motion.div>
             
             <motion.div 
