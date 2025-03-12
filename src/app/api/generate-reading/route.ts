@@ -228,7 +228,7 @@ export async function POST(request: NextRequest) {
 
 2. Establish Fixed Markers: Use the local sunrise time (${sunriseTime}) as a reliable astronomical reference point for your calculations.
 
-3. Ascendant Calculation: Calculate the rising sign's degree based on the sunrise data and approximate time of day.
+3. Ascendant Calculation: Calculate the rising sign's degree based on the sunrise data, approximate time of day, the physical traits matching and final nakshatra analysis.
 
 4. Physical Trait Matching: Compare the physical traits described with classical descriptions for each ascendant sign. Match body type, facial features, and other physical characteristics.
 
@@ -236,15 +236,16 @@ export async function POST(request: NextRequest) {
 
 6. Nakshatra Analysis: Identify nakshatras within the ascendant and select the one that best reflects the physical traits described.
 
-7. Refinement: Balance the fixed astronomical data with nakshatra details to narrow down to the perfect time.
+7. Refinement: use all data and intuition of details to narrow down to the perfect time.
 
 Keep your response to approximately 100-150 words total, and format it EXACTLY according to this template:
 
-Your predicted birth time is [best time], according to the calculations and details entered. Below is also your Calculated Ascendant: [rising sign] ([time range]). Below are 2 more of the ones that seem probable as well, test them using a chart reading to verify.
+Our calculations indicate you were likely born at {birth_time} under the Vedic star pattern {vedic_star_sign}, which aligns with your physical characteristics.
 
-Alternative ascendant possibilities and their respective timeframes:
-   - [nakshatra 1] ([rising sign 1]): [alternate time range 1]  
-   - [nakshatra 2] ([rising sign 2]): [alternate time range 2]
+NOTABLE TIME FRAMES
+
+Ascendant Window: {asc_window_start} – {asc_window_end}
+Alternative Birth Period: {alt_period_start} – {alt_period_end}
 
 IMPORTANT: While using technical astrological concepts in your analysis, present the final result in simple terms that someone without astrological knowledge can understand.`
     });
@@ -259,7 +260,7 @@ IMPORTANT: While using technical astrological concepts in your analysis, present
           model: "gpt-4.5-preview",
           messages: messages,
           temperature: 1,
-          max_tokens: 1000, // Reduced from 5010 to improve response time
+          max_tokens: 2000, // Reduced from 5010 to improve response time
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0
