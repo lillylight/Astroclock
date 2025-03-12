@@ -169,7 +169,7 @@ export async function POST(request: NextRequest) {
     const messages: any[] = [
       {
         role: "system",
-        content: "you are the world best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown, also has intuition."
+        content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY || "you are the world best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown, also has intuition."
       }
     ];
     
