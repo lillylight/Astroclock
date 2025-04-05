@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { BirthFormData } from '@/components/BirthDetailsForm';
 import { analyzeImageAndPredictBirthTime } from '@/services/openai';
-import fs from 'fs';
+
+export const runtime = 'edge';
+export const preferredRegion = 'iad1'; // Virginia region for best performance
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -200,10 +202,11 @@ export async function POST(request: NextRequest) {
       model: "gpt-4.5-preview",
       messages: messages,
       temperature: 1,
-      max_tokens: 1000,
+      max_tokens: 500,
       top_p: 1,
       frequency_penalty: 0,
-      presence_penalty: 0
+      presence_penalty: 0,
+      timeout: 10000 // 10 second timeout
     });
 
     return NextResponse.json({
@@ -211,6 +214,15 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error generating astrological reading:', error);
+    
+    // Handle timeout specifically
+    if (error instanceof Error && error.message.includes('timeout')) {
+      return NextResponse.json(
+        { error: 'The request took too long. Please try again with a simpler description.' },
+        { status: 504 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Failed to generate reading' },
       { status: 500 }
