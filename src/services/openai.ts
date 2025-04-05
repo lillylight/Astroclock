@@ -36,7 +36,7 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
     } else if (birthData.method === 'upload' && birthData.photo) {
       // For photo uploads, we would convert the photo to base64
       const fs = require('fs');
-      const base64Photo = fs.readFileSync(birthData.photo.path, { encoding: 'base64' });
+      const base64Photo = fs.readFileSync(birthData.photo, { encoding: 'base64' });
 
       // Add text prompt with photo in a single message
       messages.push({
