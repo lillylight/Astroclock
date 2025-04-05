@@ -82,36 +82,34 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
 }
 
 export async function analyzeImageAndPredictBirthTime(imagePath: string): Promise<string> {
-  const fs = require('fs');
-  const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+  try {
+    const fs = require('fs');
+    const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+    
+    // Format the image URL with the correct MIME type
+    // Assuming JPEG format, but could be determined from the file extension if needed
+    const imageUrl = `data:image/jpeg;base64,${base64Image}`;
+    
+    // Create the input for the OpenAI API using the correct format
+    const input = [
+      {
+        role: "user",
+        content: [
+          { type: "input_text", text: "what's in this image?" },
+          { type: "input_image", image_url: imageUrl }
+        ]
+      }
+    ];
 
-  if (!birthData.photo) {
-    throw new Error("An image is required to proceed. Please upload an image of yourself.");
+    // Call the OpenAI API using the responses.create method
+    const response = await openai.responses.create({
+      model: "gpt-4.5-preview",
+      input: input
+    });
+
+    return response.output_text || "Unable to analyze image.";
+  } catch (error) {
+    console.error('Error analyzing image:', error);
+    return "An error occurred while analyzing the image. Please try again later.";
   }
-
-  const messages = [
-    {
-      role: "system",
-      content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY || "Default system prompt."
-    },
-    {
-      role: "user",
-      content: [
-        { type: "input_text", text: "what's in this image?" },
-        { type: "input_image", image_url: `data:image/jpeg;base64,${base64Image}` }
-      ]
-    }
-  ];
-
-  const response = await openai.chat.completions.create({
-    model: "gpt-4.5-preview",
-    messages: messages,
-    temperature: 1,
-    max_tokens: 1000,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0
-  });
-
-  return response.choices[0]?.message?.content || "Unable to analyze image.";
 }
