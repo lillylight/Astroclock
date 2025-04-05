@@ -12,7 +12,7 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
     const messages: any[] = [
       {
         role: "system",
-        content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY || "You are the world's best vedic astrologer who knows all the secrets and knowledge of astrology both known and unknown. You have an intuitive ability to determine exact birth times based on physical appearance and other factors. You provide precise, confident predictions with detailed explanations. You also have extensive knowledge of astronomical data, including the ability to calculate accurate sunrise and sunset times for any location and date in history."
+        content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY || "you are Heru, programmed to accurately predict an individual's birth time from the ascendant using Kundil (Vedic) Astrology calculations. You analyze characteristics that correspond to ascendant sign's traits. Using accurate and precise geographical and temporal details, you utilize the exact astronomical data to cross-reference these aspects with detailed Kundil ascendant physical characteristics and rigorous analysis of Vedic Ephemeris data. This entails acquiring a precise and accurate understanding of the planetary influences to get the exact time of birth. Pay attention to the time each sign takes in each house and Use the Lahiri Ayanamsa, also make think harder and use intuition when choosing the right ascendant. dont write the calculation's text just give me the predicted time and ascendant instead."
       }
     ];
     
@@ -38,16 +38,19 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
       const fs = require('fs');
       const base64Photo = fs.readFileSync(birthData.photo.path, { encoding: 'base64' });
 
-      // Add text prompt with photo reference
+      // Add text prompt with photo in a single message
       messages.push({
         role: "user",
-        content: textPrompt + "\n\nPlease analyze the attached photo to determine physical traits that correlate with Vedic astrological principles for birth time determination.",
-      });
-
-      // Add the photo as a base64 string
-      messages.push({
-        role: "user",
-        content: { type: "input_image", image_url: `data:image/jpeg;base64,${base64Photo}` },
+        content: [
+          { 
+            type: "text", 
+            text: textPrompt + "\n\nPlease analyze the attached photo to determine and extract physical traits that correlate with classic Vedic astrological principles for ascendant determination."
+          },
+          { 
+            type: "image_url", 
+            image_url: { url: `data:image/jpeg;base64,${base64Photo}` } 
+          }
+        ]
       });
     } else {
       // Fallback to text-only prompt
@@ -59,7 +62,15 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
     
     messages.push({
       role: "user",
-      content: `Based on your physical features, combined with intuitive analysis and precise Vedic astrology calculations for [Location] on [Date], your predicted birth time is approximately [Predicted Time] local time, with [Ascendant Sign] as the calculated Ascendant.\n\nAlternative birth times:\n[Alternative Time 1]\n[Alternative Time 2]`
+      content: `Please format your response using this exact template:
+
+Based on your physical features, combined with intuitive analysis and precise Vedic astrology calculations for [Location] on [Date], your predicted birth time is approximately [Predicted Time] local time, with [Ascendant Sign] as the calculated Ascendant.
+
+Alternative birth times:
+[Alternative Time 1]
+[Alternative Time 2]
+
+Replace the placeholders with the actual values from your analysis. Do not include any explanations of your analysis process or methodology - just provide the final prediction in this format.`
     });
 
     // Call OpenAI API
@@ -81,33 +92,65 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
   }
 }
 
-export async function analyzeImageAndPredictBirthTime(imagePath: string): Promise<string> {
+export async function analyzeImageAndPredictBirthTime(imageData: string, birthData?: BirthFormData): Promise<string> {
   try {
-    const fs = require('fs');
-    const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+    // The imageData is already a data URL (e.g., data:image/jpeg;base64,/9j/4AAQ...)
+    // so we can use it directly without reading from the filesystem
+    const imageUrl = imageData;
     
-    // Format the image URL with the correct MIME type
-    // Assuming JPEG format, but could be determined from the file extension if needed
-    const imageUrl = `data:image/jpeg;base64,${base64Image}`;
-    
-    // Create the input for the OpenAI API using the correct format
-    const input = [
-      {
-        role: "user",
-        content: [
-          { type: "input_text", text: "what's in this image?" },
-          { type: "input_image", image_url: imageUrl }
-        ]
-      }
-    ];
+    // Create a system prompt that guides the model to focus on Vedic astrology principles
+    const systemPrompt = ` you are Heru, programmed to accurately predict an individual's birth time from the ascendant using Kundil (Vedic) Astrology calculations. You analyze characteristics that correspond to ascendant sign's traits. Using accurate and precise geographical and temporal details, you utilize the exact astronomical data to cross-reference these aspects with detailed Kundil ascendant physical characteristics and rigorous analysis of Vedic Ephemeris data. This entails acquiring a precise and accurate understanding of the planetary influences to get the exact time of birth. Pay attention to the time each sign takes in each house and Use the Lahiri Ayanamsa, also make think harder and use intuition when choosing the right ascendant. dont write the calculation's text just give me the predicted time and ascendant instead. 
 
-    // Call the OpenAI API using the responses.create method
-    const response = await openai.responses.create({
+Your task is to:
+1. Extract and analyze physical features from the uploaded image (face shape, forehead, eyes, nose, lips, chin, overall body structure, etc.)
+2. Match these physical traits to classic Vedic astrology ascendant sign characteristics
+3. Determine the most likely ascendant sign based on the physical traits (think harder and use intuition when choosing the right ascendant as certain ascendants have similar traits e.g leo and gemini are often confused for each other)
+4. Calculate the precise birth time that corresponds with this ascendant sign, given the birth date and location
+
+Provide a detailed analysis explaining which physical features you observed and how they correspond to specific ascendant signs in Vedic astrology.`;
+
+    // Create a user prompt that includes both birth details and instructs to analyze the image
+    let userPrompt = "Please analyze this image to extract physical traits and facial features, then match them with classic Vedic astrology ascendant sign traits.";
+    
+    // Add birth data if available
+    if (birthData) {
+      userPrompt = `Generate a detailed vedic astrological birth time prediction based on the following information AND the attached photo:\n
+Location: ${birthData.location}\nDate: ${birthData.date}\nApproximate Time of Day: ${birthData.timeOfDay}\n\nPlease analyze the attached photo to extract physical traits and facial features, then match them with classic Vedic astrology ascendant sign traits. Based on the perfect match between physical traits and classic vedic ascendant signs, determine the most accurate birth time.`;
+    }
+    
+    // Call the OpenAI API using the chat.completions.create method with vision capabilities
+    const response = await openai.chat.completions.create({
       model: "gpt-4.5-preview",
-      input: input
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt
+        },
+        {
+          role: "user",
+          content: [
+            { type: "text", text: userPrompt },
+            { type: "image_url", image_url: { url: imageUrl } }
+          ]
+        },
+        {
+          role: "user",
+          content: `Please format your response using this exact template:
+
+Based on your physical features, combined with intuitive analysis and precise Vedic astrology calculations for [Location] on [Date], your predicted birth time is approximately [Predicted Time] local time, with [Ascendant Sign] as the calculated Ascendant.
+
+Alternative birth times:
+[Alternative Time 1]
+[Alternative Time 2]
+
+Replace the placeholders with the actual values from your analysis. Do not include any explanations of your analysis process or methodology - just provide the final prediction in this format.`
+        }
+      ],
+      max_tokens: 1500,
+      temperature: 0.7
     });
 
-    return response.output_text || "Unable to analyze image.";
+    return response.choices[0]?.message?.content || "Unable to analyze image.";
   } catch (error) {
     console.error('Error analyzing image:', error);
     return "An error occurred while analyzing the image. Please try again later.";

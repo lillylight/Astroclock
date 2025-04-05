@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { BirthFormData } from '@/components/BirthDetailsForm';
+import { analyzeImageAndPredictBirthTime } from '@/services/openai';
 import fs from 'fs';
 
 // Initialize OpenAI client
@@ -132,28 +133,7 @@ async function getSunriseSunsetTimes(latitude: number, longitude: number, date: 
   }
 }
 
-// Helper function to analyze image and predict birth time
-async function analyzeImageAndPredictBirthTime(base64Image: string): Promise<string> {
-  const messages = [
-    {
-      role: "user",
-      content: [
-        { type: "input_text", text: "what's in this image?" },
-        {
-          type: "input_image",
-          image_url: base64Image
-        }
-      ]
-    }
-  ];
-
-  const response = await openai.responses.create({
-    model: "gpt-4.5-preview",
-    input: messages
-  });
-
-  return response.output_text || "Unable to analyze image.";
-}
+// We're now using the enhanced analyzeImageAndPredictBirthTime function from the openai service
 
 // Modify POST handler to include image analysis
 export async function POST(request: NextRequest) {
@@ -185,7 +165,12 @@ export async function POST(request: NextRequest) {
       const photoBase64 = Buffer.from(photoBytes).toString('base64');
       const mimeType = photoFile.type;
 
-      const imageAnalysisResult = await analyzeImageAndPredictBirthTime(`data:${mimeType};base64,${photoBase64}`);
+      // Pass both the image and birth data to the analysis function
+      // The enhanced function will extract physical features and match them with ascendant signs
+      const imageAnalysisResult = await analyzeImageAndPredictBirthTime(
+        `data:${mimeType};base64,${photoBase64}`,
+        birthData
+      );
 
       return NextResponse.json({
         prediction: imageAnalysisResult
