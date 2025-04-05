@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
     const messages: any[] = [
       {
         role: "system",
-        content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY || "Default system prompt."
+        content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY
       },
       {
         role: "user",

@@ -4,7 +4,8 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
-  isHomePage?: boolean;
+  isHomePage: boolean;
+  className?: string;
 }
 
 export function Header({ isHomePage }: HeaderProps) {

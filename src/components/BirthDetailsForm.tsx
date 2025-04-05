@@ -12,7 +12,7 @@ export interface BirthFormData {
   method: 'manual' | 'upload';
   location?: string;
   date?: string;
-  timeOfDay?: 'morning' | 'afternoon' | 'evening' | 'night';
+  timeOfDay?: 'morning' | 'afternoon' | 'evening' | 'night' | 'midnight' | 'earlyMorning';
   physicalDescription?: string;
   photo?: File | null;
 }
@@ -46,7 +46,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
     }));
   };
 
-  const handleTimeOfDayChange = (timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night') => {
+  const handleTimeOfDayChange = (timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night' | 'midnight' | 'earlyMorning') => {
     setFormData((prev) => ({
       ...prev,
       timeOfDay,
@@ -154,9 +154,9 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
               
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Time of Day
+                  Time of Day <span className="text-gray-400 text-xs" title="Morning: 6 AM - 9 AM, Afternoon: 12 PM - 3 PM, Evening: 6 PM - 9 PM, Night: 9 PM - 12 AM, Midnight: 12 AM - 3 AM, Early Morning: 3 AM - 6 AM">(i)</span>
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
                     className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
@@ -192,6 +192,24 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     onClick={() => handleTimeOfDayChange('night')}
                   >
                     Night
+                  </button>
+                  <button
+                    type="button"
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                      formData.timeOfDay === 'midnight' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    }`}
+                    onClick={() => handleTimeOfDayChange('midnight')}
+                  >
+                    Midnight
+                  </button>
+                  <button
+                    type="button"
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                      formData.timeOfDay === 'earlyMorning' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    }`}
+                    onClick={() => handleTimeOfDayChange('earlyMorning')}
+                  >
+                    Early Morning
                   </button>
                 </div>
               </div>
