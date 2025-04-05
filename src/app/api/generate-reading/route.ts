@@ -206,7 +206,7 @@ export async function POST(request: NextRequest) {
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
-      timeout: 10000 // 10 second timeout
+
     });
 
     return NextResponse.json({
