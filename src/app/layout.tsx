@@ -31,7 +31,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning={true}
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900 text-white flex flex-col min-h-screen`}
+        className="antialiased bg-gray-900 text-white flex flex-col min-h-screen sm:text-sm sm:px-2"
       >
         <Providers>
           <div className="flex-grow">

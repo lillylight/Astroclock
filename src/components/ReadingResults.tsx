@@ -12,13 +12,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
   const [isLoading, setIsLoading] = useState(false);
   const [copySuccess, setCopySuccess] = useState('');
   const [showShareMenu, setShowShareMenu] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  
-  // Handle client-side mounting to prevent hydration errors
-  useEffect(() => {
-    setMounted(true);
-  }, []);
   
   // Log when the component is rendered
   console.log('ReadingResults component rendered with prediction:', prediction ? 'Prediction available' : 'No prediction');
@@ -65,8 +59,6 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
   const toggleShareMenu = () => {
     setShowShareMenu(!showShareMenu);
   };
-  
-  if (!mounted) return null;
 
   // Animation variants
   const containerVariants = {

@@ -35,22 +35,20 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
       });
     } else if (birthData.method === 'upload' && birthData.photo) {
       // For photo uploads, we would convert the photo to base64
-      // However, since we can't directly access the File object's contents here,
-      // we'll need to handle this in the API route
-      
-      // Add text prompt without photo reference
+      const fs = require('fs');
+      const base64Photo = fs.readFileSync(birthData.photo.path, { encoding: 'base64' });
+
+      // Add text prompt with photo reference
       messages.push({
         role: "user",
-        content: [
-          {
-            type: "text",
-            text: textPrompt + "\n\nPlease analyze the attached photo to determine physical traits that correlate with Vedic astrological principles for birth time determination."
-          }
-        ]
+        content: textPrompt + "\n\nPlease analyze the attached photo to determine physical traits that correlate with Vedic astrological principles for birth time determination.",
       });
-      
-      // Note: In a real implementation, we would add the image content here
-      // This would require converting the File to base64 in the API route
+
+      // Add the photo as a base64 string
+      messages.push({
+        role: "user",
+        content: { type: "input_image", image_url: `data:image/jpeg;base64,${base64Photo}` },
+      });
     } else {
       // Fallback to text-only prompt
       messages.push({
@@ -59,23 +57,9 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
       });
     }
     
-    // Add instructions for the response format
     messages.push({
       role: "user",
-      content: `First, calculate the precise sunrise and sunset times for the given location and date. Then, based on Vedic astrology principles, determine the most likely birth time for this person. Consider:
-1. The ascendant (lagna) that best matches their physical appearance
-2. The planetary positions on the given date
-3. The relationship between time of day and the ruling planets
-4. The correlation between physical traits and astrological houses
-
-Format your response as follows:
-1. First, provide the exact predicted birth time (e.g., "Your predicted birth time is 3:42 PM")
-2. Explain the reasoning behind this prediction, referencing the ascendant and planetary positions
-3. Provide two alternative possible birth times with lower probability and explain why they're less likely
-4. Include a brief personality analysis based on the predicted birth chart
-5. Mention how this birth time affects career prospects, relationships, and health
-
-Make the prediction specific, detailed, and personalized to the provided information.`
+      content: `Based on your physical features, combined with intuitive analysis and precise Vedic astrology calculations for [Location] on [Date], your predicted birth time is approximately [Predicted Time] local time, with [Ascendant Sign] as the calculated Ascendant.\n\nAlternative birth times:\n[Alternative Time 1]\n[Alternative Time 2]`
     });
 
     // Call OpenAI API
@@ -83,7 +67,7 @@ Make the prediction specific, detailed, and personalized to the provided informa
       model: "gpt-4.5-preview",
       messages: messages,
       temperature: 1,
-      max_tokens: 5010,
+      max_tokens: 1010,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0
@@ -95,4 +79,39 @@ Make the prediction specific, detailed, and personalized to the provided informa
     console.error('Error generating astrological reading:', error);
     return "An error occurred while generating your reading. Please try again later.";
   }
+}
+
+export async function analyzeImageAndPredictBirthTime(imagePath: string): Promise<string> {
+  const fs = require('fs');
+  const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+
+  if (!birthData.photo) {
+    throw new Error("An image is required to proceed. Please upload an image of yourself.");
+  }
+
+  const messages = [
+    {
+      role: "system",
+      content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY || "Default system prompt."
+    },
+    {
+      role: "user",
+      content: [
+        { type: "input_text", text: "what's in this image?" },
+        { type: "input_image", image_url: `data:image/jpeg;base64,${base64Image}` }
+      ]
+    }
+  ];
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4.5-preview",
+    messages: messages,
+    temperature: 1,
+    max_tokens: 1000,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0
+  });
+
+  return response.choices[0]?.message?.content || "Unable to analyze image.";
 }

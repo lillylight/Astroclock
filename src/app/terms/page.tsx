@@ -6,9 +6,9 @@ import { Header } from '../../components/Header';
 export default function TermsOfService() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Header isHomePage={false} />
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="bg-secondary p-8 rounded-2xl shadow-2xl border border-gray-700 mt-8">
+      <Header isHomePage={false} className="fixed top-0 left-0 w-full z-10" />
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex items-center justify-center">
+        <div className="bg-secondary p-8 rounded-2xl shadow-2xl border border-gray-700 mt-8 text-left">
           <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>
           
           <div className="prose prose-invert max-w-none">
@@ -100,6 +100,16 @@ export default function TermsOfService() {
               <br />
               <a href="mailto:magusdalochi@yahoo.com" className="text-indigo-400 hover:text-indigo-300">magusdalochi@yahoo.com</a>
             </p>
+
+            <h2 className="text-xl font-semibold mt-6 mb-3">13. Additional Disclaimers</h2>
+            <p>
+              By using this software, you acknowledge and agree that:
+            </p>
+            <ul className="list-disc pl-6 mt-2 mb-4">
+              <li>The predicted time may sometimes be inaccurate or incorrect due to the app's learning process and ongoing improvements.</li>
+              <li>Using this software is done at your own risk. The creator is not liable for any loss of funds, damages, or other consequences arising from the use of the Service.</li>
+              <li>Your privacy is important to us. We strive to protect user data and ensure confidentiality, but we cannot guarantee absolute security.</li>
+            </ul>
           </div>
         </div>
       </div>

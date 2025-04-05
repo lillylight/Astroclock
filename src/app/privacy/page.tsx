@@ -6,9 +6,9 @@ import { Header } from '../../components/Header';
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Header isHomePage={false} />
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="bg-secondary p-8 rounded-2xl shadow-2xl border border-gray-700 mt-8">
+      <Header isHomePage={false} className="fixed top-0 left-0 w-full z-10" />
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex items-center justify-center">
+        <div className="bg-secondary p-8 rounded-2xl shadow-2xl border border-gray-700 mt-8 text-left">
           <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
           
           <div className="prose prose-invert max-w-none">

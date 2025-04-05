@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface EnhancedEntryMethodProps {
@@ -10,15 +10,7 @@ interface EnhancedEntryMethodProps {
 export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
   const [hoverManual, setHoverManual] = useState(false);
   const [hoverUpload, setHoverUpload] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  
-  // Handle client-side mounting to prevent hydration errors
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  
-  if (!mounted) return null;
-  
+
   return (
     <div className="relative w-full max-w-md mx-auto">
       {/* Background glow effect */}

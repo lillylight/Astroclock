@@ -14,7 +14,7 @@ export function Header({ isHomePage }: HeaderProps) {
   
   return (
     <div className="text-center mb-8 mt-8 flex flex-col items-center">
-      <div className="relative mb-6">
+      <div className="relative mb-6 cursor-pointer" onClick={() => window.location.href = '/'}>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl opacity-50"></div>
         <div className="w-16 h-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-full flex items-center justify-center relative shadow-2xl overflow-hidden border border-indigo-500/30 animate-float">
           {/* 3-body problem solar system animation */}

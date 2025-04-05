@@ -13,7 +13,10 @@ const queryClient = new QueryClient();
 
 export function Providers(props: { children: ReactNode }) {
   // Log the API key being used (without revealing the full key)
-  const apiKey = process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY || "x2oazcx7sSFU0P41ucJj2fJ6fePAmMZf";
+  const apiKey = process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY;
+  if (!apiKey) {
+    throw new Error('NEXT_PUBLIC_ONCHAINKIT_API_KEY is not set in the environment variables.');
+  }
   console.log('Using OnchainKit API Key:', apiKey.substring(0, 5) + '...' + apiKey.substring(apiKey.length - 5));
   
   return (
