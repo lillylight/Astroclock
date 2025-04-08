@@ -23,7 +23,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-8 shadow-2xl relative overflow-hidden"
+        className="backdrop-blur-xl bg-gray-900/40 border border-gray-700/30 rounded-[32px] p-8 shadow-2xl relative overflow-hidden"
       >
         {/* Subtle background patterns */}
         <div className="absolute inset-0 opacity-5">
