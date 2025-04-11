@@ -25,55 +25,26 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
     
-    // Load state from localStorage on mount
-    try {
-      const savedState = localStorage.getItem('astroClockState');
-      if (savedState) {
-        const { step, birthData: savedBirthData, prediction: savedPrediction } = JSON.parse(savedState);
-        
-        // Check if we have a prediction already generated
-        const predictionGenerated = localStorage.getItem('predictionGenerated') === 'true';
-        
-        // If we're on the results page and have a prediction, use it
-        if (step === 'results' && savedPrediction && predictionGenerated) {
-          console.log('Using saved prediction from localStorage on page refresh');
-          setCurrentStep(step);
-          setBirthData(savedBirthData);
-          setPrediction(savedPrediction);
-        } else if (step !== 'results') {
-          // For other steps, just restore the state
-          setCurrentStep(step);
-          setBirthData(savedBirthData);
-          setPrediction(savedPrediction);
-        }
-      }
-    } catch (error) {
-      console.error('Error loading state from localStorage:', error);
-    }
+    // No longer loading state from localStorage on mount
+    // We want users to always start from the home page
   }, []);
   
   // Reset state when wallet connection changes
   useEffect(() => {
     if (mounted && isConnected) {
-      // Check if we need to reset the state
-      const shouldReset = localStorage.getItem('resetOnConnect') !== 'false';
+      // Always reset to initial state when connecting
+      setCurrentStep('form');
+      setBirthData(null);
+      setPrediction('');
+      setEntryMethod(null);
       
-      if (shouldReset) {
-        // Reset to initial state
-        setCurrentStep('form');
-        setBirthData(null);
-        setPrediction('');
-        setEntryMethod(null);
-        
-        // Clear localStorage state
-        localStorage.removeItem('astroClockState');
-        
-        // Set flag to prevent resetting again on reconnect
-        localStorage.setItem('resetOnConnect', 'false');
-      }
+      // Clear localStorage state
+      localStorage.removeItem('astroClockState');
+      localStorage.removeItem('paymentCompleted');
+      localStorage.removeItem('predictionGenerated');
     }
     
-    // When wallet disconnects, set flag to reset on next connect
+    // When wallet disconnects, we'll reset next time too
     if (mounted && !isConnected) {
       localStorage.setItem('resetOnConnect', 'true');
     }
