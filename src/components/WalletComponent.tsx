@@ -10,6 +10,7 @@ import {
   WalletDropdownLink,
   ConnectWalletText,
 } from '@coinbase/onchainkit/wallet';
+import { FundButton } from '@coinbase/onchainkit/fund';
 import {
   Avatar,
   Name,
@@ -108,7 +109,7 @@ export function WalletComponent() {
         <div className={`absolute inset-0 rounded-full blur-md opacity-20 ${isConnected ? 'bg-gradient-to-r from-green-400 to-indigo-500' : 'bg-gradient-to-r from-indigo-400 to-purple-500'}`}></div>
       </div>
       
-      <div ref={buttonRef}>
+      <div ref={buttonRef} className="relative">
         <Wallet>
           <ConnectWallet 
             className={`
@@ -179,9 +180,12 @@ export function WalletComponent() {
               !border-0 
               !overflow-visible 
               w-[90vw] 
-              max-w-[180px] 
-              md:max-w-[220px] 
-              right-2 
+              max-w-[230px] 
+              md:max-w-[280px] 
+              left-1/2 
+              -translate-x-1/2 
+              md:left-auto 
+              md:translate-x-0 
               md:right-0 
               ${dropDirection === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} 
               z-50
@@ -194,52 +198,30 @@ export function WalletComponent() {
                 <div className="absolute bottom-0 left-0 w-16 h-16 md:w-20 md:h-20 bg-green-500 rounded-full blur-xl"></div>
               </div>
               
-              <div className="px-3 pt-3 pb-2 md:px-4 md:pt-4 md:pb-3 bg-gray-800/90 relative">
-                <div className="flex items-center mb-1">
-                  <motion.button 
-                    className={`text-sm md:text-lg font-bold text-white cursor-pointer flex items-center ${copySuccess ? 'text-green-400' : 'text-white'}`}
-                    onClick={handleCopyAddress}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    aria-label="Copy wallet address"
-                  >
-                    {address 
-                      ? `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
-                      : '0x...'
-                    }
-                    
-                    <motion.svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className={`h-3 w-3 md:h-4 md:w-4 ml-1.5 ${copySuccess ? 'text-green-400' : 'text-gray-400'}`} 
-                      viewBox="0 0 20 20" 
-                      fill="currentColor"
-                      animate={copySuccess ? { scale: [1, 1.2, 1] } : {}}
-                      transition={{ duration: 0.3 }}
-                      aria-hidden="true"
-                    >
-                      {copySuccess ? (
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      ) : (
-                        <>
-                          <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                          <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                        </>
-                      )}
-                    </motion.svg>
-                  </motion.button>
-                </div>
-                <div className="text-green-400 text-xs md:text-sm font-medium flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 md:h-3.5 md:w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                    <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-                  </svg>
-                  0.0001 ETH
+              <div className="px-3 pt-3 pb-2 md:px-4 md:pt-4 md:pb-3 bg-[#1A1B1E] relative">
+                <div className="flex flex-col items-center mb-1">
+                  <span className="text-xs text-gray-400 uppercase tracking-wider mb-1">BALANCE</span>
+                  <div className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2 text-blue-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.9975 2L12 9.01685L17.1152 12L12 14.9895L11.9975 22L4.5 12L11.9975 2Z" fill="currentColor"/>
+                      <path d="M12 2L19.5 12L12 22L12 15.0105L16.5 12L12 9.01685V2Z" fill="currentColor" fillOpacity="0.6"/>
+                    </svg>
+                    <span className="text-xl md:text-2xl font-bold text-white">0.0001 ETH</span>
+                  </div>
                 </div>
               </div>
               
               <div className="py-1 px-1 md:py-2 md:px-2 relative z-10">
+                <div className="mb-2">
+                  <FundButton 
+                    className="w-full py-2 md:py-3 rounded-xl flex items-center justify-center bg-[#1A1B1E] hover:!bg-gray-700/90 text-white font-medium my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px] text-sm md:text-base"
+                    text="Add Funds"
+                    openIn="tab"
+                  />
+                </div>
+                
                 <WalletDropdownLink
-                  className="py-2 md:py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-3 pr-2 md:pl-4 md:pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px] text-sm md:text-base"
+                  className="py-2 md:py-3 rounded-xl flex items-center justify-center bg-[#1A1B1E] hover:!bg-gray-700/90 text-white font-medium pl-3 pr-2 md:pl-4 md:pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px] text-sm md:text-base"
                   icon="wallet"
                   href="https://keys.coinbase.com"
                   aria-label="Go to wallet"
@@ -248,7 +230,7 @@ export function WalletComponent() {
                 </WalletDropdownLink>
                 
                 <WalletDropdownLink
-                  className="py-2 md:py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-3 pr-2 md:pl-4 md:pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px] text-sm md:text-base"
+                  className="py-2 md:py-3 rounded-xl flex items-center justify-center bg-[#1A1B1E] hover:!bg-gray-700/90 text-white font-medium pl-3 pr-2 md:pl-4 md:pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px] text-sm md:text-base"
                   icon="wallet"
                   href={address ? `https://basescan.org/address/${address}` : '#'}
                   aria-label="View wallet on explorer"
@@ -257,7 +239,7 @@ export function WalletComponent() {
                 </WalletDropdownLink>
                 
                 <div className="pt-1 pb-1 md:pt-2 md:pb-2">
-                  <WalletDropdownDisconnect className="w-full bg-gray-800/80 hover:!bg-red-900/60 transition-all duration-200 py-2 md:py-3 rounded-xl text-white font-medium border border-gray-700/30 hover:border-red-500/30 hover:translate-y-[-2px] text-sm md:text-base" />
+                  <WalletDropdownDisconnect className="w-full bg-[#1A1B1E] hover:!bg-red-900/60 transition-all duration-200 py-2 md:py-3 rounded-xl text-white font-medium border border-gray-700/30 hover:border-red-500/30 hover:translate-y-[-2px] text-sm md:text-base" />
                 </div>
               </div>
             </div>

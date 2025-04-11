@@ -1,39 +1,33 @@
 'use client';
 
-import React from 'react';
-import type { ReactNode } from 'react';
-import { OnchainKitProvider } from '@coinbase/onchainkit';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
+import * as React from 'react';
+import { WagmiProvider, createConfig, http } from 'wagmi';
 import { base } from 'wagmi/chains';
-import { config } from './wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { OnchainKitProvider } from '@coinbase/onchainkit';
 
-// Create a client for React Query
+const config = createConfig({
+  chains: [base],
+  transports: {
+    [base.id]: http(),
+  },
+});
+
 const queryClient = new QueryClient();
 
-export function Providers(props: { children: ReactNode }) {
-  // Log the API key being used (without revealing the full key)
-  const apiKey = process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY;
-  if (!apiKey) {
-    throw new Error('NEXT_PUBLIC_ONCHAINKIT_API_KEY is not set in the environment variables.');
-  }
-  console.log('Using OnchainKit API Key:', apiKey.substring(0, 5) + '...' + apiKey.substring(apiKey.length - 5));
-  
+export function Providers({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <OnchainKitProvider
-          apiKey={apiKey}
-          chain={base} // Using Base mainnet for production
-          config={{
-            appearance: {
-              name: 'Astro Clock',
-              theme: 'dark',
-              logo: '/images/logo.png',
-            },
-          }}
+        <OnchainKitProvider 
+          apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
+          projectId={process.env.NEXT_PUBLIC_CDP_PROJECT_ID}
+          chain={base}
         >
-          {props.children}
+          {mounted && children}
         </OnchainKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
