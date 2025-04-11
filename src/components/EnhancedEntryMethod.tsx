@@ -12,10 +12,10 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
   const [hoverUpload, setHoverUpload] = useState(false);
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
+    <div className="relative w-full max-w-md mx-auto px-4 md:px-3 sm:px-2">
       {/* Background glow effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] blur-3xl opacity-50 transform scale-75"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] md:rounded-[30px] sm:rounded-[24px] blur-3xl opacity-50 transform scale-75"></div>
       </div>
       
       {/* Main container with glass effect */}
@@ -23,12 +23,12 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="backdrop-blur-xl bg-gray-900/40 border border-gray-700/30 rounded-[32px] p-8 shadow-2xl relative overflow-hidden"
+        className="backdrop-blur-xl bg-gray-900/40 border border-gray-700/30 rounded-[32px] md:rounded-[28px] sm:rounded-[20px] p-8 md:p-6 sm:p-4 shadow-2xl relative overflow-hidden"
       >
         {/* Subtle background patterns */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-40 h-40 md:w-32 md:h-32 sm:w-24 sm:h-24 bg-indigo-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-40 h-40 md:w-32 md:h-32 sm:w-24 sm:h-24 bg-purple-500 rounded-full blur-3xl"></div>
         </div>
         
         {/* Content */}
@@ -37,14 +37,14 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-3xl font-bold text-center mb-8 tracking-tight"
+            className="text-3xl md:text-2xl sm:text-xl font-bold text-center mb-8 md:mb-6 sm:mb-4 tracking-tight"
           >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-indigo-200 to-purple-300">
               Choose Entry Method
             </span>
           </motion.h2>
           
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-6 md:gap-4 sm:gap-3">
             {/* Manual Entry Option */}
             <motion.button
               initial={{ opacity: 0, x: -20 }}
@@ -55,11 +55,11 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onMouseLeave={() => setHoverManual(false)}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-2xl md:rounded-xl sm:rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-6 rounded-2xl transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
+              <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-6 md:p-5 sm:p-4 rounded-2xl md:rounded-xl sm:rounded-lg transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
                 {/* 3D Icon Container */}
-                <div className="relative w-24 h-24 mx-auto mb-4">
+                <div className="relative w-24 h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 mx-auto mb-4 md:mb-3 sm:mb-2">
                   {/* Base circle with gradient */}
                   <motion.div 
                     animate={{ 
@@ -93,7 +93,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                     transition={{ duration: 0.4 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <svg className="w-12 h-12 text-indigo-100 drop-shadow-[0_2px_3px_rgba(0,0,0,0.4)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-12 h-12 md:w-10 md:h-10 sm:w-8 sm:h-8 text-indigo-100 drop-shadow-[0_2px_3px_rgba(0,0,0,0.4)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M15.5 5L18 7.5M18 7.5L15.5 10M18 7.5H10M10 16.5L7.5 14M7.5 14L10 11.5M7.5 14H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       <path d="M12 3.5V3.5C16.1421 3.5 19.5 6.85786 19.5 11V13C19.5 17.1421 16.1421 20.5 12 20.5V20.5C7.85786 20.5 4.5 17.1421 4.5 13V11C4.5 6.85786 7.85786 3.5 12 3.5V3.5Z" stroke="currentColor" strokeWidth="1.5"/>
                     </svg>
@@ -107,14 +107,14 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                 <motion.span 
                   animate={{ y: hoverManual ? -2 : 0 }}
                   transition={{ duration: 0.2 }}
-                  className="block font-medium text-lg text-center text-white mb-1"
+                  className="block font-medium text-lg md:text-base sm:text-sm text-center text-white mb-1"
                 >
                   Enter Manually
                 </motion.span>
                 <motion.p 
                   animate={{ opacity: hoverManual ? 1 : 0.7 }}
                   transition={{ duration: 0.3 }}
-                  className="text-sm text-center text-gray-300"
+                  className="text-sm md:text-xs sm:text-xs text-center text-gray-300"
                 >
                   Input your physical traits
                 </motion.p>
@@ -131,11 +131,11 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onMouseLeave={() => setHoverUpload(false)}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-2xl md:rounded-xl sm:rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-6 rounded-2xl transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
+              <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-6 md:p-5 sm:p-4 rounded-2xl md:rounded-xl sm:rounded-lg transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
                 {/* 3D Icon Container */}
-                <div className="relative w-24 h-24 mx-auto mb-4">
+                <div className="relative w-24 h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 mx-auto mb-4 md:mb-3 sm:mb-2">
                   {/* Base circle with gradient */}
                   <motion.div 
                     animate={{ 
@@ -169,7 +169,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                     transition={{ duration: 0.4 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <svg className="w-12 h-12 text-indigo-100 drop-shadow-[0_2px_3px_rgba(0,0,0,0.4)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-12 h-12 md:w-10 md:h-10 sm:w-8 sm:h-8 text-indigo-100 drop-shadow-[0_2px_3px_rgba(0,0,0,0.4)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M4 16L8.586 11.414C8.96106 11.0391 9.46967 10.8284 10 10.8284C10.5303 10.8284 11.0389 11.0391 11.414 11.414L16 16M14 14L15.586 12.414C15.9611 12.0391 16.4697 11.8284 17 11.8284C17.5303 11.8284 18.0389 12.0391 18.414 12.414L20 14M14 8H14.01M6 20H18C18.5304 20 19.0391 19.7893 19.4142 19.4142C19.7893 19.0391 20 18.5304 20 18V6C20 5.46957 19.7893 4.96086 19.4142 4.58579C19.0391 4.21071 18.5304 4 18 4H6C5.46957 4 4.96086 4.21071 4.58579 4.58579C4.21071 4.96086 4 5.46957 4 6V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </motion.div>
@@ -182,14 +182,14 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                 <motion.span 
                   animate={{ y: hoverUpload ? -2 : 0 }}
                   transition={{ duration: 0.2 }}
-                  className="block font-medium text-lg text-center text-white mb-1"
+                  className="block font-medium text-lg md:text-base sm:text-sm text-center text-white mb-1"
                 >
                   Upload Photo
                 </motion.span>
                 <motion.p 
                   animate={{ opacity: hoverUpload ? 1 : 0.7 }}
                   transition={{ duration: 0.3 }}
-                  className="text-sm text-center text-gray-300"
+                  className="text-sm md:text-xs sm:text-xs text-center text-gray-300"
                 >
                   We'll analyze your image
                 </motion.p>
@@ -217,7 +217,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                   duration: 3 + Math.random() * 5,
                   delay: Math.random() * 5
                 }}
-                className="absolute w-1 h-1 bg-white rounded-full"
+                className="absolute w-1 h-1 md:w-0.8 md:h-0.8 sm:w-0.5 sm:h-0.5 bg-white rounded-full"
               />
             ))}
           </div>
