@@ -140,75 +140,60 @@ export function WalletComponent() {
           <Name className="font-medium" />
         </ConnectWallet>
         
-        <WalletDropdown className="!bg-transparent !shadow-none !border-0 !overflow-visible w-full max-w-[220px] sm:max-w-[180px] right-0 origin-top-right z-50">
-          <div className="backdrop-blur-md bg-gray-900/90 rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
-            {/* Subtle background patterns - reduced intensity */}
-            <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-500 rounded-full blur-xl sm:w-16 sm:h-16"></div>
-              <div className="absolute bottom-0 left-0 w-20 h-20 bg-green-500 rounded-full blur-xl sm:w-16 sm:h-16"></div>
+        <WalletDropdown className="!bg-transparent !shadow-none !border-0 !overflow-visible w-full max-w-[500px] sm:max-w-[300px] right-0 origin-top-right z-50">
+          {/* New dropdown menu design */}
+          <div className="bg-[#1e2126] rounded-[20px] shadow-2xl overflow-hidden border border-gray-700/20">
+            {/* Account bar with gradient background */}
+            <div className="bg-gradient-to-r from-[#2ecc71] to-[#26a69a] p-3 flex items-center">
+              <div className="w-7 h-7 bg-[#121418] rounded-full flex items-center justify-center mr-3">
+                <div className="w-3.5 h-3.5 bg-[#26a69a] rounded-full"></div>
+              </div>
+              <div 
+                className="text-[#121418] text-lg font-semibold cursor-pointer"
+                onClick={handleCopyAddress}
+              >
+                {address 
+                  ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+                  : '0x...'
+                }
+              </div>
             </div>
             
-            <div className="px-4 pt-4 pb-3 bg-gray-800/90 relative sm:px-3 sm:pt-3 sm:pb-2">
-              <div className="flex items-center mb-1">
-                <motion.div 
-                  className={`text-lg font-bold text-white cursor-pointer flex items-center ${copySuccess ? 'text-green-400' : 'text-white'}`}
-                  onClick={handleCopyAddress}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {address 
-                    ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-                    : '0x...'
-                  }
-                  
-                  <motion.svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className={`h-4 w-4 ml-1.5 ${copySuccess ? 'text-green-400' : 'text-gray-400'}`} 
-                    viewBox="0 0 20 20" 
-                    fill="currentColor"
-                    animate={copySuccess ? { scale: [1, 1.2, 1] } : {}}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {copySuccess ? (
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    ) : (
-                      <>
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                      </>
-                    )}
-                  </motion.svg>
-                </motion.div>
-              </div>
-              <div className="text-green-400 text-sm font-medium flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                  <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+            {/* Balance section */}
+            <div className="p-5">
+              <div className="text-sm text-gray-400 uppercase tracking-wider mb-2">BALANCE</div>
+              <div className="flex items-center text-3xl font-bold text-white mb-6">
+                <svg className="w-8 h-8 mr-3 text-gray-400" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.994-15.781L16.498 4 9 16.22l7.498 4.353 7.496-4.354zM16.498 27.11L9 19.566l7.498 5.43 7.496-5.43-7.496 7.544z"/>
                 </svg>
                 0.0001 ETH
               </div>
-            </div>
-            
-            <div className="py-2 px-2 relative z-10 sm:py-1 sm:px-1">
+              
+              {/* Menu items */}
               <WalletDropdownLink
-                className="py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-4 pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px]"
+                className="flex items-center bg-[#262a30] hover:bg-[#2d3238] rounded-2xl p-4 mb-3 transition-all duration-200"
                 icon="wallet"
                 href="https://keys.coinbase.com"
               >
-                Wallet
+                <div className="text-white text-lg font-medium">Wallet</div>
               </WalletDropdownLink>
               
-              <WalletDropdownLink
-                className="py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-4 pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px]"
-                icon="wallet"
-                href={address ? `https://basescan.org/address/${address}` : '#'}
-              >
-                View on Explorer
-              </WalletDropdownLink>
-              
-              <div className="pt-2 pb-2">
-                <WalletDropdownDisconnect className="w-full bg-gray-800/80 hover:!bg-red-900/60 transition-all duration-200 py-3 rounded-xl text-white font-medium border border-gray-700/30 hover:border-red-500/30 hover:translate-y-[-2px]" />
+              {/* Add Funds button styled as primary button */}
+              <div className="bg-[#4a6fee] hover:bg-[#3f64e0] rounded-2xl p-4 mb-3 transition-all duration-200 cursor-pointer text-center">
+                <div className="text-white text-lg font-medium">Add Funds</div>
               </div>
+              
+              {/* Disconnect button */}
+              <WalletDropdownDisconnect className="flex items-center bg-[#262a30] hover:bg-[#2d3238] rounded-2xl p-4 transition-all duration-200 w-full">
+                <div className="mr-4 text-gray-400">
+                  <svg className="w-6 h-6 transform scale-x-[-1]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M10 17L15 12L10 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M15 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="text-white text-lg font-medium">Disconnect</div>
+              </WalletDropdownDisconnect>
             </div>
           </div>
         </WalletDropdown>
