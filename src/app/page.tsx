@@ -33,6 +33,7 @@ export default function Home() {
         
         // Check if we have a prediction already generated
         const predictionGenerated = localStorage.getItem('predictionGenerated') === 'true';
+        const paymentCompleted = localStorage.getItem('paymentCompleted') === 'true';
         
         // If we're on the results page and have a prediction, use it
         if (step === 'results' && savedPrediction && predictionGenerated) {
@@ -40,11 +41,21 @@ export default function Home() {
           setCurrentStep(step);
           setBirthData(savedBirthData);
           setPrediction(savedPrediction);
+        } else if (step === 'payment' && paymentCompleted) {
+          // If payment is completed but we're still on payment page, move to results
+          setCurrentStep('results');
+          setBirthData(savedBirthData);
+          setPrediction(savedPrediction || '');
         } else if (step !== 'results') {
           // For other steps, just restore the state
           setCurrentStep(step);
           setBirthData(savedBirthData);
           setPrediction(savedPrediction);
+          
+          // If we have birth data, make sure entry method is set
+          if (savedBirthData && savedBirthData.method) {
+            setEntryMethod(savedBirthData.method as 'manual' | 'upload');
+          }
         }
       }
     } catch (error) {
@@ -234,8 +245,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4 py-8">
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         <WalletWrapper />
         
         {showWelcome && (
@@ -247,19 +258,19 @@ export default function Home() {
         
         {/* Header is now included in each component */}
         
-        <div className="flex flex-col justify-center items-center h-[70vh]">
+        <div className="flex flex-col justify-center items-center h-auto md:h-[70vh]">
           {!isConnected ? (
-            <div className="max-w-md mx-auto">
-              <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 p-6 rounded-2xl text-center shadow-lg border border-indigo-500/30 backdrop-filter backdrop-blur-sm">
+            <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+              <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 p-4 sm:p-6 rounded-2xl text-center shadow-lg border border-indigo-500/30 backdrop-filter backdrop-blur-sm">
                 <div className="flex items-center justify-center mb-3">
-                  <svg className="w-6 h-6 text-yellow-300 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-300 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  <p className="text-yellow-300 font-medium">
+                  <p className="text-yellow-300 font-medium text-sm sm:text-base">
                     Wallet Connection Required
                   </p>
                 </div>
-                <p className="text-gray-300 text-sm">
+                <p className="text-gray-300 text-xs sm:text-sm">
                   Please connect your wallet using the button in the top right corner to access Astro Clock.
                 </p>
               </div>
@@ -274,7 +285,7 @@ export default function Home() {
             )}
             
             {currentStep === 'form' && entryMethod !== null && (
-              <div className="animate-slide-left">
+              <div className="animate-slide-left w-full max-w-md px-2 sm:px-0">
                 <BirthDetailsForm 
                   onSubmit={handleFormSubmit} 
                   initialMethod={entryMethod}
@@ -283,34 +294,34 @@ export default function Home() {
             )}
             
             {currentStep === 'payment' && (
-              <div className="animate-slide-left">
+              <div className="animate-slide-left w-full max-w-md px-2 sm:px-0">
                 <PaymentComponent onPaymentSuccess={handlePaymentSuccess} />
               </div>
             )}
             
             {currentStep === 'results' && (
-              <div className="animate-slide-left" key="results-container">
+              <div className="animate-slide-left w-full max-w-md px-2 sm:px-0" key="results-container">
                 {isGenerating ? (
-                  <div className="max-w-md mx-auto bg-secondary bg-opacity-90 backdrop-filter backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-gray-600/30 text-center">
-                    <h2 className="text-2xl font-bold mb-6 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300">Generating Your Reading</h2>
-                    <div className="flex justify-center items-center h-40 relative">
+                  <div className="max-w-md mx-auto bg-secondary bg-opacity-90 backdrop-filter backdrop-blur-md p-6 sm:p-8 rounded-3xl shadow-2xl border border-gray-600/30 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300">Generating Your Reading</h2>
+                    <div className="flex justify-center items-center h-32 sm:h-40 relative">
                       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-full blur-3xl opacity-50"></div>
                       <div className="relative">
                         <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-indigo-500"></div>
                         <div className="relative flex items-center justify-center">
-                          <div className="w-24 h-24 rounded-full border-t-2 border-b-2 border-l-2 border-indigo-400 animate-spin"></div>
-                          <div className="w-20 h-20 rounded-full border-r-2 border-t-2 border-purple-400 animate-spin absolute" style={{ animationDirection: 'reverse', animationDuration: '3s' }}></div>
-                          <div className="w-16 h-16 bg-gray-800/80 rounded-full flex items-center justify-center absolute shadow-lg overflow-hidden border border-indigo-500/30">
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-t-2 border-b-2 border-l-2 border-indigo-400 animate-spin"></div>
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-r-2 border-t-2 border-purple-400 animate-spin absolute" style={{ animationDirection: 'reverse', animationDuration: '3s' }}></div>
+                          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-800/80 rounded-full flex items-center justify-center absolute shadow-lg overflow-hidden border border-indigo-500/30">
                             {/* 3-body problem solar system animation */}
-                            <div className="absolute w-2 h-2 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
+                            <div className="absolute w-1.5 sm:w-2 h-1.5 sm:h-2 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
                               style={{ 
                                 animation: 'orbit1 8s linear infinite',
                               }}></div>
-                            <div className="absolute w-1.5 h-1.5 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
+                            <div className="absolute w-1 sm:w-1.5 h-1 sm:h-1.5 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
                               style={{ 
                                 animation: 'orbit2 12s linear infinite',
                               }}></div>
-                            <div className="absolute w-1.5 h-1.5 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
+                            <div className="absolute w-1 sm:w-1.5 h-1 sm:h-1.5 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
                               style={{ 
                                 animation: 'orbit3 10s linear infinite',
                               }}></div>
@@ -318,10 +329,10 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-300 mt-4">
+                    <p className="text-gray-300 mt-4 text-sm sm:text-base">
                       Please wait while we analyze the cosmic energies...
                     </p>
-                    <div className="mt-4 text-xs text-gray-500 animate-pulse">
+                    <div className="mt-4 text-xxs sm:text-xs text-gray-500 animate-pulse">
                       This may take a few moments
                     </div>
                   </div>

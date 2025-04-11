@@ -28,13 +28,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <head>
         <MetaTags />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
       </head>
       <body
         suppressHydrationWarning={true}
-        className="antialiased bg-gray-900 text-white flex flex-col min-h-screen sm:text-sm sm:px-2"
+        className="antialiased bg-gray-900 text-white flex flex-col min-h-screen sm:text-sm sm:px-2 overflow-x-hidden"
       >
         <Providers>
-          <div className="flex-grow">
+          <div className="flex-grow w-full overflow-x-hidden">
             {children}
           </div>
           <Footer />
