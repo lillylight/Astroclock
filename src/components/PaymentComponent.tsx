@@ -215,19 +215,19 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
   return (
     <>
       <Header isHomePage={false} />
-      <div className="max-w-md mx-auto bg-secondary bg-opacity-90 p-6 rounded-3xl shadow-2xl border border-gray-600/30 text-center my-8 mx-4 sm:my-4 sm:mx-2">
-        <h2 className="text-2xl font-bold mb-4 sm:text-xl">Complete Your Payment</h2>
-        <p className="mb-6 text-gray-300 sm:mb-4 sm:text-sm">
+      <div className="max-w-md mx-auto bg-secondary bg-opacity-90 p-6 md:p-5 sm:p-4 rounded-3xl md:rounded-2xl sm:rounded-xl shadow-2xl border border-gray-600/30 text-center my-8 md:my-6 sm:my-4 mx-4 md:mx-3 sm:mx-2">
+        <h2 className="text-2xl md:text-xl sm:text-lg font-bold mb-4 md:mb-3 sm:mb-2">Complete Your Payment</h2>
+        <p className="mb-6 md:mb-5 sm:mb-4 text-gray-300 md:text-sm sm:text-xs">
           To receive your personalized birth time prediction, please complete the payment of $1 USDC.
         </p>
         
         {showDisclaimer ? (
-          <div className="bg-gray-800/70 p-6 rounded-2xl mb-6 border border-gray-700/50 shadow-lg sm:p-4 sm:mb-4">
-            <h3 className="text-xl font-bold mb-4 sm:text-lg">Disclaimer</h3>
-            <p className="mb-4 text-gray-300 sm:text-sm">
+          <div className="bg-gray-800/70 p-6 md:p-5 sm:p-4 rounded-2xl md:rounded-xl sm:rounded-lg mb-6 md:mb-5 sm:mb-4 border border-gray-700/50 shadow-lg">
+            <h3 className="text-xl md:text-lg sm:text-base font-bold mb-4 md:mb-3 sm:mb-2">Disclaimer</h3>
+            <p className="mb-4 md:mb-3 sm:mb-2 text-gray-300 md:text-sm sm:text-xs">
               By proceeding with this payment, you acknowledge that:
             </p>
-            <ul className="text-left text-gray-300 mb-6 space-y-2 sm:mb-4 sm:text-sm">
+            <ul className="text-left text-gray-300 mb-6 md:mb-5 sm:mb-4 space-y-2 md:space-y-1.5 sm:space-y-1 md:text-sm sm:text-xs">
               <li className="flex items-start">
                 <span className="mr-2">•</span>
                 <span>This is an experimental service and results are for entertainment purposes only.</span>
@@ -241,42 +241,42 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                 <span>The accuracy of birth time predictions cannot be guaranteed.</span>
               </li>
             </ul>
-            <div className="flex space-x-4 sm:space-x-2">
+            <div className="flex space-x-4 md:space-x-3 sm:space-x-2">
               <button
                 onClick={handleCancelDisclaimer}
-                className="flex-1 py-3 bg-gray-700/80 hover:bg-gray-600/80 rounded-full shadow-lg sm:py-2"
+                className="flex-1 py-3 md:py-2.5 sm:py-2 bg-gray-700/80 hover:bg-gray-600/80 rounded-full shadow-lg sm:text-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAcceptDisclaimer}
-                className="flex-1 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 rounded-full shadow-lg font-medium sm:py-2"
+                className="flex-1 py-3 md:py-2.5 sm:py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 rounded-full shadow-lg font-medium sm:text-sm"
               >
                 I Understand
               </button>
             </div>
           </div>
         ) : disclaimerAccepted ? (
-          <div className="mb-6 sm:mb-4">
+          <div className="mb-6 md:mb-5 sm:mb-4">
             {!isConnected ? (
-              <div className="bg-gradient-to-r from-yellow-900/30 to-amber-900/30 p-4 rounded-2xl mb-4 border border-yellow-700/30 shadow-lg sm:p-3 sm:mb-3">
-                <div className="flex items-center justify-center mb-2">
-                  <svg className="w-5 h-5 text-yellow-300 mr-2 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <div className="bg-gradient-to-r from-yellow-900/30 to-amber-900/30 p-4 md:p-3 sm:p-2 rounded-2xl md:rounded-xl sm:rounded-lg mb-4 md:mb-3 sm:mb-2 border border-yellow-700/30 shadow-lg">
+                <div className="flex items-center justify-center mb-2 sm:mb-1">
+                  <svg className="w-5 h-5 md:w-4 md:h-4 sm:w-3.5 sm:h-3.5 text-yellow-300 mr-2 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-yellow-300 font-medium sm:text-sm">
+                  <p className="text-yellow-300 font-medium md:text-sm sm:text-xs">
                     Wallet Connection Required
                   </p>
                 </div>
-                <p className="text-sm text-yellow-200 mt-2 sm:text-xs">
+                <p className="text-sm md:text-xs sm:text-xs text-yellow-200 mt-2 md:mt-1.5 sm:mt-1">
                   Please connect your wallet using the button in the top right corner.
                 </p>
               </div>
             ) : (
               <div>
-                <div className="relative mb-6 p-6 bg-gray-800/70 rounded-2xl border border-gray-700/50 shadow-lg sm:p-4 sm:mb-4">
+                <div className="relative mb-6 md:mb-5 sm:mb-4 p-6 md:p-5 sm:p-4 bg-gray-800/70 rounded-2xl md:rounded-xl sm:rounded-lg border border-gray-700/50 shadow-lg">
                   {error && (
-                    <div className="bg-red-900/30 p-3 rounded-xl mb-4 text-red-300 text-sm sm:p-2 sm:mb-3">
+                    <div className="bg-red-900/30 p-3 md:p-2.5 sm:p-2 rounded-xl md:rounded-lg sm:rounded-md mb-4 md:mb-3 sm:mb-2 text-red-300 text-sm md:text-xs sm:text-xs">
                       {error}
                     </div>
                   )}
@@ -284,24 +284,24 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                   <div className="relative">
                     {/* Always render the Checkout component or the success UI */}
                     {paymentVerified ? (
-                      <div className="bg-green-900/30 p-4 rounded-xl text-green-300 flex flex-col items-center justify-center max-h-[60vh] overflow-hidden sm:p-3">
-                        <svg className="w-10 h-10 text-green-400 mb-2 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <div className="bg-green-900/30 p-4 md:p-3 sm:p-2 rounded-xl md:rounded-lg sm:rounded-md text-green-300 flex flex-col items-center justify-center max-h-[60vh] overflow-hidden">
+                        <svg className="w-10 h-10 md:w-8 md:h-8 sm:w-6 sm:h-6 text-green-400 mb-2 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="text-lg font-bold mb-1 sm:text-base">Payment Verified!</h3>
-                        <p className="mb-2 text-sm sm:text-xs">Your payment has been successfully processed.</p>
-                        <p className="text-xs sm:text-[10px]">Preparing your personalized birth time prediction...</p>
-                        <div className="mt-3 w-full bg-gray-700/50 h-2 rounded-full overflow-hidden sm:mt-2">
+                        <h3 className="text-lg md:text-base sm:text-sm font-bold mb-1 sm:mb-0.5">Payment Verified!</h3>
+                        <p className="mb-2 md:mb-1.5 sm:mb-1 text-sm md:text-xs sm:text-xs">Your payment has been successfully processed.</p>
+                        <p className="text-xs md:text-[10px] sm:text-[10px]">Preparing your personalized birth time prediction...</p>
+                        <div className="mt-3 md:mt-2 sm:mt-1.5 w-full bg-gray-700/50 h-2 md:h-1.5 sm:h-1 rounded-full overflow-hidden">
                           <div className="bg-gradient-to-r from-green-400 to-teal-500 h-full rounded-full animate-pulse" style={{ width: '100%' }}></div>
                         </div>
                         
-                        <div className="mt-4 py-2 px-4 bg-indigo-900/50 rounded-xl text-indigo-200 animate-pulse sm:mt-3 sm:py-1 sm:px-3">
-                          <p className="font-medium text-sm sm:text-xs">Generating prediction...</p>
-                          <p className="text-xs mt-1 sm:text-[10px]">Please wait while we prepare your results</p>
+                        <div className="mt-4 md:mt-3 sm:mt-2 py-2 md:py-1.5 sm:py-1 px-4 md:px-3 sm:px-2 bg-indigo-900/50 rounded-xl md:rounded-lg sm:rounded-md text-indigo-200 animate-pulse">
+                          <p className="font-medium text-sm md:text-xs sm:text-[10px]">Generating prediction...</p>
+                          <p className="text-xs md:text-[10px] sm:text-[10px] mt-1 md:mt-0.5 sm:mt-0.5">Please wait while we prepare your results</p>
                         </div>
                         
                         {receiptUrl && (
-                          <p className="mt-3 text-xs text-green-200 sm:mt-2 sm:text-[10px]">
+                          <p className="mt-3 md:mt-2 sm:mt-1.5 text-xs md:text-[10px] sm:text-[10px] text-green-200">
                             A receipt has been opened in a new tab.
                           </p>
                         )}
@@ -310,7 +310,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                       <>
                         {/* Use the Coinbase Commerce Checkout component */}
                         <Checkout productId={productId}>
-                          <CheckoutButton className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 rounded-full shadow-lg font-medium sm:py-2" />
+                          <CheckoutButton className="w-full py-3 md:py-2.5 sm:py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 rounded-full shadow-lg font-medium sm:text-sm" />
                           <CheckoutStatus />
                         </Checkout>
                       </>
@@ -318,14 +318,14 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                   </div>
                 </div>
                 
-                <div className="flex flex-col items-center justify-center space-y-2 mb-4 sm:space-y-1 sm:mb-3">
-                  <div className="flex items-center text-xs text-gray-400 sm:text-[10px]">
-                    <svg className="w-4 h-4 mr-1 text-indigo-400 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex flex-col items-center justify-center space-y-2 md:space-y-1.5 sm:space-y-1 mb-4 md:mb-3 sm:mb-2">
+                  <div className="flex items-center text-xs md:text-[10px] sm:text-[10px] text-gray-400">
+                    <svg className="w-4 h-4 md:w-3.5 md:h-3.5 sm:w-3 sm:h-3 mr-1 sm:mr-0.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
                     Using Base mainnet for payments
                   </div>
-                  <div className="text-xs text-gray-500 sm:text-[10px]">
+                  <div className="text-xs md:text-[10px] sm:text-[10px] text-gray-500">
                     Make sure your wallet is connected to the Base network
                   </div>
                 </div>
@@ -333,18 +333,18 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
             )}
           </div>
         ) : (
-          <div className="mb-6 sm:mb-4">
+          <div className="mb-6 md:mb-5 sm:mb-4">
             <button
               onClick={handlePredictClick}
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 py-3 px-6 rounded-full w-full shadow-lg font-medium sm:py-2 sm:px-4"
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 py-3 md:py-2.5 sm:py-2 px-6 md:px-5 sm:px-4 rounded-full w-full shadow-lg font-medium sm:text-sm"
             >
               Predict Birth Time
             </button>
           </div>
         )}
         
-        <div className="flex items-center justify-center text-sm text-gray-400 sm:text-xs">
-          <svg className="w-4 h-4 mr-1 text-gray-500 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <div className="flex items-center justify-center text-sm md:text-xs sm:text-[10px] text-gray-400">
+          <svg className="w-4 h-4 md:w-3.5 md:h-3.5 sm:w-3 sm:h-3 mr-1 sm:mr-0.5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"></path>
           </svg>
           Your payment is processed securely through Coinbase Commerce
