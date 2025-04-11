@@ -100,9 +100,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
   return (
     <>
       {/* Main content container with responsive dimensions */}
-      <div className="relative max-w-2xl mx-auto px-4 md:px-3 sm:px-2 flex items-center justify-center py-16 md:py-12 sm:py-8">
+      <div className="relative max-w-2xl mx-auto px-4 md:px-3 sm:px-2 xs:px-1 flex items-center justify-center py-16 md:py-12 sm:py-8 xs:py-6">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] blur-3xl opacity-50 transform scale-75"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] md:rounded-[30px] sm:rounded-[24px] xs:rounded-[16px] blur-3xl opacity-50 transform scale-75"></div>
         </div>
         
         {/* Main container with glass effect */}
@@ -110,19 +110,19 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] md:rounded-[28px] sm:rounded-[24px] p-6 md:p-5 sm:p-4 shadow-2xl overflow-visible w-full"
+          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] md:rounded-[28px] sm:rounded-[20px] xs:rounded-[16px] p-6 md:p-5 sm:p-4 xs:p-3 shadow-2xl overflow-visible w-full"
         >
           {/* Subtle background patterns */}
           <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-0 right-0 w-40 h-40 md:w-32 md:h-32 sm:w-24 sm:h-24 bg-indigo-500 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-40 h-40 md:w-32 md:h-32 sm:w-24 sm:h-24 bg-purple-500 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-40 h-40 md:w-32 md:h-32 sm:w-24 sm:h-24 xs:w-16 xs:h-16 bg-indigo-500 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-40 h-40 md:w-32 md:h-32 sm:w-24 sm:h-24 xs:w-16 xs:h-16 bg-purple-500 rounded-full blur-3xl"></div>
           </div>
           
           {/* Content */}
           <div className="relative z-10">
             <motion.h2 
               variants={itemVariants}
-              className="text-3xl md:text-2xl sm:text-xl font-bold text-center mb-8 md:mb-6 sm:mb-4 tracking-tight"
+              className="text-3xl md:text-2xl sm:text-xl xs:text-lg font-bold text-center mb-8 md:mb-6 sm:mb-4 xs:mb-3 tracking-tight"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-indigo-200 to-purple-300">
                 Your Birth Time Prediction
@@ -131,22 +131,22 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
             
             <motion.div 
               variants={itemVariants}
-              className="bg-gray-800/70 p-6 md:p-5 sm:p-4 rounded-3xl md:rounded-2xl sm:rounded-xl whitespace-pre-wrap shadow-inner border border-gray-700/50 backdrop-blur-sm mb-6 md:mb-5 sm:mb-4"
+              className="bg-gray-800/70 p-6 md:p-5 sm:p-4 xs:p-2.5 rounded-3xl md:rounded-2xl sm:rounded-xl xs:rounded-lg whitespace-pre-wrap shadow-inner border border-gray-700/50 backdrop-blur-sm mb-6 md:mb-5 sm:mb-4 xs:mb-3"
             >
               {isLoading ? (
-                <div className="flex justify-center items-center h-40 md:h-32 sm:h-24">
-                  <div className="animate-spin rounded-full h-12 w-12 md:h-10 md:w-10 sm:h-8 sm:w-8 border-t-2 border-b-2 border-indigo-400"></div>
+                <div className="flex justify-center items-center h-40 md:h-32 sm:h-24 xs:h-20">
+                  <div className="animate-spin rounded-full h-12 w-12 md:h-10 md:w-10 sm:h-8 sm:w-8 xs:h-6 xs:w-6 border-t-2 border-b-2 border-indigo-400"></div>
                 </div>
               ) : (
                 <div 
                   ref={contentRef}
-                  className="prose prose-invert max-w-none overflow-y-auto max-h-[400px] md:max-h-[350px] sm:max-h-[250px] pr-2 break-words scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-700"
+                  className="prose prose-invert max-w-none overflow-y-auto max-h-[400px] md:max-h-[350px] sm:max-h-[250px] xs:max-h-[200px] pr-2 break-words scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-700"
                   style={{ 
                     scrollbarWidth: 'thin',
                     scrollbarColor: '#6366f1 #374151'
                   }}
                 >
-                  <div className="text-white whitespace-pre-line md:text-sm sm:text-xs">
+                  <div className="text-white whitespace-pre-line md:text-sm sm:text-xs xs:text-[10px]">
                     {prediction}
                   </div>
                 </div>
@@ -155,15 +155,15 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
             
             <motion.div 
               variants={itemVariants}
-              className="flex flex-wrap justify-center gap-4 md:gap-3 sm:gap-2 mt-6 md:mt-5 sm:mt-4 max-w-md mx-auto"
+              className="flex flex-wrap justify-center gap-4 md:gap-3 sm:gap-2 xs:gap-1.5 mt-6 md:mt-5 sm:mt-4 xs:mt-3 max-w-md mx-auto"
             >
               <motion.button
                 onClick={handleDownload}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="py-2 px-4 md:py-1.5 md:px-3 sm:py-1 sm:px-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl md:rounded-lg sm:rounded-md transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-sm md:text-xs sm:text-xs font-medium border border-purple-500/30 backdrop-blur-sm"
+                className="py-2 px-4 md:py-1.5 md:px-3 sm:py-1 sm:px-2 xs:py-0.5 xs:px-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl md:rounded-lg sm:rounded-md xs:rounded transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-sm md:text-xs sm:text-xs xs:text-[9px] font-medium border border-purple-500/30 backdrop-blur-sm"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 md:h-3.5 md:w-3.5 sm:h-3 sm:w-3 sm:mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 md:h-3.5 md:w-3.5 sm:h-3 sm:w-3 sm:mr-1 xs:h-2.5 xs:w-2.5 xs:mr-0.5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
                 Download
@@ -174,9 +174,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                   onClick={toggleShareMenu}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="py-2 px-4 md:py-1.5 md:px-3 sm:py-1 sm:px-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl md:rounded-lg sm:rounded-md transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-sm md:text-xs sm:text-xs font-medium border border-indigo-500/30 backdrop-blur-sm"
+                  className="py-2 px-4 md:py-1.5 md:px-3 sm:py-1 sm:px-2 xs:py-0.5 xs:px-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl md:rounded-lg sm:rounded-md xs:rounded transition-all duration-300 hover:shadow-[0_0_20px_rgba(129,140,248,0.6)] flex items-center shadow-lg text-sm md:text-xs sm:text-xs xs:text-[9px] font-medium border border-indigo-500/30 backdrop-blur-sm"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 md:h-3.5 md:w-3.5 sm:h-3 sm:w-3 sm:mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 md:h-3.5 md:w-3.5 sm:h-3 sm:w-3 sm:mr-1 xs:h-2.5 xs:w-2.5 xs:mr-0.5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                   </svg>
                   Share
@@ -189,14 +189,14 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      className="absolute top-full mt-3 md:mt-2 sm:mt-1.5 flex flex-col bg-gray-800/95 rounded-xl md:rounded-lg sm:rounded-md shadow-xl border border-gray-700/50 p-3 md:p-2.5 sm:p-2 w-52 md:w-48 sm:w-44 z-10 backdrop-blur-sm"
+                      className="absolute top-full mt-3 md:mt-2 sm:mt-1.5 xs:mt-1 flex flex-col bg-gray-800/95 rounded-xl md:rounded-lg sm:rounded-md xs:rounded shadow-xl border border-gray-700/50 p-3 md:p-2.5 sm:p-2 xs:p-1.5 w-52 md:w-48 sm:w-44 xs:w-32 z-10 backdrop-blur-sm"
                     >
                       <motion.button
                         onClick={handleCopyToClipboard}
                         whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                        className="flex items-center p-3 md:p-2.5 sm:p-2 hover:bg-gray-700/60 rounded-lg md:rounded-md sm:rounded-md text-left text-sm md:text-xs sm:text-xs transition-all duration-200"
+                        className="flex items-center p-3 md:p-2.5 sm:p-2 xs:p-1.5 hover:bg-gray-700/60 rounded-lg md:rounded-md sm:rounded xs:rounded text-left text-sm md:text-xs sm:text-xs xs:text-[9px] transition-all duration-200"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-4 md:w-4 sm:h-3.5 sm:w-3.5 sm:mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-4 md:w-4 sm:h-3.5 sm:w-3.5 sm:mr-1.5 xs:h-2.5 xs:w-2.5 xs:mr-1" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
                           <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
                         </svg>
@@ -206,23 +206,25 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                       <motion.button
                         onClick={handleShareToX}
                         whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                        className="flex items-center p-3 md:p-2.5 sm:p-2 hover:bg-gray-700/60 rounded-lg md:rounded-md sm:rounded-md text-left text-sm md:text-xs sm:text-xs transition-all duration-200"
+                        className="flex items-center p-3 md:p-2.5 sm:p-2 xs:p-1.5 hover:bg-gray-700/60 rounded-lg md:rounded-md sm:rounded xs:rounded text-left text-sm md:text-xs sm:text-xs xs:text-[9px] transition-all duration-200"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-4 md:w-4 sm:h-3.5 sm:w-3.5 sm:mr-1.5" viewBox="0 0 24 24" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-4 md:w-4 sm:h-3.5 sm:w-3.5 sm:mr-1.5 xs:h-2.5 xs:w-2.5 xs:mr-1" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                         </svg>
-                        Share on X
+                        <span className="md:inline sm:inline xs:hidden">Share on X</span>
+                        <span className="md:hidden sm:hidden xs:inline">X</span>
                       </motion.button>
                       
                       <motion.button
                         onClick={handleShareToFacebook}
                         whileHover={{ backgroundColor: "rgba(75, 85, 99, 0.6)" }}
-                        className="flex items-center p-3 md:p-2.5 sm:p-2 hover:bg-gray-700/60 rounded-lg md:rounded-md sm:rounded-md text-left text-sm md:text-xs sm:text-xs transition-all duration-200"
+                        className="flex items-center p-3 md:p-2.5 sm:p-2 xs:p-1.5 hover:bg-gray-700/60 rounded-lg md:rounded-md sm:rounded xs:rounded text-left text-sm md:text-xs sm:text-xs xs:text-[9px] transition-all duration-200"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-4 md:w-4 sm:h-3.5 sm:w-3.5 sm:mr-1.5" viewBox="0 0 24 24" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-4 md:w-4 sm:h-3.5 sm:w-3.5 sm:mr-1.5 xs:h-2.5 xs:w-2.5 xs:mr-1" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
-                        Share on Facebook
+                        <span className="md:inline sm:inline xs:hidden">Share on Facebook</span>
+                        <span className="md:hidden sm:hidden xs:inline">Facebook</span>
                       </motion.button>
                     </motion.div>
                   )}
@@ -233,9 +235,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                 onClick={onNewReading}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="py-2 px-4 md:py-1.5 md:px-3 sm:py-1 sm:px-2 bg-gradient-to-br from-pink-500 to-orange-400 hover:from-pink-400 hover:to-orange-300 rounded-xl md:rounded-lg sm:rounded-md transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,114,182,0.6)] flex items-center shadow-lg text-sm md:text-xs sm:text-xs font-medium border border-pink-500/30 backdrop-blur-sm"
+                className="py-2 px-4 md:py-1.5 md:px-3 sm:py-1 sm:px-2 xs:py-0.5 xs:px-1.5 bg-gradient-to-br from-pink-500 to-orange-400 hover:from-pink-400 hover:to-orange-300 rounded-xl md:rounded-lg sm:rounded-md xs:rounded transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,114,182,0.6)] flex items-center shadow-lg text-sm md:text-xs sm:text-xs xs:text-[9px] font-medium border border-pink-500/30 backdrop-blur-sm"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 md:h-3.5 md:w-3.5 sm:h-3 sm:w-3 sm:mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 md:h-3.5 md:w-3.5 sm:h-3 sm:w-3 sm:mr-1 xs:h-2.5 xs:w-2.5 xs:mr-0.5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
                 </svg>
                 New Reading
@@ -244,9 +246,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
             
             <motion.div 
               variants={itemVariants}
-              className="mt-6 md:mt-5 sm:mt-4 text-center"
+              className="mt-6 md:mt-5 sm:mt-4 xs:mt-3 text-center"
             >
-              <p className="text-sm md:text-xs sm:text-[10px] text-gray-400">
+              <p className="text-sm md:text-xs sm:text-[10px] xs:text-[8px] text-gray-400">
                 This is an experimental service and results may vary. Use for entertainment purposes only.
               </p>
             </motion.div>
@@ -271,7 +273,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
                     duration: 3 + Math.random() * 5,
                     delay: Math.random() * 5
                   }}
-                  className="absolute w-1 h-1 bg-white rounded-full md:w-0.8 md:h-0.8 sm:w-0.5 sm:h-0.5"
+                  className="absolute w-1 h-1 md:w-0.8 md:h-0.8 sm:w-0.5 sm:h-0.5 xs:w-0.5 xs:h-0.5 bg-white rounded-full"
                 />
               ))}
             </div>

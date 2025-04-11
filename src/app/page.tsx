@@ -119,7 +119,7 @@ export default function Home() {
   if (!mounted) {
     return (
       <main className="min-h-screen bg-background text-foreground">
-        <div className="container mx-auto px-4 py-8"></div>
+        <div className="container mx-auto px-4 py-8 sm:px-3 xs:px-2 sm:py-6 xs:py-4"></div>
       </main>
     );
   }
@@ -235,7 +235,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 md:px-3 sm:px-2 xs:px-1 md:py-6 sm:py-5 xs:py-4">
         <WalletWrapper />
         
         {showWelcome && (
@@ -247,19 +247,19 @@ export default function Home() {
         
         {/* Header is now included in each component */}
         
-        <div className="flex flex-col justify-center items-center h-[70vh]">
+        <div className="flex flex-col justify-center items-center min-h-[70vh] md:min-h-[65vh] sm:min-h-[60vh] xs:min-h-[50vh]">
           {!isConnected ? (
-            <div className="max-w-md mx-auto">
-              <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 p-6 rounded-2xl text-center shadow-lg border border-indigo-500/30 backdrop-filter backdrop-blur-sm">
-                <div className="flex items-center justify-center mb-3">
-                  <svg className="w-6 h-6 text-yellow-300 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div className="max-w-md mx-auto md:max-w-sm sm:max-w-xs xs:max-w-[90%]">
+              <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 p-6 md:p-5 sm:p-4 xs:p-3 rounded-2xl md:rounded-xl sm:rounded-lg xs:rounded text-center shadow-lg border border-indigo-500/30 backdrop-filter backdrop-blur-sm">
+                <div className="flex items-center justify-center mb-3 md:mb-2 sm:mb-1.5 xs:mb-1">
+                  <svg className="w-6 h-6 md:w-5 md:h-5 sm:w-4 sm:h-4 xs:w-3.5 xs:h-3.5 text-yellow-300 mr-2 md:mr-1.5 sm:mr-1 xs:mr-0.5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  <p className="text-yellow-300 font-medium">
+                  <p className="text-yellow-300 font-medium md:text-sm sm:text-xs xs:text-[10px]">
                     Wallet Connection Required
                   </p>
                 </div>
-                <p className="text-gray-300 text-sm">
+                <p className="text-gray-300 text-sm md:text-xs sm:text-[10px] xs:text-[9px]">
                   Please connect your wallet using the button in the top right corner to access Astro Clock.
                 </p>
               </div>
@@ -291,26 +291,26 @@ export default function Home() {
             {currentStep === 'results' && (
               <div className="animate-slide-left" key="results-container">
                 {isGenerating ? (
-                  <div className="max-w-md mx-auto bg-secondary bg-opacity-90 backdrop-filter backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-gray-600/30 text-center">
-                    <h2 className="text-2xl font-bold mb-6 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300">Generating Your Reading</h2>
-                    <div className="flex justify-center items-center h-40 relative">
+                  <div className="max-w-md mx-auto md:max-w-sm sm:max-w-xs xs:max-w-[90%] bg-secondary bg-opacity-90 backdrop-filter backdrop-blur-md p-8 md:p-6 sm:p-4 xs:p-3 rounded-3xl md:rounded-2xl sm:rounded-xl xs:rounded-lg shadow-2xl border border-gray-600/30 text-center">
+                    <h2 className="text-2xl md:text-xl sm:text-lg xs:text-base font-bold mb-6 md:mb-5 sm:mb-4 xs:mb-3 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300">Generating Your Reading</h2>
+                    <div className="flex justify-center items-center h-40 md:h-32 sm:h-24 xs:h-20 relative">
                       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-full blur-3xl opacity-50"></div>
                       <div className="relative">
                         <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-indigo-500"></div>
                         <div className="relative flex items-center justify-center">
-                          <div className="w-24 h-24 rounded-full border-t-2 border-b-2 border-l-2 border-indigo-400 animate-spin"></div>
-                          <div className="w-20 h-20 rounded-full border-r-2 border-t-2 border-purple-400 animate-spin absolute" style={{ animationDirection: 'reverse', animationDuration: '3s' }}></div>
-                          <div className="w-16 h-16 bg-gray-800/80 rounded-full flex items-center justify-center absolute shadow-lg overflow-hidden border border-indigo-500/30">
+                          <div className="w-24 h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 xs:w-12 xs:h-12 rounded-full border-t-2 border-b-2 border-l-2 border-indigo-400 animate-spin"></div>
+                          <div className="w-20 h-20 md:w-16 md:h-16 sm:w-12 sm:h-12 xs:w-10 xs:h-10 rounded-full border-r-2 border-t-2 border-purple-400 animate-spin absolute" style={{ animationDirection: 'reverse', animationDuration: '3s' }}></div>
+                          <div className="w-16 h-16 md:w-12 md:h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 bg-gray-800/80 rounded-full flex items-center justify-center absolute shadow-lg overflow-hidden border border-indigo-500/30">
                             {/* 3-body problem solar system animation */}
-                            <div className="absolute w-2 h-2 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
+                            <div className="absolute w-2 h-2 md:w-1.5 md:h-1.5 sm:w-1 sm:h-1 xs:w-0.5 xs:h-0.5 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
                               style={{ 
                                 animation: 'orbit1 8s linear infinite',
                               }}></div>
-                            <div className="absolute w-1.5 h-1.5 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
+                            <div className="absolute w-1.5 h-1.5 md:w-1 md:h-1 sm:w-0.75 sm:h-0.75 xs:w-0.5 xs:h-0.5 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
                               style={{ 
                                 animation: 'orbit2 12s linear infinite',
                               }}></div>
-                            <div className="absolute w-1.5 h-1.5 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
+                            <div className="absolute w-1.5 h-1.5 md:w-1 md:h-1 sm:w-0.75 sm:h-0.75 xs:w-0.5 xs:h-0.5 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
                               style={{ 
                                 animation: 'orbit3 10s linear infinite',
                               }}></div>
@@ -318,10 +318,10 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-300 mt-4">
+                    <p className="text-gray-300 mt-4 md:mt-3 sm:mt-2 xs:mt-1.5 md:text-sm sm:text-xs xs:text-[10px]">
                       Please wait while we analyze the cosmic energies...
                     </p>
-                    <div className="mt-4 text-xs text-gray-500 animate-pulse">
+                    <div className="mt-4 md:mt-3 sm:mt-2 xs:mt-1.5 text-xs md:text-[10px] sm:text-[9px] xs:text-[8px] text-gray-500 animate-pulse">
                       This may take a few moments
                     </div>
                   </div>
