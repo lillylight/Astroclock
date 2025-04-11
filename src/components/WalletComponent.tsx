@@ -169,7 +169,7 @@ export function WalletComponent() {
                 0.0001 ETH
               </div>
               
-              {/* Menu items */}
+              {/* Menu items - fixed to use string children for WalletDropdownLink */}
               <WalletDropdownLink
                 className="flex items-center bg-[#262a30] hover:bg-[#2d3238] rounded-2xl p-4 mb-3 transition-all duration-200 text-white text-lg font-medium"
                 icon="wallet"
@@ -183,9 +183,9 @@ export function WalletComponent() {
                 <div className="text-white text-lg font-medium">Add Funds</div>
               </div>
               
-              {/* Disconnect button */}
-              <WalletDropdownDisconnect>
-                <div className="flex items-center bg-[#262a30] hover:bg-[#2d3238] rounded-2xl p-4 transition-all duration-200 w-full">
+              {/* Disconnect button - fixed to properly wrap with children */}
+              <div className="pt-2 pb-2">
+                <WalletDropdownDisconnect className="w-full bg-[#262a30] hover:bg-[#2d3238] rounded-2xl p-4 transition-all duration-200 text-white text-lg font-medium flex items-center">
                   <div className="mr-4 text-gray-400">
                     <svg className="w-6 h-6 transform scale-x-[-1]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M15 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -193,9 +193,9 @@ export function WalletComponent() {
                       <path d="M15 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <div className="text-white text-lg font-medium">Disconnect</div>
-                </div>
-              </WalletDropdownDisconnect>
+                  Disconnect
+                </WalletDropdownDisconnect>
+              </div>
             </div>
           </div>
         </WalletDropdown>

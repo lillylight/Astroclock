@@ -16,7 +16,8 @@ import {
 } from '@coinbase/onchainkit/identity';
 import { useAccount } from 'wagmi';
 
-export function WalletComponent() {
+// Renamed component to avoid naming conflicts with WalletComponent.tsx
+export function LegacyWalletComponent() {
   const { isConnected, address } = useAccount();
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
