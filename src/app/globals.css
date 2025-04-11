@@ -249,6 +249,15 @@ body::after {
   --accent: #e2e2e2;
 }
 
+/* Better color contrast */
+.text-gray-300 {
+  color: #d1d5db; /* Improved contrast from gray-400 */
+}
+
+.text-gray-400 {
+  color: #9ca3af; /* Original gray-400 - keep for reference */
+}
+
 /* Media query for very small screens */
 @media (max-width: 340px) {
   .sm\:px-2 {
@@ -259,5 +268,34 @@ body::after {
   .container {
     padding-left: 0.25rem;
     padding-right: 0.25rem;
+  }
+  
+  /* Ensure content fits in very small screens */
+  .text-sm {
+    font-size: 0.8rem;
+  }
+  
+  .text-xs {
+    font-size: 0.7rem;
+  }
+}
+
+/* Improved button focus states for accessibility */
+button:focus-visible, 
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
+
+/* Add reduced motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

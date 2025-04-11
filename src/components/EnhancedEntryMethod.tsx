@@ -26,7 +26,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
         className="backdrop-blur-xl bg-gray-900/40 border border-gray-700/30 rounded-[32px] p-4 md:p-8 shadow-2xl relative overflow-hidden"
       >
         {/* Subtle background patterns */}
-        <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 opacity-5" aria-hidden="true">
           <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
         </div>
@@ -54,12 +54,13 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onMouseEnter={() => setHoverManual(true)}
               onMouseLeave={() => setHoverManual(false)}
               className="relative group"
+              aria-label="Choose manual entry method"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
               
               <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-4 md:p-6 rounded-2xl transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
                 {/* 3D Icon Container */}
-                <div className="relative w-16 h-16 md:w-24 md:h-24 mx-auto mb-4">
+                <div className="relative w-16 h-16 md:w-24 md:h-24 mx-auto mb-4" aria-hidden="true">
                   {/* Base circle with gradient */}
                   <motion.div 
                     animate={{ 
@@ -130,12 +131,13 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onMouseEnter={() => setHoverUpload(true)}
               onMouseLeave={() => setHoverUpload(false)}
               className="relative group"
+              aria-label="Choose photo upload method"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
               
               <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-4 md:p-6 rounded-2xl transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
                 {/* 3D Icon Container */}
-                <div className="relative w-16 h-16 md:w-24 md:h-24 mx-auto mb-4">
+                <div className="relative w-16 h-16 md:w-24 md:h-24 mx-auto mb-4" aria-hidden="true">
                   {/* Base circle with gradient */}
                   <motion.div 
                     animate={{ 
@@ -198,7 +200,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
           </div>
           
           {/* Subtle animated stars */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
             {[...Array(20)].map((_, i) => (
               <motion.div
                 key={i}
