@@ -34,35 +34,9 @@ export function WalletComponent() {
     setMounted(true);
   }, []);
   
-  // Set flag to reset state on wallet connection
-  useEffect(() => {
-    if (!isConnected && mounted) {
-      // Set flag to reset on connect
-      localStorage.setItem('resetOnConnect', 'true');
-    }
-  }, [isConnected, mounted]);
-
   useEffect(() => {
     if (isConnected) {
-      // Removed logic for automatic redirection to the payment page
       console.log('Wallet is connected');
-    } else {
-      // Reset the redirection flag when disconnected
-      localStorage.removeItem('hasRedirected');
-    }
-  }, [isConnected]);
-
-  useEffect(() => {
-    if (isConnected) {
-      // Check if the user is on the prediction page
-      const currentPath = window.location.pathname;
-
-      if (currentPath === '/prediction') {
-        console.log('User is on the prediction page');
-        // Add logic to handle prediction page behavior
-      } else {
-        console.log('User navigated away from the prediction page');
-      }
     }
   }, [isConnected]);
 
@@ -167,14 +141,7 @@ export function WalletComponent() {
                   icon="wallet"
                   href="https://keys.coinbase.com"
                 >
-                  <span className="flex items-center justify-center">
-                    <svg className="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                      <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" fill="currentColor"/>
-                      <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5"/>
-                    </svg>
-                    Wallet
-                  </span>
+                  Wallet
                 </WalletDropdownLink>
                 
                 <FundButton 
@@ -182,12 +149,12 @@ export function WalletComponent() {
                   text="Add Funds"
                   productId={process.env.NEXT_PUBLIC_PRODUCT_ID || "2bde99f3-84a0-4b81-9338-430eafdb9c36"}
                 >
-                  <span className="flex items-center justify-center w-full">
+                  <div className="flex items-center pl-4">
                     <svg className="h-5 w-5 mr-3 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12 4V20M4 12H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     Add Funds
-                  </span>
+                  </div>
                 </FundButton>
                 
                 <WalletDropdownDisconnect className="w-full bg-[#1a1b25] transition-all duration-200 py-3 rounded-xl text-white font-medium flex items-center pl-4">
