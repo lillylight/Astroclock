@@ -9,8 +9,8 @@ import {
   WalletDropdownDisconnect,
   WalletDropdownLink,
   ConnectWalletText,
+  CheckoutWithCard as FundButton,
 } from '@coinbase/onchainkit/wallet';
-import { FundButton } from '@coinbase/onchainkit/fund';
 import {
   Avatar,
   Name,
@@ -21,38 +21,30 @@ export function WalletComponent() {
   const { isConnected, address } = useAccount();
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
-  
-  // Handle client-side mounting to prevent hydration errors
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  
-  // Set flag to reset state on wallet connection
+
   useEffect(() => {
     if (!isConnected && mounted) {
-      // Set flag to reset on connect
       localStorage.setItem('resetOnConnect', 'true');
     }
   }, [isConnected, mounted]);
 
   useEffect(() => {
     if (isConnected) {
-      // Removed logic for automatic redirection to the payment page
       console.log('Wallet is connected');
     } else {
-      // Reset the redirection flag when disconnected
       localStorage.removeItem('hasRedirected');
     }
   }, [isConnected]);
 
   useEffect(() => {
     if (isConnected) {
-      // Check if the user is on the prediction page
       const currentPath = window.location.pathname;
-
       if (currentPath === '/prediction') {
         console.log('User is on the prediction page');
-        // Add logic to handle prediction page behavior
       } else {
         console.log('User navigated away from the prediction page');
       }
@@ -66,24 +58,13 @@ export function WalletComponent() {
       setTimeout(() => setCopySuccess(false), 2000);
     }
   };
-  
+
   if (!mounted) {
-    return (
-      <div className="flex justify-end p-4 relative sm:p-2">
-        <div className="absolute right-4 top-4 w-40 h-12 pointer-events-none sm:w-32 sm:h-10">
-          <div className="absolute inset-0 rounded-full blur-md opacity-20 bg-gradient-to-r from-gray-400 to-gray-500"></div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
     <div className="flex justify-end p-4 relative sm:p-2">
-      {/* Subtle background glow effect - positioned behind the button */}
-      <div className="absolute right-4 top-4 w-40 h-12 pointer-events-none sm:w-32 sm:h-10">
-        <div className={`absolute inset-0 rounded-full blur-md opacity-20 ${isConnected ? 'bg-gradient-to-r from-green-400 to-indigo-500' : 'bg-gradient-to-r from-indigo-400 to-purple-500'}`}></div>
-      </div>
-      
       <Wallet>
         <ConnectWallet 
           className={`
@@ -140,15 +121,14 @@ export function WalletComponent() {
           </ConnectWalletText>
           <Name className="font-medium" />
         </ConnectWallet>
-        
+
         <WalletDropdown className="!bg-transparent !shadow-none !border-0 !overflow-visible w-full max-w-[220px] sm:max-w-[180px] right-0 origin-top-right z-50">
           <div className="backdrop-blur-md bg-gray-900/90 rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
-            {/* Subtle background patterns - reduced intensity */}
             <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
               <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-500 rounded-full blur-xl sm:w-16 sm:h-16"></div>
               <div className="absolute bottom-0 left-0 w-20 h-20 bg-green-500 rounded-full blur-xl sm:w-16 sm:h-16"></div>
             </div>
-            
+
             <div className="px-4 pt-4 pb-3 bg-gray-800/90 relative sm:px-3 sm:pt-3 sm:pb-2">
               <div className="flex items-center mb-1">
                 <motion.div 
@@ -161,7 +141,6 @@ export function WalletComponent() {
                     ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
                     : '0x...'
                   }
-                  
                   <motion.svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className={`h-4 w-4 ml-1.5 ${copySuccess ? 'text-green-400' : 'text-gray-400'}`} 
@@ -189,7 +168,7 @@ export function WalletComponent() {
                 0.0001 ETH
               </div>
             </div>
-            
+
             <div className="py-2 px-2 relative z-10 sm:py-1 sm:px-1">
               <WalletDropdownLink
                 className="py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-4 pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px]"
@@ -198,12 +177,12 @@ export function WalletComponent() {
               >
                 Wallet
               </WalletDropdownLink>
-              
+
               <FundButton 
                 className="w-full py-3 rounded-xl flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-medium my-1 transition-all duration-200"
                 text="Add Funds"
               />
-              
+
               <div className="pt-2 pb-2">
                 <WalletDropdownDisconnect className="w-full bg-gray-800/80 hover:!bg-red-900/60 transition-all duration-200 py-3 rounded-xl text-white font-medium border border-gray-700/30 hover:border-red-500/30 hover:translate-y-[-2px]" />
               </div>
