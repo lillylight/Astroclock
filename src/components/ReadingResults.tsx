@@ -97,10 +97,46 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
     }
   };
 
+  'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+
+interface ReadingResultsProps {
+  prediction: string;
+  onNewReading: () => void;
+}
+
+export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps) {
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  };
+
   return (
     <>
       {/* Main content container with fixed height and proper spacing */}
-      <div className="relative max-w-2xl mx-auto px-4 min-h-screen flex items-center justify-center py-24">
+      <div className="relative w-full max-w-2xl mx-auto px-4 md:min-h-[70vh] flex items-center justify-center py-12 sm:py-16">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] blur-3xl opacity-50 transform scale-75"></div>
         </div>
@@ -110,7 +146,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-6 shadow-2xl overflow-visible"
+          className="relative backdrop-blur-xl bg-gray-900/60 border border-gray-700/50 rounded-[32px] p-4 sm:p-6 shadow-2xl overflow-visible w-full max-w-full"
         >
           {/* Subtle background patterns */}
           <div className="absolute inset-0 opacity-5">
@@ -122,7 +158,7 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
           <div className="relative z-10">
             <motion.h2 
               variants={itemVariants}
-              className="text-3xl font-bold text-center mb-8 tracking-tight"
+              className="text-2xl sm:text-3xl font-bold text-center mb-4 sm:mb-8 tracking-tight"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-indigo-200 to-purple-300">
                 Your Birth Time Prediction
@@ -244,9 +280,9 @@ export function ReadingResults({ prediction, onNewReading }: ReadingResultsProps
             
             <motion.div 
               variants={itemVariants}
-              className="mt-6 text-center"
+              className="mt-4 sm:mt-6 text-center"
             >
-              <p className="text-sm text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-400 px-2">
                 This is an experimental service and results may vary. Use for entertainment purposes only.
               </p>
             </motion.div>

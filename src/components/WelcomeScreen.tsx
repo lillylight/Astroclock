@@ -102,28 +102,28 @@ export function WelcomeScreen({ onComplete, isWalletConnected }: WelcomeScreenPr
   if (step === 1) {
     return (
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 cursor-pointer"
+        className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 cursor-pointer px-4 sm:px-6"
         onClick={handleNextStep}
       >
         <style jsx>{animationStyles}</style>
         <div 
-          className="bg-secondary p-5 rounded-2xl max-w-sm w-full animate-slide-left shadow-2xl border border-gray-700"
+          className="bg-secondary p-4 sm:p-5 rounded-2xl max-w-sm w-full animate-slide-left shadow-2xl border border-gray-700"
           onClick={(e) => e.stopPropagation()} // Prevent clicks on the content from closing
         >
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold font-serif">How It Works</h2>
+          <div className="text-center mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold font-serif">How It Works</h2>
           </div>
           
           {/* Logo removed from How It Works screen as requested */}
           
-          <div className="space-y-3 mb-6">
+          <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
             <div className="flex items-start bg-gray-800 bg-opacity-50 p-2 rounded-xl hover:bg-opacity-70 transition-all">
-              <div className="bg-gray-200 text-gray-800 rounded-full w-6 h-6 flex items-center justify-center shrink-0 mr-2 shadow-md">
-                <span className="font-medium text-sm">1</span>
+              <div className="bg-gray-200 text-gray-800 rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center shrink-0 mr-2 shadow-md">
+                <span className="font-medium text-xs sm:text-sm">1</span>
               </div>
               <div>
-                <h3 className="font-medium font-serif text-sm">Enter Your Birth Details</h3>
-                <p className="text-gray-300 text-xs">
+                <h3 className="font-medium font-serif text-xs sm:text-sm">Enter Your Birth Details</h3>
+                <p className="text-gray-300 text-[10px] sm:text-xs">
                   Provide your birth location, date, and approximate time of day.
                 </p>
               </div>

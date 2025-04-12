@@ -3,8 +3,13 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
+'use client';
+
+import React from 'react';
+import { usePathname } from 'next/navigation';
+
 interface HeaderProps {
-  isHomePage: boolean;
+  isHomePage?: boolean;
   className?: string;
 }
 
@@ -14,20 +19,20 @@ export function Header({ isHomePage }: HeaderProps) {
   const isHome = isHomePage !== undefined ? isHomePage : pathname === '/' || pathname === '/nako';
 
   return (
-    <div className="text-center mb-8 mt-8 flex flex-col items-center">
-      <div className="relative mb-6 cursor-pointer" onClick={() => window.location.href = '/'}>
+    <div className="text-center mb-4 sm:mb-8 mt-4 sm:mt-8 flex flex-col items-center px-4">
+      <div className="relative mb-4 sm:mb-6 cursor-pointer" onClick={() => window.location.href = '/'}>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl opacity-50"></div>
-        <div className="w-16 h-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-full flex items-center justify-center relative shadow-2xl overflow-hidden border border-indigo-500/30 animate-float">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-full flex items-center justify-center relative shadow-2xl overflow-hidden border border-indigo-500/30 animate-float">
           {/* 3-body problem solar system animation */}
-          <div className="absolute w-3 h-3 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
+          <div className="absolute w-2 sm:w-3 h-2 sm:h-3 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
             style={{ 
               animation: 'orbit1 8s linear infinite',
             }}></div>
-          <div className="absolute w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
+          <div className="absolute w-1.5 sm:w-2 h-1.5 sm:h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
             style={{ 
               animation: 'orbit2 12s linear infinite',
             }}></div>
-          <div className="absolute w-2 h-2 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
+          <div className="absolute w-1.5 sm:w-2 h-1.5 sm:h-2 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
             style={{ 
               animation: 'orbit3 10s linear infinite',
             }}></div>

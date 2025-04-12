@@ -10,6 +10,10 @@
   --accent: #e2e2e2;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   color: var(--foreground);
   min-height: 100vh;
@@ -253,5 +257,40 @@ body::after {
 @media (max-width: 640px) {
   .container {
     padding: 0 0.5rem;
+  }
+  
+  h1, h2, h3 {
+    word-break: break-word;
+  }
+  
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Fix for horizontal overflow */
+#__next, 
+.main, 
+body > div {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Improved text truncation for small screens */
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* For entry method icons */
+@media (max-width: 360px) {
+  .w-20 {
+    width: 4rem;
+  }
+  .h-20 {
+    height: 4rem;
   }
 }
