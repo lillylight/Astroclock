@@ -15,19 +15,19 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
         content: process.env.OPENAI_SYSTEM_PROMPT_ASTROLOGY
       }
     ];
-    
+
     // Construct the text prompt
     let textPrompt = `Generate a detailed vedic astrological birth time prediction based on the following information:\n`;
     textPrompt += `Location: ${birthData.location}\n`;
     textPrompt += `Date: ${birthData.date}\n`;
     textPrompt += `Approximate Time of Day: ${birthData.timeOfDay}\n`;
-    
+
     // Note: We're relying on GPT-4.5's knowledge to calculate sunrise/sunset times
     // based on the location and date provided
-    
+
     if (birthData.method === 'manual' && birthData.physicalDescription) {
       textPrompt += `\nPhysical Description:\n${birthData.physicalDescription}\n`;
-      
+
       // Add text prompt to messages
       messages.push({
         role: "user",
@@ -59,7 +59,7 @@ export async function generateAstrologicalReading(birthData: BirthFormData): Pro
         content: textPrompt
       });
     }
-    
+
     messages.push({
       role: "user",
       content: `Please format your response using this exact template:
@@ -97,7 +97,7 @@ export async function analyzeImageAndPredictBirthTime(imageData: string, birthDa
     // The imageData is already a data URL (e.g., data:image/jpeg;base64,/9j/4AAQ...)
     // so we can use it directly without reading from the filesystem
     const imageUrl = imageData;
-    
+
     // Create a system prompt that guides the model to focus on Vedic astrology principles
     const systemPrompt = ` you are Heru, programmed to accurately predict an individual's birth time from the ascendant using Kundil (Vedic) Astrology calculations. You analyze characteristics that correspond to ascendant sign's traits. Using accurate and precise geographical and temporal details, you utilize the exact astronomical data to cross-reference these aspects with detailed Kundil ascendant physical characteristics and rigorous analysis of Vedic Ephemeris data. This entails acquiring a precise and accurate understanding of the planetary influences to get the exact time of birth. Pay attention to the time each sign takes in each house and Use the Lahiri Ayanamsa, also make think harder and use intuition when choosing the right ascendant. dont write the calculation's text just give me the predicted time and ascendant instead. 
 
@@ -111,13 +111,13 @@ Provide a detailed analysis explaining which physical features you observed and 
 
     // Create a user prompt that includes both birth details and instructs to analyze the image
     let userPrompt = "Please analyze this image to extract physical traits and facial features, then match them with classic Vedic astrology ascendant sign traits.";
-    
+
     // Add birth data if available
     if (birthData) {
       userPrompt = `Generate a detailed vedic astrological birth time prediction based on the following information AND the attached photo:\n
 Location: ${birthData.location}\nDate: ${birthData.date}\nApproximate Time of Day: ${birthData.timeOfDay}\n\nPlease analyze the attached photo to extract physical traits and facial features, then match them with classic Vedic astrology ascendant sign traits. Based on the perfect match between physical traits and classic vedic ascendant signs, determine the most accurate birth time.`;
     }
-    
+
     // Call the OpenAI API using the chat.completions.create method with vision capabilities
     const response = await openai.chat.completions.create({
       model: "gpt-4.5-preview",
