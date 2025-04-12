@@ -17,8 +17,8 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
   
-  // Get the product ID from environment variables
-  const productId = process.env.NEXT_PUBLIC_PRODUCT_ID || '';
+  // Use a fixed product ID
+  const productId = '2bde99f3-84a0-4b81-9338-430eafdb9c36';
 
   // Set up an effect to listen for payment status changes
   useEffect(() => {

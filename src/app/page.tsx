@@ -24,32 +24,8 @@ export default function Home() {
   // Handle client-side mounting to prevent hydration errors
   useEffect(() => {
     setMounted(true);
-    
-    // Load state from localStorage on mount
-    try {
-      const savedState = localStorage.getItem('astroClockState');
-      if (savedState) {
-        const { step, birthData: savedBirthData, prediction: savedPrediction } = JSON.parse(savedState);
-        
-        // Check if we have a prediction already generated
-        const predictionGenerated = localStorage.getItem('predictionGenerated') === 'true';
-        
-        // If we're on the results page and have a prediction, use it
-        if (step === 'results' && savedPrediction && predictionGenerated) {
-          console.log('Using saved prediction from localStorage on page refresh');
-          setCurrentStep(step);
-          setBirthData(savedBirthData);
-          setPrediction(savedPrediction);
-        } else if (step !== 'results') {
-          // For other steps, just restore the state
-          setCurrentStep(step);
-          setBirthData(savedBirthData);
-          setPrediction(savedPrediction);
-        }
-      }
-    } catch (error) {
-      console.error('Error loading state from localStorage:', error);
-    }
+    // No automatic redirection or state restoration from localStorage
+    console.log('Component mounted, starting fresh with form step');
   }, []);
   
   // Handle wallet connection without automatic redirection
@@ -59,18 +35,10 @@ export default function Home() {
     }
   }, [isConnected, mounted]);
   
-  // Save state whenever it changes
+  // We're keeping state in memory without forcing redirects
   useEffect(() => {
     if (mounted) {
-      try {
-        localStorage.setItem('astroClockState', JSON.stringify({
-          step: currentStep,
-          birthData,
-          prediction
-        }));
-      } catch (error) {
-        console.error('Error saving state to localStorage:', error);
-      }
+      console.log('Current application state:', { currentStep, birthData: !!birthData });
     }
   }, [currentStep, birthData, prediction, mounted]);
   
@@ -120,36 +88,11 @@ export default function Home() {
   const handlePaymentSuccess = async () => {
     console.log('Payment success callback triggered in page.tsx');
     
-    // Set payment completed flag
-    localStorage.setItem('paymentCompleted', 'true');
-    localStorage.setItem('predictionGenerated', 'true');
+    // No localStorage flags used, just proceed with the logic
     
     if (!birthData) {
       console.error('Birth data is missing, cannot generate reading');
       setPrediction('Error: Birth data is missing. Please start over and try again.');
-      setCurrentStep('results');
-      return;
-    }
-    
-    // Check if we already have a saved prediction for this birth data
-    try {
-      const savedState = localStorage.getItem('astroClockState');
-      if (savedState) {
-        const { prediction: savedPrediction } = JSON.parse(savedState);
-        
-        // If we have a saved prediction, use it instead of making a new API call
-        if (savedPrediction && savedPrediction.length > 0) {
-          console.log('Using saved prediction from localStorage');
-          setPrediction(savedPrediction);
-          setCurrentStep('results');
-          return;
-        }
-      }
-    } catch (error) {
-      console.error('Error checking localStorage for saved prediction:', error);
-      // Do not continue with API call if there's an error checking localStorage
-      // Instead, show an error message and set to results step
-      setPrediction('Error retrieving your saved prediction. Please try starting a new reading.');
       setCurrentStep('results');
       return;
     }
@@ -208,9 +151,8 @@ export default function Home() {
     setEntryMethod(null);
     setCurrentStep('form');
     
-    // Clear the payment and prediction status in localStorage
-    localStorage.removeItem('paymentCompleted');
-    localStorage.removeItem('predictionGenerated');
+    // No localStorage to clean up
+    console.log('Starting a new reading');
   };
 
   return (

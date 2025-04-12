@@ -147,7 +147,9 @@ export function WalletComponent() {
                 <FundButton 
                   className="w-full py-3 rounded-xl flex items-center bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-200"
                   text="Add Funds"
-                  productId={process.env.NEXT_PUBLIC_PRODUCT_ID || "2bde99f3-84a0-4b81-9338-430eafdb9c36"}
+                  productId="2bde99f3-84a0-4b81-9338-430eafdb9c36"
+                  onSuccess={(data) => console.log('Funding successful:', data)}
+                  onError={(error) => console.error('Funding error:', error)}
                 >
                   <div className="flex items-center pl-4">
                     <svg className="h-5 w-5 mr-3 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
