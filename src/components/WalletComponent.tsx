@@ -59,6 +59,7 @@ export function WalletComponent() {
     }
   }, [isConnected]);
 
+  // We're removing the copy address functionality since it's not in the new design
   const handleCopyAddress = () => {
     if (address) {
       navigator.clipboard.writeText(address);
@@ -142,70 +143,42 @@ export function WalletComponent() {
         </ConnectWallet>
         
         <WalletDropdown className="!bg-transparent !shadow-none !border-0 !overflow-visible w-full max-w-[220px] sm:max-w-[180px] right-0 origin-top-right z-50">
-          <div className="backdrop-blur-md bg-gray-900/90 rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
-            {/* Subtle background patterns - reduced intensity */}
-            <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-500 rounded-full blur-xl sm:w-16 sm:h-16"></div>
-              <div className="absolute bottom-0 left-0 w-20 h-20 bg-green-500 rounded-full blur-xl sm:w-16 sm:h-16"></div>
-            </div>
-            
-            <div className="px-4 pt-4 pb-3 bg-gray-800/90 relative sm:px-3 sm:pt-3 sm:pb-2">
-              <div className="flex items-center mb-1">
-                <motion.div 
-                  className={`text-lg font-bold text-white cursor-pointer flex items-center ${copySuccess ? 'text-green-400' : 'text-white'}`}
-                  onClick={handleCopyAddress}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {address 
-                    ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-                    : '0x...'
-                  }
-                  
-                  <motion.svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className={`h-4 w-4 ml-1.5 ${copySuccess ? 'text-green-400' : 'text-gray-400'}`} 
-                    viewBox="0 0 20 20" 
-                    fill="currentColor"
-                    animate={copySuccess ? { scale: [1, 1.2, 1] } : {}}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {copySuccess ? (
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    ) : (
-                      <>
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                      </>
-                    )}
-                  </motion.svg>
-                </motion.div>
-              </div>
-              <div className="text-green-400 text-sm font-medium flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                  <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+          <div className="bg-[#111218] rounded-2xl shadow-2xl overflow-hidden border border-gray-800">
+            <div className="p-4 pb-2">
+              <div className="uppercase text-gray-400 text-xs font-semibold mb-1">BALANCE</div>
+              <div className="flex items-center text-white text-lg font-bold mb-4">
+                <svg className="h-5 w-5 mr-2 text-gray-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.9999 2L4.80005 12.6L12 16.2L19.2 12.6L11.9999 2Z" fill="currentColor"/>
+                  <path d="M12 16.2L4.8 12.6L12 22L19.2 12.6L12 16.2Z" fill="currentColor" fillOpacity="0.7"/>
                 </svg>
                 0.0001 ETH
               </div>
-            </div>
-            
-            <div className="py-2 px-2 relative z-10 sm:py-1 sm:px-1">
-              <WalletDropdownLink
-                className="py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-4 pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px]"
-                icon="wallet"
-                href="https://keys.coinbase.com"
-              >
-                Wallet
-              </WalletDropdownLink>
               
-              <FundButton 
-                className="w-full py-3 rounded-xl flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-medium my-1 transition-all duration-200"
-                text="Add Funds"
-              />
-              
-              <div className="pt-2 pb-2">
-                <WalletDropdownDisconnect className="w-full bg-gray-800/80 hover:!bg-red-900/60 transition-all duration-200 py-3 rounded-xl text-white font-medium border border-gray-700/30 hover:border-red-500/30 hover:translate-y-[-2px]" />
+              <div className="space-y-2">
+                <WalletDropdownLink
+                  className="py-3 rounded-xl flex items-center bg-[#1a1b25] text-white font-medium pl-4 pr-2 transition-all duration-200"
+                  icon="wallet"
+                  href="https://keys.coinbase.com"
+                >
+                  <svg className="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" fill="currentColor"/>
+                    <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5"/>
+                  </svg>
+                  Wallet
+                </WalletDropdownLink>
+                
+                <FundButton 
+                  className="w-full py-3 rounded-xl flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-200"
+                  text="Add Funds"
+                />
+                
+                <WalletDropdownDisconnect className="w-full bg-[#1a1b25] transition-all duration-200 py-3 rounded-xl text-white font-medium flex items-center pl-4">
+                  <svg className="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 8L22 12M22 12L18 16M22 12H9M15 4.20404C13.7252 3.43827 12.2452 3 10.6667 3C5.8802 3 2 7.02944 2 12C2 16.9706 5.8802 21 10.6667 21C12.2452 21 13.7252 20.5617 15 19.796" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Disconnect
+                </WalletDropdownDisconnect>
               </div>
             </div>
           </div>
