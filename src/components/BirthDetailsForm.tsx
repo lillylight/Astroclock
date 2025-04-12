@@ -12,7 +12,7 @@ export interface BirthFormData {
   method: 'manual' | 'upload';
   location?: string;
   date?: string;
-  timeOfDay?: 'brahma' | 'pratah' | 'sangava' | 'madhyahna' | 'aparahna' | 'sayahna' | 'pradosha' | 'nisha';
+  timeOfDay?: 'morning' | 'afternoon' | 'evening' | 'night' | 'midnight' | 'earlyMorning';
   physicalDescription?: string;
   photo?: File | null;
 }
@@ -22,7 +22,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
     method: initialMethod,
     location: '',
     date: '',
-    timeOfDay: 'pratah',
+    timeOfDay: 'morning',
     physicalDescription: '',
     photo: null,
   });
@@ -46,7 +46,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
     }));
   };
 
-  const handleTimeOfDayChange = (timeOfDay: 'brahma' | 'pratah' | 'sangava' | 'madhyahna' | 'aparahna' | 'sayahna' | 'pradosha' | 'nisha') => {
+  const handleTimeOfDayChange = (timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night' | 'midnight' | 'earlyMorning') => {
     setFormData((prev) => ({
       ...prev,
       timeOfDay,
@@ -154,93 +154,64 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
 
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Vedic Time of Day <span className="text-gray-400 text-xs" title="Brahma (3:30-6:00): Pre-dawn, Pratah (6:00-8:30): Sunrise, Sangava (8:30-11:00): Morning, Madhyahna (11:00-13:30): Midday, Aparahna (13:30-16:00): Afternoon, Sayahna (16:00-18:30): Sunset, Pradosha (18:30-21:00): Evening, Nisha (21:00-3:30): Night">(i)</span>
+                  Time of Day <span className="text-gray-400 text-xs" title="Morning: 6 AM - 9 AM, Afternoon: 12 PM - 3 PM, Evening: 6 PM - 9 PM, Night: 9 PM - 12 AM, Midnight: 12 AM - 3 AM, Early Morning: 3 AM - 6 AM">(i)</span>
                 </label>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'brahma' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
+                      formData.timeOfDay === 'morning' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
-                    onClick={() => handleTimeOfDayChange('brahma')}
-                    title="Pre-dawn period (3:30-6:00)"
+                    onClick={() => handleTimeOfDayChange('morning')}
                   >
-                    Brahma
+                    Morning
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'pratah' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
+                      formData.timeOfDay === 'afternoon' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
-                    onClick={() => handleTimeOfDayChange('pratah')}
-                    title="Sunrise period (6:00-8:30)"
+                    onClick={() => handleTimeOfDayChange('afternoon')}
                   >
-                    Pratah
+                    Afternoon
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'sangava' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
+                      formData.timeOfDay === 'evening' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
-                    onClick={() => handleTimeOfDayChange('sangava')}
-                    title="Morning period (8:30-11:00)"
+                    onClick={() => handleTimeOfDayChange('evening')}
                   >
-                    Sangava
+                    Evening
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'madhyahna' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
+                      formData.timeOfDay === 'night' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
-                    onClick={() => handleTimeOfDayChange('madhyahna')}
-                    title="Midday period (11:00-13:30)"
+                    onClick={() => handleTimeOfDayChange('night')}
                   >
-                    Madhyahna
+                    Night
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'aparahna' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
+                      formData.timeOfDay === 'midnight' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
-                    onClick={() => handleTimeOfDayChange('aparahna')}
-                    title="Afternoon period (13:30-16:00)"
+                    onClick={() => handleTimeOfDayChange('midnight')}
                   >
-                    Aparahna
+                    Midnight
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'sayahna' ? 'bg-gray-600 text-white' : 'bg-primary'
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
+                      formData.timeOfDay === 'earlyMorning' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
-                    onClick={() => handleTimeOfDayChange('sayahna')}
-                    title="Sunset period (16:00-18:30)"
+                    onClick={() => handleTimeOfDayChange('earlyMorning')}
                   >
-                    Sayahna
-                  </button>
-                  <button
-                    type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'pradosha' ? 'bg-gray-600 text-white' : 'bg-primary'
-                    }`}
-                    onClick={() => handleTimeOfDayChange('pradosha')}
-                    title="Evening period (18:30-21:00)"
-                  >
-                    Pradosha
-                  </button>
-                  <button
-                    type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-xs sm:text-sm w-full ${
-                      formData.timeOfDay === 'nisha' ? 'bg-gray-600 text-white' : 'bg-primary'
-                    }`}
-                    onClick={() => handleTimeOfDayChange('nisha')}
-                    title="Night period (21:00-3:30)"
-                  >
-                    Nisha
+                    Early Morning
                   </button>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">
-                  Vedic time divisions based on sunrise and sunset cycles, which vary slightly with location and season.
-                </p>
               </div>
             </div>
 
@@ -341,7 +312,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
               <h3 className="font-medium mb-2">Birth Information</h3>
               <p><span className="text-gray-400">Location:</span> {formData.location}</p>
               <p><span className="text-gray-400">Date:</span> {formData.date}</p>
-              <p><span className="text-gray-400">Vedic Time Period:</span> {formData.timeOfDay}</p>
+              <p><span className="text-gray-400">Time of Day:</span> {formData.timeOfDay}</p>
 
               {formData.method === 'manual' ? (
                 <div className="mt-2">
