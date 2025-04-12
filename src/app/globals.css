@@ -243,7 +243,6 @@ body::after {
   --accent: #e2e2e2;
 }
 
-/* Custom sizing containers */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -251,53 +250,8 @@ body::after {
   padding: 0 1rem;
 }
 
-/* Prevent content from overflowing the viewport */
-body {
-  overflow-x: hidden;
-  width: 100%;
-  position: relative;
-}
-
-/* Make all images responsive by default */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Handle overflow text */
-.truncate-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Responsive spacing */
-.responsive-container {
-  width: 100%;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Responsive text sizing */
-@media (max-width: 475px) {
-  h1 {
-    font-size: 1.75rem !important;
-  }
-  h2 {
-    font-size: 1.5rem !important;
-  }
-  p {
-    font-size: 0.875rem !important;
-  }
-  .container {
-    padding: 0 0.5rem;
-  }
-}
-
 @media (max-width: 640px) {
   .container {
-    padding: 0 0.75rem;
+    padding: 0 0.5rem;
   }
 }
