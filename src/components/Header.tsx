@@ -1,7 +1,3 @@
-'use client';
-
-import React from 'react';
-import { usePathname } from 'next/navigation';
 
 'use client';
 
@@ -9,14 +5,12 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
-  isHomePage?: boolean;
-  className?: string;
+  showWelcome?: boolean;
 }
 
-export function Header({ isHomePage }: HeaderProps) {
+export function Header({ showWelcome = true }: HeaderProps) {
   const pathname = usePathname();
-  // Determine if we're on the home page
-  const isHome = isHomePage !== undefined ? isHomePage : pathname === '/' || pathname === '/nako';
+  const isHome = pathname === '/';
 
   return (
     <div className="text-center mb-4 sm:mb-8 mt-4 sm:mt-8 flex flex-col items-center px-4">
@@ -36,7 +30,7 @@ export function Header({ isHomePage }: HeaderProps) {
             style={{ 
               animation: 'orbit3 10s linear infinite',
             }}></div>
-
+          
           <style jsx>{`
             @keyframes orbit1 {
               0% { transform: translate(0, 0) }
