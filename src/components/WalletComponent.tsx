@@ -4,13 +4,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
-  ConnectWallet,
+  ConnectButton as ConnectWallet,
   Wallet,
   WalletDropdown,
   WalletDropdownDisconnect,
   WalletDropdownLink,
-  ConnectWalletText,
-  FundButton,
+  ConnectButtonText as ConnectWalletText,
+  CheckoutWithCard as FundButton,
 } from '@coinbase/onchainkit/wallet';
 import {
   Avatar,
