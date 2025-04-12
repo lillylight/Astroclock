@@ -27,15 +27,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <MetaTags />
       </head>
       <body
         suppressHydrationWarning={true}
-        className="antialiased bg-gray-900 text-white flex flex-col min-h-screen sm:text-sm sm:px-2"
+        className="antialiased bg-gray-900 text-white flex flex-col min-h-screen overflow-x-hidden"
       >
         <Providers>
-          <div className="flex-grow">
-            {children}
+          <div className="flex-grow w-full max-w-full overflow-x-hidden">
+            <div className="mx-auto max-w-2xl px-3 xs:px-4 sm:px-6">
+              {children}
+            </div>
           </div>
           <Footer />
         </Providers>

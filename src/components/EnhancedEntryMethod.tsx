@@ -17,7 +17,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-[40px] blur-3xl opacity-50 transform scale-75"></div>
       </div>
-      
+
       {/* Main container with glass effect */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
           <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10">
           <motion.h2 
@@ -43,8 +43,8 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               Choose Entry Method
             </span>
           </motion.h2>
-          
-          <div className="grid grid-cols-2 gap-6">
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2"> {/* Responsive Grid */}
             {/* Manual Entry Option */}
             <motion.button
               initial={{ opacity: 0, x: -20 }}
@@ -53,10 +53,10 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onClick={() => onSelect('manual')}
               onMouseEnter={() => setHoverManual(true)}
               onMouseLeave={() => setHoverManual(false)}
-              className="relative group"
+              className="relative group w-full sm:w-auto" {/* Added w-full for smaller screens */}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
+
               <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-6 rounded-2xl transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
                 {/* 3D Icon Container */}
                 <div className="relative w-24 h-24 mx-auto mb-4">
@@ -70,7 +70,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                     transition={{ duration: 0.5 }}
                     className="absolute inset-0 bg-gradient-to-br from-purple-700 to-indigo-800 rounded-full"
                   ></motion.div>
-                  
+
                   {/* Gold rim */}
                   <motion.div 
                     animate={{ 
@@ -83,7 +83,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                       background: 'linear-gradient(135deg, rgba(251,191,36,0.4) 0%, rgba(217,119,6,0.1) 100%)'
                     }}
                   ></motion.div>
-                  
+
                   {/* Icon */}
                   <motion.div 
                     animate={{ 
@@ -98,11 +98,11 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                       <path d="M12 3.5V3.5C16.1421 3.5 19.5 6.85786 19.5 11V13C19.5 17.1421 16.1421 20.5 12 20.5V20.5C7.85786 20.5 4.5 17.1421 4.5 13V11C4.5 6.85786 7.85786 3.5 12 3.5V3.5Z" stroke="currentColor" strokeWidth="1.5"/>
                     </svg>
                   </motion.div>
-                  
+
                   {/* Highlight overlay */}
                   <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent rounded-full opacity-50 h-1/2"></div>
                 </div>
-                
+
                 {/* Text */}
                 <motion.span 
                   animate={{ y: hoverManual ? -2 : 0 }}
@@ -120,7 +120,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                 </motion.p>
               </div>
             </motion.button>
-            
+
             {/* Upload Photo Option */}
             <motion.button
               initial={{ opacity: 0, x: 20 }}
@@ -129,10 +129,10 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onClick={() => onSelect('upload')}
               onMouseEnter={() => setHoverUpload(true)}
               onMouseLeave={() => setHoverUpload(false)}
-              className="relative group"
+              className="relative group w-full sm:w-auto" {/* Added w-full for smaller screens */}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
+
               <div className="bg-gray-800/40 backdrop-blur-md hover:bg-gray-800/60 p-6 rounded-2xl transition-all duration-500 border border-gray-700/50 group-hover:border-indigo-500/30 relative overflow-hidden shadow-lg">
                 {/* 3D Icon Container */}
                 <div className="relative w-24 h-24 mx-auto mb-4">
@@ -146,7 +146,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                     transition={{ duration: 0.5 }}
                     className="absolute inset-0 bg-gradient-to-br from-indigo-700 to-purple-800 rounded-full"
                   ></motion.div>
-                  
+
                   {/* Gold rim */}
                   <motion.div 
                     animate={{ 
@@ -159,7 +159,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                       background: 'linear-gradient(135deg, rgba(251,191,36,0.4) 0%, rgba(217,119,6,0.1) 100%)'
                     }}
                   ></motion.div>
-                  
+
                   {/* Icon */}
                   <motion.div 
                     animate={{ 
@@ -173,11 +173,11 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
                       <path d="M4 16L8.586 11.414C8.96106 11.0391 9.46967 10.8284 10 10.8284C10.5303 10.8284 11.0389 11.0391 11.414 11.414L16 16M14 14L15.586 12.414C15.9611 12.0391 16.4697 11.8284 17 11.8284C17.5303 11.8284 18.0389 12.0391 18.414 12.414L20 14M14 8H14.01M6 20H18C18.5304 20 19.0391 19.7893 19.4142 19.4142C19.7893 19.0391 20 18.5304 20 18V6C20 5.46957 19.7893 4.96086 19.4142 4.58579C19.0391 4.21071 18.5304 4 18 4H6C5.46957 4 4.96086 4.21071 4.58579 4.58579C4.21071 4.96086 4 5.46957 4 6V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </motion.div>
-                  
+
                   {/* Highlight overlay */}
                   <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent rounded-full opacity-50 h-1/2"></div>
                 </div>
-                
+
                 {/* Text */}
                 <motion.span 
                   animate={{ y: hoverUpload ? -2 : 0 }}
@@ -196,7 +196,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               </div>
             </motion.button>
           </div>
-          
+
           {/* Subtle animated stars */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(20)].map((_, i) => (

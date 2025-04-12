@@ -14,20 +14,20 @@ export function Header({ isHomePage }: HeaderProps) {
   const isHome = isHomePage !== undefined ? isHomePage : pathname === '/' || pathname === '/nako';
 
   return (
-    <div className="text-center mb-8 mt-8 flex flex-col items-center">
-      <div className="relative mb-6 cursor-pointer" onClick={() => window.location.href = '/'}>
+    <div className="text-center mb-6 md:mb-8 mt-6 md:mt-8 flex flex-col items-center w-full px-3 sm:px-0">
+      <div className="relative mb-4 md:mb-6 cursor-pointer" onClick={() => window.location.href = '/'}>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl opacity-50"></div>
-        <div className="w-16 h-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-full flex items-center justify-center relative shadow-2xl overflow-hidden border border-indigo-500/30 animate-float">
+        <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-full flex items-center justify-center relative shadow-2xl overflow-hidden border border-indigo-500/30 animate-float">
           {/* 3-body problem solar system animation */}
-          <div className="absolute w-3 h-3 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
+          <div className="absolute w-2 h-2 md:w-3 md:h-3 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/50" 
             style={{ 
               animation: 'orbit1 8s linear infinite',
             }}></div>
-          <div className="absolute w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
+          <div className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50" 
             style={{ 
               animation: 'orbit2 12s linear infinite',
             }}></div>
-          <div className="absolute w-2 h-2 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
+          <div className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-red-400 rounded-full shadow-lg shadow-red-400/50" 
             style={{ 
               animation: 'orbit3 10s linear infinite',
             }}></div>
@@ -57,8 +57,8 @@ export function Header({ isHomePage }: HeaderProps) {
 
       {isHome && (
         <>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-indigo-300">Astro Clock</h1>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-md mx-auto px-4 sm:px-0">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold mb-2 md:mb-4 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-indigo-300">Astro Clock</h1>
+          <p className="text-base xs:text-lg sm:text-xl text-gray-300 max-w-md mx-auto px-2 xs:px-4 sm:px-0 break-words">
             Discover your exact birth time through Vedic astrology
           </p>
         </>

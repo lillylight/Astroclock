@@ -20,28 +20,28 @@ export default function Home() {
   const [prediction, setPrediction] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [entryMethod, setEntryMethod] = useState<'manual' | 'upload' | null>(null);
-  
+
   // Handle client-side mounting to prevent hydration errors
   useEffect(() => {
     setMounted(true);
     // No automatic redirection or state restoration from localStorage
     console.log('Component mounted, starting fresh with form step');
   }, []);
-  
+
   // Handle wallet connection without automatic redirection
   useEffect(() => {
     if (mounted && isConnected) {
       console.log('Wallet connected, no automatic redirect');
     }
   }, [isConnected, mounted]);
-  
+
   // We're keeping state in memory without forcing redirects
   useEffect(() => {
     if (mounted) {
       console.log('Current application state:', { currentStep, birthData: !!birthData });
     }
   }, [currentStep, birthData, prediction, mounted]);
-  
+
   // Prevent back navigation when on results page
   useEffect(() => {
     if (currentStep === 'results' && prediction) {
@@ -52,17 +52,52 @@ export default function Home() {
         // Show a message
         alert('Please use the "New Reading" button to start over.');
       };
-      
+
       // Push a state so we have something to go back to
       window.history.pushState(null, '', window.location.pathname);
       window.addEventListener('popstate', handlePopState);
-      
+
       return () => {
         window.removeEventListener('popstate', handlePopState);
       };
     }
   }, [currentStep, prediction]);
-  
+
+  // Check for existing birth data in local storage but don't auto-redirect
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem('birthData');
+      const savedReadingId = localStorage.getItem('readingId');
+
+      if (savedReadingId) {
+        // If we have a reading ID, go straight to results
+        setCurrentStep('results');
+        //setReadingId(savedReadingId); //readingId is not defined
+      } else if (savedData) {
+        // Load saved birth data but don't auto-redirect to payment
+        try {
+          const parsedData = JSON.parse(savedData);
+          setBirthData(parsedData);
+          console.log("Wallet connected, no automatic redirect");
+        } catch (error) {
+          console.error('Error parsing saved birth data:', error);
+          localStorage.removeItem('birthData');
+        }
+      } else {
+        // Start fresh with form step
+        console.log("Component mounted, starting fresh with form step");
+        setCurrentStep('form');
+      }
+
+      // Log current state for debugging
+      console.log("Current application state:", {
+        currentStep,
+        birthData: !!birthData
+      });
+    }
+  }, []);
+
+
   // If not mounted yet, return a placeholder that matches the server-rendered output
   if (!mounted) {
     return (
@@ -71,7 +106,7 @@ export default function Home() {
       </main>
     );
   }
-  
+
   const handleWelcomeComplete = () => {
     setShowWelcome(false);
   };
@@ -84,53 +119,53 @@ export default function Home() {
     setBirthData(data);
     setCurrentStep('payment');
   };
-  
+
   const handlePaymentSuccess = async () => {
     console.log('Payment success callback triggered in page.tsx');
-    
+
     // No localStorage flags used, just proceed with the logic
-    
+
     if (!birthData) {
       console.error('Birth data is missing, cannot generate reading');
       setPrediction('Error: Birth data is missing. Please start over and try again.');
       setCurrentStep('results');
       return;
     }
-    
+
     console.log('Starting reading generation with birth data:', birthData);
     setIsGenerating(true);
     console.log('isGenerating set to true');
-    
+
     try {
       // Create a FormData object to handle file uploads
       const formData = new FormData();
-      
+
       // Add birth data as JSON
       formData.append('birthData', JSON.stringify(birthData));
-      
+
       // Add photo if available
       if (birthData.method === 'upload' && birthData.photo) {
         formData.append('photo', birthData.photo);
         console.log('Photo attached to request');
       }
-      
+
       console.log('Calling generate-reading API...');
-      
+
       // Call the API route to generate the reading
       const response = await fetch('/api/generate-reading', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error('API error response:', errorText);
         throw new Error(`Failed to generate reading: ${response.status} ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       console.log('Reading generated successfully');
-      
+
       console.log('Setting prediction and changing to results step');
       setPrediction(data.prediction);
       setCurrentStep('results');
@@ -150,7 +185,7 @@ export default function Home() {
     setPrediction('');
     setEntryMethod(null);
     setCurrentStep('form');
-    
+
     // No localStorage to clean up
     console.log('Starting a new reading');
   };
@@ -159,16 +194,16 @@ export default function Home() {
     <main className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 py-8">
         <WalletWrapper />
-        
+
         {showWelcome && (
           <WelcomeScreen 
             onComplete={handleWelcomeComplete} 
             isWalletConnected={isConnected}
           />
         )}
-        
+
         {/* Header is now included in each component */}
-        
+
         <div className="flex flex-col justify-center items-center h-[70vh]">
           {!isConnected ? (
             <div className="max-w-md mx-auto">
@@ -194,7 +229,7 @@ export default function Home() {
                 <EnhancedEntryMethod onSelect={handleEntryMethodSelect} />
               </>
             )}
-            
+
             {currentStep === 'form' && entryMethod !== null && (
               <div className="animate-slide-left">
                 <BirthDetailsForm 
@@ -203,13 +238,13 @@ export default function Home() {
                 />
               </div>
             )}
-            
+
             {currentStep === 'payment' && (
               <div className="animate-slide-left">
                 <PaymentComponent onPaymentSuccess={handlePaymentSuccess} />
               </div>
             )}
-            
+
             {currentStep === 'results' && (
               <div className="animate-slide-left" key="results-container">
                 {isGenerating ? (

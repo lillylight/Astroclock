@@ -16,7 +16,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
   const [error, setError] = useState<string | null>(null);
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
-  
+
   // Use a fixed product ID
   const productId = '2bde99f3-84a0-4b81-9338-430eafdb9c36';
 
@@ -24,17 +24,17 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
   useEffect(() => {
     // This effect should only run on the client side
     if (typeof window === 'undefined') return;
-    
+
     // Flag to track if payment success has been detected
     let paymentSuccessDetected = false;
-    
+
     const handleMessage = (event: MessageEvent) => {
       // Log all message events to help debug
       console.log('Message event received:', event);
-      
+
       if (event.data) {
         console.log('Event data:', JSON.stringify(event.data, null, 2));
-        
+
         // Check for any payment success indicators
         if (
           (event.data.type === 'checkout-status-change' && event.data.status === 'success') ||
@@ -43,17 +43,17 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
           event.data.event_type === 'charge:completed'
         ) {
           console.log('Payment success detected!');
-          
+
           if (paymentSuccessDetected) {
             console.log('Payment success already detected, ignoring duplicate event');
             return;
           }
-          
+
           paymentSuccessDetected = true;
-          
+
           // Set payment as verified
           setPaymentVerified(true);
-          
+
           // Store receipt URL if available
           if (event.data.hosted_url) {
             setReceiptUrl(event.data.hosted_url);
@@ -64,7 +64,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
             // Open receipt in a new tab
             window.open(event.data.receipt_url, '_blank');
           }
-          
+
           // Show payment verified UI first, then transition after a delay
           console.log('Payment verified. Showing verification message...');
           setTimeout(() => {
@@ -74,15 +74,15 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
         }
       }
     };
-    
+
     window.addEventListener('message', handleMessage);
-    
+
     // Function to check for payment success indicators in the DOM
     const checkForPaymentSuccess = () => {
       if (paymentSuccessDetected) {
         return;
       }
-      
+
       // Check for success message in the DOM
       const successElements = document.querySelectorAll('.ock-text-success, .ock-success-message');
       if (successElements.length > 0) {
@@ -94,7 +94,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
         }, 3000); // Show verification message for 3 seconds before transitioning
         return;
       }
-      
+
       // Check for success text in any element
       const allElements = document.querySelectorAll('*');
       Array.from(allElements).forEach(element => {
@@ -115,41 +115,41 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
         }
       });
     };
-    
+
     // Set up a DOM observer to detect when the Coinbase Commerce UI shows the payment success message
     const observer = new MutationObserver((mutations) => {
       if (paymentSuccessDetected) {
         return;
       }
-      
+
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
           // Check if any of the added nodes contain text indicating payment success
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.ELEMENT_NODE) {
               const element = node as HTMLElement;
-              
+
               // Check for success message in the DOM
               const successElements = document.querySelectorAll('.ock-text-success, .ock-success-message');
               if (successElements.length > 0) {
                 console.log('Payment success detected via DOM observer!');
-                
+
                 if (paymentSuccessDetected) {
                   return;
                 }
-                
+
                 paymentSuccessDetected = true;
-                
+
                 // Set payment as verified
                 setPaymentVerified(true);
-                
+
                 // Call onPaymentSuccess immediately to proceed to prediction
                 console.log('Payment verified via DOM. Calling onPaymentSuccess immediately...');
                 setTimeout(() => {
                   onPaymentSuccess();
                 }, 3000); // Show verification message for 3 seconds before transitioning
               }
-              
+
               // Also check for text content that indicates success
               if (
                 element.textContent?.includes('Payment successful') ||
@@ -159,16 +159,16 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                 element.textContent?.includes('View payment details')
               ) {
                 console.log('Payment success text detected in DOM observer!');
-                
+
                 if (paymentSuccessDetected) {
                   return;
                 }
-                
+
                 paymentSuccessDetected = true;
-                
+
                 // Set payment as verified
                 setPaymentVerified(true);
-                
+
                 // Call onPaymentSuccess immediately to proceed to prediction
                 console.log('Payment verified via text. Calling onPaymentSuccess immediately...');
                 setTimeout(() => {
@@ -180,13 +180,13 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
         }
       });
     });
-    
+
     // Start observing the document body for changes
     observer.observe(document.body, { childList: true, subtree: true });
-    
+
     // Set up a timer to periodically check for payment success indicators
     const checkInterval = setInterval(checkForPaymentSuccess, 1000);
-    
+
     return () => {
       window.removeEventListener('message', handleMessage);
       observer.disconnect();
@@ -220,7 +220,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
         <p className="mb-6 text-gray-300 sm:mb-4 sm:text-sm">
           To receive your personalized birth time prediction, please complete the payment of $1 USDC.
         </p>
-        
+
         {showDisclaimer ? (
           <div className="bg-gray-800/70 p-6 rounded-2xl mb-6 border border-gray-700/50 shadow-lg sm:p-4 sm:mb-4">
             <h3 className="text-xl font-bold mb-4 sm:text-lg">Disclaimer</h3>
@@ -280,7 +280,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                       {error}
                     </div>
                   )}
-                  
+
                   <div className="relative">
                     {/* Always render the Checkout component or the success UI */}
                     {paymentVerified ? (
@@ -294,12 +294,12 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                         <div className="mt-3 w-full bg-gray-700/50 h-2 rounded-full overflow-hidden sm:mt-2">
                           <div className="bg-gradient-to-r from-green-400 to-teal-500 h-full rounded-full animate-pulse" style={{ width: '100%' }}></div>
                         </div>
-                        
+
                         <div className="mt-4 py-2 px-4 bg-indigo-900/50 rounded-xl text-indigo-200 animate-pulse sm:mt-3 sm:py-1 sm:px-3">
                           <p className="font-medium text-sm sm:text-xs">Generating prediction...</p>
                           <p className="text-xs mt-1 sm:text-[10px]">Please wait while we prepare your results</p>
                         </div>
-                        
+
                         {receiptUrl && (
                           <p className="mt-3 text-xs text-green-200 sm:mt-2 sm:text-[10px]">
                             A receipt has been opened in a new tab.
@@ -317,7 +317,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="flex flex-col items-center justify-center space-y-2 mb-4 sm:space-y-1 sm:mb-3">
                   <div className="flex items-center text-xs text-gray-400 sm:text-[10px]">
                     <svg className="w-4 h-4 mr-1 text-indigo-400 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -342,7 +342,7 @@ export function PaymentComponent({ onPaymentSuccess }: PaymentComponentProps) {
             </button>
           </div>
         )}
-        
+
         <div className="flex items-center justify-center text-sm text-gray-400 sm:text-xs">
           <svg className="w-4 h-4 mr-1 text-gray-500 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"></path>
