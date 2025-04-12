@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -10,15 +11,18 @@ import {
   WalletDropdownLink,
   ConnectWalletText,
   FundButton,
+} from '@coinbase/onchainkit/wallet';
+import {
   Avatar,
   Name,
-} from '@coinbase/onchainkit';
+} from '@coinbase/onchainkit/identity';
 import { useAccount } from 'wagmi';
 
 export function WalletComponent() {
   const { isConnected, address } = useAccount();
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
+  const productId = "2bde99f3-84a0-4b81-9338-430eafdb9c36";
 
   useEffect(() => {
     setMounted(true);
@@ -159,6 +163,7 @@ export function WalletComponent() {
 
             <div className="p-3 relative z-10">
               <FundButton 
+                productId={productId}
                 className="w-full py-3 rounded-xl flex items-center justify-center bg-[#2B62F6] hover:bg-[#2B62F6]/90 text-white font-medium mb-2 transition-all duration-200"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
