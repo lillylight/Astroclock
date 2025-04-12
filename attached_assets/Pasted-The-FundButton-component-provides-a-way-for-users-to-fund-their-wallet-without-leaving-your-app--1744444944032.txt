@@ -1,0 +1,74 @@
+The <FundButton /> component provides a way for users to fund their wallet without leaving your app. It automatically detects the user's wallet type (EOA vs Smart Wallet) and directs them to the appropriate funding URL.
+
+If your user connects a Coinbase Smart Wallet, it provides an easy way to access the Coinbase Smart Wallet Fund flow. Users will be able to buy and receive crypto, or use their Coinbase balances onchain with Magic Spend.
+
+If your user connects any other EOA wallet, it provides an easy way to access Coinbase Onramp where your users will also be able to buy crypto using a fiat payment method, or transfer existing crypto from their Coinbase account.
+
+Before using it, ensure you've completed all Getting Started steps.
+Walkthrough
+Get your Project ID
+
+    Get your Project ID from the Coinbase Developer Platform Dashboard.
+
+OnchainKit copy Project Id
+
+    Add your Project ID to your .env file.
+
+.env
+
+NEXT_PUBLIC_ONCHAINKIT_API_KEY=YOUR_PUBLIC_API_KEY
+NEXT_PUBLIC_CDP_PROJECT_ID=YOUR_CDP_PROJECT_ID
+
+Add Project ID to OnchainKitProvider
+
+<OnchainKitProvider
+  apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY} 
+  projectId={process.env.NEXT_PUBLIC_CDP_PROJECT_ID} 
+  chain={base}
+>
+  {props.children}
+</OnchainKitProvider>
+
+Drop in the <FundButton /> component
+
+import { FundButton } from '@coinbase/onchainkit/fund';
+ 
+<FundButton />
+
+Troubleshooting
+
+If you see a "something went wrong" error message when navigating to pay.coinbase.com, make sure you have "enforce secure initialization" disabled on the Onramp config page in Coinbase Developer Platform Dashboard.
+OnchainKit require secure init
+Customizing the funding experience
+
+You can customize the Coinbase Onramp experience by bringing your own Onramp URL and passing it to the <FundButton /> component. We provide the getOnrampBuyUrl utility to help you generate a Coinbase Onramp URL tailored to your use case.
+
+import { FundButton, getOnrampBuyUrl } from '@coinbase/onchainkit/fund';
+import { useAccount } from 'wagmi';
+ 
+const projectId = 'YOUR_CDP_PROJECT_ID';
+const { address } = useAccount();
+ 
+const onrampBuyUrl = getOnrampBuyUrl({
+  projectId,
+  addresses: { [address]: ['base'] },
+  assets: ['USDC'],
+  presetFiatAmount: 20,
+  fiatCurrency: 'USD'
+});
+ 
+<FundButton fundingUrl={onrampBuyUrl} />
+
+You can choose to have the funding URL open in a popup or a new tab using the openIn prop.
+
+<FundButton openIn={"tab"} />
+
+Customizing the fund button
+
+You can override the text on the fund button using the text prop, and hide the icon with the hideIcon prop.
+
+<FundButton text={"Onramp"} hideIcon={true} />
+
+You can hide the text with the hideText prop.
+
+<FundButton hideText={true} />
