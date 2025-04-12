@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -38,14 +37,14 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-2xl font-bold text-center mb-8 tracking-tight"
+            className="text-3xl font-bold text-center mb-8 tracking-tight"
           >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-indigo-200 to-purple-300">
               Choose Entry Method
             </span>
           </motion.h2>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2"> {/* Responsive Grid */}
             {/* Manual Entry Option */}
             <motion.button
               initial={{ opacity: 0, x: -20 }}
@@ -54,7 +53,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onClick={() => onSelect('manual')}
               onMouseEnter={() => setHoverManual(true)}
               onMouseLeave={() => setHoverManual(false)}
-              className="relative group w-full sm:w-auto"
+              className="relative group w-full sm:w-auto" {/* Added w-full for smaller screens */}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -130,7 +129,7 @@ export function EnhancedEntryMethod({ onSelect }: EnhancedEntryMethodProps) {
               onClick={() => onSelect('upload')}
               onMouseEnter={() => setHoverUpload(true)}
               onMouseLeave={() => setHoverUpload(false)}
-              className="relative group w-full sm:w-auto"
+              className="relative group w-full sm:w-auto" {/* Added w-full for smaller screens */}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
