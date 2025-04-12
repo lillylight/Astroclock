@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -15,12 +16,18 @@ import {
   Avatar,
   Name,
 } from '@coinbase/onchainkit/identity';
-import { useAccount } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 
 export function WalletComponent() {
   const { isConnected, address } = useAccount();
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
+  
+  // Fetch wallet balance
+  const { data: balanceData } = useBalance({
+    address: address,
+    watch: true,
+  });
   
   // Handle client-side mounting to prevent hydration errors
   useEffect(() => {
@@ -151,7 +158,7 @@ export function WalletComponent() {
                   <path d="M11.9999 2L4.80005 12.6L12 16.2L19.2 12.6L11.9999 2Z" fill="currentColor"/>
                   <path d="M12 16.2L4.8 12.6L12 22L19.2 12.6L12 16.2Z" fill="currentColor" fillOpacity="0.7"/>
                 </svg>
-                0.0001 ETH
+                {balanceData ? `${parseFloat(balanceData.formatted).toFixed(4)} ${balanceData.symbol}` : '0.0000 ETH'}
               </div>
               
               <div className="space-y-2">
@@ -160,18 +167,28 @@ export function WalletComponent() {
                   icon="wallet"
                   href="https://keys.coinbase.com"
                 >
-                  <svg className="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" fill="currentColor"/>
-                    <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
-                  Wallet
+                  <span className="flex items-center justify-center">
+                    <svg className="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" fill="currentColor"/>
+                      <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5"/>
+                    </svg>
+                    Wallet
+                  </span>
                 </WalletDropdownLink>
                 
                 <FundButton 
-                  className="w-full py-3 rounded-xl flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-200"
+                  className="w-full py-3 rounded-xl flex items-center bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-200"
                   text="Add Funds"
-                />
+                  productId={process.env.NEXT_PUBLIC_PRODUCT_ID || "2bde99f3-84a0-4b81-9338-430eafdb9c36"}
+                >
+                  <span className="flex items-center justify-center w-full">
+                    <svg className="h-5 w-5 mr-3 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4V20M4 12H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    Add Funds
+                  </span>
+                </FundButton>
                 
                 <WalletDropdownDisconnect className="w-full bg-[#1a1b25] transition-all duration-200 py-3 rounded-xl text-white font-medium flex items-center pl-4">
                   <svg className="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
