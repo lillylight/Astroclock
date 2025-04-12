@@ -154,7 +154,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
 
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Time of Day <span className="text-gray-400 text-xs" title="Morning: 6 AM - 9 AM, Afternoon: 12 PM - 3 PM, Evening: 6 PM - 9 PM, Night: 9 PM - 12 AM, Midnight: 12 AM - 3 AM, Early Morning: 3 AM - 6 AM">(i)</span>
+                  Time of Day <span className="font-bold text-indigo-300">(i)</span>
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <button
@@ -164,7 +164,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     }`}
                     onClick={() => handleTimeOfDayChange('morning')}
                   >
-                    Morning
+                    Morning (6 AM - 9 AM)
                   </button>
                   <button
                     type="button"
@@ -173,7 +173,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     }`}
                     onClick={() => handleTimeOfDayChange('afternoon')}
                   >
-                    Afternoon
+                    Afternoon (12 PM - 3 PM)
                   </button>
                   <button
                     type="button"
@@ -182,7 +182,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     }`}
                     onClick={() => handleTimeOfDayChange('evening')}
                   >
-                    Evening
+                    Evening (6 PM - 9 PM)
                   </button>
                   <button
                     type="button"
@@ -191,7 +191,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     }`}
                     onClick={() => handleTimeOfDayChange('night')}
                   >
-                    Night
+                    Night (9 PM - 12 AM)
                   </button>
                   <button
                     type="button"
@@ -200,7 +200,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     }`}
                     onClick={() => handleTimeOfDayChange('midnight')}
                   >
-                    Midnight
+                    Midnight (12 AM - 3 AM)
                   </button>
                   <button
                     type="button"
@@ -209,7 +209,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                     }`}
                     onClick={() => handleTimeOfDayChange('earlyMorning')}
                   >
-                    Early Morning
+                    Early Morning (3 AM - 6 AM)
                   </button>
                 </div>
               </div>
