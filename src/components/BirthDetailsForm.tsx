@@ -64,7 +64,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
 
   const validateStep = (currentStep: number): boolean => {
     const newErrors: {[key: string]: string} = {};
-    
+
     if (currentStep === 1) {
       if (!formData.date) {
         newErrors.date = 'Birth date is required';
@@ -83,7 +83,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
         }
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -115,7 +115,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
         {step === 1 && (
           <div className={`space-y-6 ${getAnimationClass()}`}>
             <h2 className="text-2xl font-bold text-center mb-6">Enter Your Birth Details</h2>
-            
+
             {/* Method selection is now handled by the parent component */}
 
             <div className="space-y-4">
@@ -134,7 +134,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 />
                 {errors.date && <p className="text-red-400 text-xs mt-1">{errors.date}</p>}
               </div>
-              
+
               <div>
                 <label htmlFor="location" className="block text-sm font-medium mb-1">
                   Birth Location <span className="text-red-400">*</span>
@@ -151,7 +151,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 />
                 {errors.location && <p className="text-red-400 text-xs mt-1">{errors.location}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Time of Day <span className="text-gray-400 text-xs" title="Morning: 6 AM - 9 AM, Afternoon: 12 PM - 3 PM, Evening: 6 PM - 9 PM, Night: 9 PM - 12 AM, Midnight: 12 AM - 3 AM, Early Morning: 3 AM - 6 AM">(i)</span>
@@ -159,7 +159,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
                       formData.timeOfDay === 'morning' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
                     onClick={() => handleTimeOfDayChange('morning')}
@@ -168,7 +168,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
                       formData.timeOfDay === 'afternoon' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
                     onClick={() => handleTimeOfDayChange('afternoon')}
@@ -177,7 +177,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
                       formData.timeOfDay === 'evening' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
                     onClick={() => handleTimeOfDayChange('evening')}
@@ -186,7 +186,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
                       formData.timeOfDay === 'night' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
                     onClick={() => handleTimeOfDayChange('night')}
@@ -195,7 +195,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
                       formData.timeOfDay === 'midnight' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
                     onClick={() => handleTimeOfDayChange('midnight')}
@@ -204,7 +204,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                   </button>
                   <button
                     type="button"
-                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] ${
+                    className={`py-2 rounded-lg transition-transform hover:translate-y-[-2px] text-sm sm:text-base w-full sm:w-auto ${
                       formData.timeOfDay === 'earlyMorning' ? 'bg-gray-600 text-white' : 'bg-primary'
                     }`}
                     onClick={() => handleTimeOfDayChange('earlyMorning')}
@@ -214,7 +214,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 </div>
               </div>
             </div>
-            
+
             <button
               type="button"
               onClick={goToNextStep}
@@ -232,7 +232,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
         {step === 2 && (
           <div className={`space-y-6 ${getAnimationClass()}`}>
             <h2 className="text-2xl font-bold text-center mb-6">Physical Description</h2>
-            
+
             {formData.method === 'manual' ? (
               <div className="space-y-4">
                 <div>
@@ -280,7 +280,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 </div>
               </div>
             )}
-            
+
             <div className="flex space-x-4">
               <button
                 type="button"
@@ -307,13 +307,13 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
         {step === 3 && (
           <div className={`space-y-6 ${getAnimationClass()}`}>
             <h2 className="text-2xl font-bold text-center mb-6">Confirm Your Details</h2>
-            
+
             <div className="bg-primary p-4 rounded-lg">
               <h3 className="font-medium mb-2">Birth Information</h3>
               <p><span className="text-gray-400">Location:</span> {formData.location}</p>
               <p><span className="text-gray-400">Date:</span> {formData.date}</p>
               <p><span className="text-gray-400">Time of Day:</span> {formData.timeOfDay}</p>
-              
+
               {formData.method === 'manual' ? (
                 <div className="mt-2">
                   <p className="text-gray-400 font-medium">Physical Description:</p>
@@ -325,7 +325,7 @@ export function BirthDetailsForm({ onSubmit, initialMethod = 'manual' }: BirthDe
                 </p>
               )}
             </div>
-            
+
             <div className="flex space-x-4">
               <button
                 type="button"

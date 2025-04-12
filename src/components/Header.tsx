@@ -12,7 +12,7 @@ export function Header({ isHomePage }: HeaderProps) {
   const pathname = usePathname();
   // Determine if we're on the home page
   const isHome = isHomePage !== undefined ? isHomePage : pathname === '/' || pathname === '/nako';
-  
+
   return (
     <div className="text-center mb-8 mt-8 flex flex-col items-center">
       <div className="relative mb-6 cursor-pointer" onClick={() => window.location.href = '/'}>
@@ -31,7 +31,7 @@ export function Header({ isHomePage }: HeaderProps) {
             style={{ 
               animation: 'orbit3 10s linear infinite',
             }}></div>
-          
+
           <style jsx>{`
             @keyframes orbit1 {
               0% { transform: translate(0, 0) }
@@ -54,11 +54,11 @@ export function Header({ isHomePage }: HeaderProps) {
           `}</style>
         </div>
       </div>
-      
+
       {isHome && (
         <>
-          <h1 className="text-5xl font-bold mb-4 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-indigo-300">Astro Clock</h1>
-          <p className="text-xl text-gray-300 max-w-md mx-auto">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-serif bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-indigo-300">Astro Clock</h1>
+          <p className="text-lg sm:text-xl text-gray-300 max-w-md mx-auto px-4 sm:px-0">
             Discover your exact birth time through Vedic astrology
           </p>
         </>

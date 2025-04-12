@@ -10,6 +10,7 @@ import {
   WalletDropdownLink,
   ConnectWalletText,
 } from '@coinbase/onchainkit/wallet';
+import { FundButton } from '@coinbase/onchainkit/fund';
 import {
   Avatar,
   Name,
@@ -198,13 +199,10 @@ export function WalletComponent() {
                 Wallet
               </WalletDropdownLink>
               
-              <WalletDropdownLink
-                className="py-3 rounded-xl flex items-center bg-gray-800/80 hover:!bg-gray-700/90 text-white font-medium pl-4 pr-2 my-1 transition-all duration-200 border border-gray-700/30 hover:translate-y-[-2px]"
-                icon="wallet"
-                href={address ? `https://basescan.org/address/${address}` : '#'}
-              >
-                View on Explorer
-              </WalletDropdownLink>
+              <FundButton 
+                className="w-full py-3 rounded-xl flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-medium my-1 transition-all duration-200"
+                text="Add Funds"
+              />
               
               <div className="pt-2 pb-2">
                 <WalletDropdownDisconnect className="w-full bg-gray-800/80 hover:!bg-red-900/60 transition-all duration-200 py-3 rounded-xl text-white font-medium border border-gray-700/30 hover:border-red-500/30 hover:translate-y-[-2px]" />
