@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "npm run vercel-build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "functions": {
+    "app/api/generate-reading/**": {
+      "maxDuration": 60
+    },
+    "app/api/**": {
+      "maxDuration": 30
+    }
+  }
+}
